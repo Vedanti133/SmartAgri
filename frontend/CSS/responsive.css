@@ -1,0 +1,154 @@
+/**
+ * SmartAgri Design System - Responsive Layout & Breakpoints
+ * Ensures proper rendering on 1366px, 1440px, 1920px desktops, tablets, and smartphones.
+ */
+
+/* =========================================================
+   GLOBAL OVERFLOW PROTECTION
+   ========================================================= */
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+img, canvas, svg {
+    max-width: 100%;
+    height: auto;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* =========================================================
+   TABLET & MOBILE BREAKPOINT (< 992px)
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+    .main {
+        margin-left: 0 !important;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+    }
+
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.45);
+        z-index: 1030;
+    }
+
+    .sidebar-overlay.show {
+        display: block;
+    }
+
+    .topbar {
+        padding: 0 1rem;
+    }
+
+    .content {
+        padding: 1.25rem 1rem;
+    }
+
+    .sidebar-toggle {
+        display: inline-flex !important;
+        background: none;
+        border: 1px solid var(--sa-border-color, #e2ebe4);
+        border-radius: var(--sa-radius-sm, 6px);
+        padding: 0.4rem 0.65rem;
+        color: var(--sa-text-primary, #173f2f);
+        font-size: 1.25rem;
+        cursor: pointer;
+    }
+}
+
+/* =========================================================
+   MOBILE BREAKPOINT (< 768px)
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+    .topbar-search {
+        display: none;
+    }
+
+    .topbar-search.active {
+        display: flex;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #ffffff;
+        padding: 0 1rem;
+        z-index: 1050;
+        align-items: center;
+        max-width: 100%;
+    }
+
+    .topbar-search.active input {
+        border-radius: var(--sa-radius-sm, 6px);
+    }
+
+    .mobile-search-button {
+        display: inline-flex !important;
+        background: none;
+        border: none;
+        font-size: 1.15rem;
+        color: var(--sa-text-muted, #6c7c74);
+        padding: 0.4rem;
+        cursor: pointer;
+    }
+
+    .search-close {
+        display: inline-flex !important;
+        background: none;
+        border: none;
+        font-size: 1.35rem;
+        color: var(--sa-text-muted, #6c7c74);
+        margin-left: 0.5rem;
+        cursor: pointer;
+    }
+
+    .stat-value {
+        font-size: 1.35rem;
+    }
+
+    .stat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.15rem;
+    }
+
+    .sales-chart-wrapper,
+    .stock-chart-wrapper {
+        height: 250px;
+    }
+}
+
+/* Desktop default for mobile toggle controls */
+@media (min-width: 992px) {
+    .sidebar-toggle {
+        display: none;
+    }
+
+    .sidebar-overlay {
+        display: none !important;
+    }
+
+    .mobile-search-button,
+    .search-close {
+        display: none;
+    }
+}

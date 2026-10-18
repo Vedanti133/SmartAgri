@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Customer Profile & Delivery Addresses | SmartAgri</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- SmartAgri Styles -->
+    <link rel="stylesheet" href="../CSS/style2.css">
+    <link rel="stylesheet" href="../CSS/components.css">
+    <link rel="stylesheet" href="../CSS/ecommerce.css">
+    <link rel="stylesheet" href="../CSS/responsive.css">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f4f7f4;
+            color: #173f2f;
+        }
+        .profile-card {
+            background: #ffffff;
+            border: 1px solid #e2ebe4;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            margin-bottom: 2rem;
+        }
+        .toast-container {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 1090;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CUSTOMER NAVBAR -->
+    <nav class="customer-navbar py-2 px-3 mb-4">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <a class="navbar-brand fs-4" href="customer-catalog.html">
+                <i class="bi bi-flower1"></i>
+                <span>Smart<strong>Agri</strong> Store</span>
+            </a>
+
+            <div class="d-flex align-items-center gap-2 gap-md-3">
+                <a href="customer-catalog.html" class="customer-nav-link">
+                    <i class="bi bi-grid-fill"></i>
+                    <span class="d-none d-md-inline">Catalog</span>
+                </a>
+
+                <a href="customer-wishlist.html" class="customer-nav-link position-relative">
+                    <i class="bi bi-heart fs-5"></i>
+                    <span class="d-none d-md-inline">Wishlist</span>
+                    <span id="wishlistCountBadge" class="nav-badge-count" style="display: none;">0</span>
+                </a>
+
+                <a href="customer-cart.html" class="customer-nav-link position-relative">
+                    <i class="bi bi-cart3 fs-5"></i>
+                    <span class="d-none d-md-inline">Cart</span>
+                    <span id="cartCountBadge" class="nav-badge-count" style="display: none;">0</span>
+                </a>
+
+                <a href="customer-orders.html" class="customer-nav-link">
+                    <i class="bi bi-receipt fs-5"></i>
+                    <span class="d-none d-md-inline">My Orders</span>
+                </a>
+
+                <a href="customer-order-tracking.html" class="customer-nav-link">
+                    <i class="bi bi-truck fs-5"></i>
+                    <span class="d-none d-md-inline">Track Order</span>
+                </a>
+
+                <a href="returns.html" class="customer-nav-link">
+                    <i class="bi bi-arrow-counterclockwise fs-5"></i>
+                    <span class="d-none d-md-inline">Returns</span>
+                </a>
+
+                <a href="support.html" class="customer-nav-link">
+                    <i class="bi bi-headset fs-5"></i>
+                    <span class="d-none d-md-inline">Support</span>
+                </a>
+
+                <a href="customer-profile.html" class="customer-nav-link active">
+                    <i class="bi bi-person-circle fs-5"></i>
+                    <span class="d-none d-md-inline" data-user-name>Account</span>
+                </a>
+
+                <button class="btn btn-outline-danger btn-sm ms-2" onclick="logout()">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span class="d-none d-md-inline">Sign Out</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <main class="container px-3 px-md-4 mb-5" style="max-width: 1000px;">
+
+        <!-- PROFILE HEADER -->
+        <div class="profile-card">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center fw-bold fs-2" style="width: 64px; height: 64px;" id="avatarInitial">
+                        U
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-1" id="profileFullName">Loading...</h4>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge bg-success" id="profileRoleBadge">CUSTOMER</span>
+                            <span class="text-muted small" id="profileUsername">@username</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                        <i class="bi bi-pencil me-1"></i> Edit Profile
+                    </button>
+                </div>
+            </div>
+
+            <div class="row g-3 mt-3 pt-3 border-top">
+                <div class="col-sm-6">
+                    <label class="text-muted small">Registered Email Address</label>
+                    <div class="fw-semibold" id="profileEmail">-</div>
+                </div>
+                <div class="col-sm-6">
+                    <label class="text-muted small">Contact Phone Number</label>
+                    <div class="fw-semibold" id="profilePhone">-</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADDRESSES SECTION -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h4 class="fw-bold mb-0">Delivery Addresses</h4>
+                <p class="text-muted small mb-0">Manage addresses for dispatch of agricultural fertilizer supplies.</p>
+            </div>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addAddressModal">
+                <i class="bi bi-plus-lg me-1"></i> Add New Address
+            </button>
+        </div>
+
+        <div class="row g-3" id="addressesGrid">
+            <!-- Loading state -->
+            <div class="col-12 text-center py-4">
+                <div class="spinner-border text-success" role="status"></div>
+                <p class="mt-2 text-muted">Loading addresses...</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- EDIT PROFILE MODAL -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title fw-bold">Edit Profile Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="editProfileForm">
+                    <div class="modal-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Full Name</label>
+                            <input type="text" id="editFullName" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Phone Number</label>
+                            <input type="tel" id="editPhone" class="form-control" placeholder="10-digit mobile number">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Email Address</label>
+                            <input type="email" id="editEmail" class="form-control" required>
+                        </div>
+                        <div id="profileMsg"></div>
+                    </div>
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success fw-bold" id="saveProfileBtn">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD ADDRESS MODAL -->
+    <div class="modal fade" id="addAddressModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title fw-bold">Add Delivery Address</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="addAddressForm">
+                    <div class="modal-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Recipient Full Name *</label>
+                                <input type="text" id="addrFullName" class="form-control" required placeholder="e.g. Ramesh Patel">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">10-Digit Mobile Number *</label>
+                                <input type="tel" id="addrPhone" class="form-control" pattern="^[0-9]{10}$" required placeholder="9876543210">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Address Line 1 (House/Plot/Farm No, Village/Street) *</label>
+                                <input type="text" id="addrLine1" class="form-control" required placeholder="e.g. Survey No. 42, Green Valley Farm">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Address Line 2 (Taluka, Post Office, Locality)</label>
+                                <input type="text" id="addrLine2" class="form-control" placeholder="e.g. Near Kisan Mandi, Post Shirur">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold">City *</label>
+                                <input type="text" id="addrCity" class="form-control" required placeholder="e.g. Pune">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold">District</label>
+                                <input type="text" id="addrDistrict" class="form-control" placeholder="e.g. Pune">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold">State *</label>
+                                <input type="text" id="addrState" class="form-control" required placeholder="e.g. Maharashtra">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold">PIN Code (6-digit) *</label>
+                                <input type="text" id="addrPincode" class="form-control" pattern="^[1-9][0-9]{5}$" maxlength="6" required placeholder="412210">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Landmark (Optional)</label>
+                                <input type="text" id="addrLandmark" class="form-control" placeholder="e.g. Near Gram Panchayat">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Address Type</label>
+                                <select id="addrType" class="form-select">
+                                    <option value="HOME">Home</option>
+                                    <option value="FARM" selected>Farm / Warehouse</option>
+                                    <option value="WORK">Work / Shop</option>
+                                    <option value="OTHER">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="checkbox" id="addrIsDefault">
+                                    <label class="form-check-label fw-semibold" for="addrIsDefault">
+                                        Make this my default delivery address
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="addressMsg" class="mt-3"></div>
+                    </div>
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success fw-bold" id="saveAddressBtn">Save Address</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast-container">
+        <div id="liveToast" class="toast align-items-center text-white bg-success border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body" id="toastMessage">
+                    Action completed!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../JS/config.js"></script>
+    <script src="../JS/utils.js"></script>
+    <script src="../JS/api.js"></script>
+    <script src="../JS/auth.js"></script>
+    <script src="../JS/customer-profile.js"></script>
+    <script src="../JS/i18n.js"></script>
+</body>
+</html>

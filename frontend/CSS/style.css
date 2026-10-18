@@ -1,0 +1,1121 @@
+/**
+ * SmartAgri - Master Unified Stylesheet
+ * Incorporates modular design tokens, components, dashboard shell, and responsive breakpoints.
+ */
+@import url("components.css");
+@import url("dashboard.css");
+@import url("responsive.css");
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f2f8ef;
+    color: #153d30;
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   MAIN PAGE
+   ========================================================= */
+
+.login-page {
+    width: 100%;
+    min-height: 100vh;
+}
+
+.login-card {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    margin: 0;
+}
+
+
+/* =========================================================
+   LEFT SIDE
+   ========================================================= */
+
+.login-art {
+    position: relative;
+
+    width: 46%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+
+    padding: 45px 6%;
+
+    overflow: hidden;
+
+    background-image: url("../img/img1.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    isolation: isolate;
+}
+
+.login-art-overlay {
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.03),
+            rgba(5, 64, 33, 0.18) 55%,
+            rgba(3, 54, 29, 0.45)
+        );
+
+    z-index: -1;
+}
+
+
+/* Curved divider */
+
+.login-art::after {
+    content: "";
+
+    position: absolute;
+
+    top: -5%;
+    right: -90px;
+
+    width: 180px;
+    height: 110%;
+
+    background: #f2f8ef;
+
+    border-radius: 50%;
+
+    z-index: 2;
+}
+
+
+/* =========================================================
+   LEFT CONTENT
+   ========================================================= */
+
+.login-art-content {
+    position: relative;
+    z-index: 3;
+
+    width: 100%;
+    max-width: 560px;
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.smartagri-brand {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: clamp(32px, 6vh, 60px);
+}
+
+.brand-icon {
+    width: clamp(60px, 6vw, 90px);
+    height: clamp(60px, 6vw, 90px);
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 22px;
+
+    background: rgba(255, 255, 255, 0.12);
+
+    color: #19753f;
+
+    font-size: clamp(38px, 4.5vw, 62px);
+}
+
+.smartagri-brand h1 {
+    margin: 0;
+
+    font-size: clamp(34px, 3.8vw, 54px);
+
+    line-height: 1;
+
+    font-weight: 800;
+
+    letter-spacing: -2px;
+
+    color: #07382b;
+}
+
+.smartagri-brand h1 span {
+    color: #43b72a;
+}
+
+.smartagri-brand p {
+    margin: 7px 0 0;
+
+    font-size: clamp(10px, 1vw, 15px);
+
+    color: #204b3b;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero-content h2 {
+    margin: 0;
+
+    font-size: clamp(30px, 3.2vw, 46px);
+
+    line-height: 1.12;
+
+    font-weight: 800;
+
+    letter-spacing: -1px;
+
+    color: #123b30;
+}
+
+.hero-content h2 span {
+    color: #39a828;
+}
+
+
+/* =========================================================
+   FEATURES
+   ========================================================= */
+
+.feature-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 13px;
+
+    margin-top: clamp(25px, 4vh, 38px);
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+}
+
+.feature-icon {
+    width: 50px;
+    height: 50px;
+
+    flex: 0 0 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: rgba(216, 241, 139, 0.82);
+
+    color: #166c39;
+
+    font-size: 22px;
+}
+
+.feature-item h5 {
+    margin: 0;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    color: #153c2f;
+}
+
+.feature-item p {
+    margin: 1px 0 0;
+
+    font-size: 13px;
+
+    color: #153c2f;
+}
+
+
+/* =========================================================
+   QUOTE
+   ========================================================= */
+
+.left-quote {
+    margin-top: clamp(25px, 4vh, 40px);
+
+    margin-left: auto;
+    margin-right: 25px;
+
+    width: fit-content;
+
+    text-align: center;
+
+    font-family: Georgia, serif;
+
+    font-size: clamp(17px, 1.8vw, 24px);
+
+    line-height: 1.15;
+
+    font-style: italic;
+
+    color: white;
+
+    text-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.55);
+}
+
+
+/* =========================================================
+   RIGHT SIDE
+   ========================================================= */
+
+.login-form-side {
+    width: 54%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 35px 4%;
+
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(92, 180, 83, 0.15),
+            transparent 30%
+        ),
+        #f2f8ef;
+}
+
+
+/* =========================================================
+   REGISTRATION CARD
+   ========================================================= */
+
+.registration-card {
+    width: 100%;
+    max-width: 690px;
+
+    padding: clamp(25px, 2.8vw, 38px);
+
+    background: rgba(255, 255, 255, 0.97);
+
+    border-radius: 28px;
+
+    border: 1px solid rgba(255, 255, 255, 0.9);
+
+    box-shadow:
+        0 20px 55px rgba(43, 91, 54, 0.13);
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.registration-header {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 14px;
+
+    margin-bottom: 24px;
+}
+
+.registration-icon {
+    width: 58px;
+    height: 58px;
+
+    flex: 0 0 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 17px;
+
+    background: #edf8e9;
+
+    color: #249344;
+
+    font-size: 32px;
+}
+
+.registration-header h2 {
+    margin: 0;
+
+    font-size: clamp(26px, 2.4vw, 35px);
+
+    line-height: 1.1;
+
+    font-weight: 800;
+
+    color: #123b30;
+}
+
+.registration-header p {
+    margin: 5px 0 0;
+
+    font-size: 13px;
+
+    line-height: 1.45;
+
+    color: #687970;
+}
+
+
+/* =========================================================
+   FORM GRID
+   ========================================================= */
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 14px 22px;
+}
+
+.form-group {
+    width: 100%;
+    min-width: 0;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
+.form-label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    color: #164d39;
+}
+
+.form-label i {
+    margin-right: 5px;
+
+    color: #14733d;
+}
+
+
+/* =========================================================
+   INPUT
+   ========================================================= */
+
+.input-wrapper {
+    position: relative;
+
+    width: 100%;
+}
+
+.input-icon {
+    position: absolute;
+
+    left: 14px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #167344;
+
+    font-size: 18px;
+
+    pointer-events: none;
+
+    z-index: 2;
+}
+
+.form-control,
+.form-select {
+    width: 100%;
+
+    height: 47px;
+    min-height: 47px;
+
+    padding: 8px 13px 8px 43px;
+
+    border: 1.5px solid #cadad3;
+
+    border-radius: 11px;
+
+    background: #fff;
+
+    color: #183b2b;
+
+    font-size: 13.5px;
+
+    box-shadow: none;
+
+    transition: 0.2s ease;
+}
+
+.form-control::placeholder {
+    color: #94a3a9;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #269d4b;
+
+    box-shadow:
+        0 0 0 3px rgba(38, 157, 75, 0.10);
+
+    outline: none;
+}
+
+
+/* =========================================================
+   PASSWORD
+   ========================================================= */
+
+.password-input {
+    padding-right: 48px;
+}
+
+.password-toggle {
+    position: absolute;
+
+    right: 5px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: #63756c;
+
+    cursor: pointer;
+
+    z-index: 3;
+}
+
+.password-toggle:hover {
+    background: #eef7ef;
+
+    color: #198754;
+}
+
+
+/* =========================================================
+   MESSAGE
+   ========================================================= */
+
+#msg {
+    min-height: 4px;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   REGISTER BUTTON
+   ========================================================= */
+
+.register-button {
+    width: 100%;
+    min-height: 51px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    border: none;
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4dbd4c,
+            #238e3e
+        );
+
+    color: #fff;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 9px 22px rgba(35, 142, 62, 0.22);
+
+    transition: 0.2s ease;
+}
+
+.register-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 13px 27px rgba(35, 142, 62, 0.29);
+}
+
+
+/* =========================================================
+   LOGIN
+   ========================================================= */
+
+.login-link {
+    margin-top: 20px;
+
+    text-align: center;
+
+    font-size: 12.5px;
+
+    color: #6d7b74;
+}
+
+.login-link a {
+    margin-left: 4px;
+
+    color: #17753e;
+
+    font-weight: 700;
+
+    text-decoration: underline;
+}
+
+.login-link > i {
+    margin-left: 3px;
+
+    color: #17753e;
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   LAPTOP
+   1024px - 1399px
+   ========================================================= */
+
+@media (min-width: 1024px) and (max-width: 1399px) {
+
+    .login-art {
+        width: 45%;
+
+        padding: 38px 5%;
+    }
+
+    .login-form-side {
+        width: 55%;
+
+        padding: 25px 3%;
+    }
+
+    .registration-card {
+        max-width: 650px;
+
+        padding: 27px;
+    }
+
+    .smartagri-brand {
+        margin-bottom: 38px;
+    }
+
+    .smartagri-brand h1 {
+        font-size: 44px;
+    }
+
+    .brand-icon {
+        width: 68px;
+        height: 68px;
+
+        font-size: 44px;
+    }
+
+    .hero-content h2 {
+        font-size: 36px;
+    }
+
+    .feature-list {
+        gap: 10px;
+
+        margin-top: 25px;
+    }
+
+    .feature-icon {
+        width: 45px;
+        height: 45px;
+        flex-basis: 45px;
+
+        font-size: 19px;
+    }
+
+    .feature-item h5 {
+        font-size: 12.5px;
+    }
+
+    .feature-item p {
+        font-size: 11.5px;
+    }
+
+    .left-quote {
+        margin-top: 28px;
+
+        font-size: 19px;
+    }
+
+    .form-grid {
+        gap: 11px 18px;
+    }
+
+    .registration-header {
+        margin-bottom: 18px;
+    }
+}
+
+
+/* =========================================================
+   SHORT LAPTOP SCREEN
+   Example: 1366 x 768
+   ========================================================= */
+
+@media (min-width: 992px) and (max-height: 800px) {
+
+    .login-art {
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
+
+    .smartagri-brand {
+        margin-bottom: 28px;
+    }
+
+    .hero-content h2 {
+        font-size: 32px;
+    }
+
+    .feature-list {
+        margin-top: 20px;
+
+        gap: 8px;
+    }
+
+    .feature-icon {
+        width: 42px;
+        height: 42px;
+        flex-basis: 42px;
+
+        font-size: 17px;
+    }
+
+    .feature-item h5 {
+        font-size: 12px;
+    }
+
+    .feature-item p {
+        font-size: 10.5px;
+    }
+
+    .left-quote {
+        display: none;
+    }
+
+    .registration-card {
+        padding: 23px 27px;
+    }
+
+    .registration-header {
+        margin-bottom: 17px;
+    }
+
+    .registration-header p {
+        font-size: 12px;
+    }
+
+    .form-grid {
+        gap: 9px 18px;
+    }
+
+    .form-label {
+        margin-bottom: 4px;
+    }
+
+    .form-control,
+    .form-select {
+        height: 43px;
+        min-height: 43px;
+    }
+
+    .password-toggle {
+        height: 32px;
+        width: 32px;
+    }
+
+    .register-button {
+        min-height: 46px;
+    }
+
+    .login-link {
+        margin-top: 15px;
+    }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 991px) {
+
+    .login-card {
+        display: flex;
+
+        flex-direction: column;
+    }
+
+    .login-art {
+        width: 100%;
+        min-height: 480px;
+
+        padding: 45px 7%;
+
+        background-position: center;
+    }
+
+    .login-art::after {
+        display: none;
+    }
+
+    .login-art-content {
+        max-width: 720px;
+    }
+
+    .smartagri-brand {
+        margin-bottom: 40px;
+    }
+
+    .hero-content h2 {
+        font-size: 38px;
+    }
+
+    .feature-list {
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 16px 28px;
+    }
+
+    .login-form-side {
+        width: 100%;
+        min-height: auto;
+
+        padding: 40px 7%;
+    }
+
+    .registration-card {
+        max-width: 760px;
+    }
+}
+
+
+/* =========================================================
+   SMALL TABLET / LARGE MOBILE
+   ========================================================= */
+
+@media (max-width: 767px) {
+
+    .login-art {
+        min-height: 430px;
+
+        padding: 38px 28px;
+    }
+
+    .smartagri-brand {
+        margin-bottom: 32px;
+    }
+
+    .brand-icon {
+        width: 62px;
+        height: 62px;
+
+        font-size: 40px;
+    }
+
+    .smartagri-brand h1 {
+        font-size: 37px;
+    }
+
+    .smartagri-brand p {
+        font-size: 11px;
+    }
+
+    .hero-content h2 {
+        font-size: 33px;
+    }
+
+    .feature-list {
+        gap: 13px 20px;
+    }
+
+    .feature-icon {
+        width: 46px;
+        height: 46px;
+        flex-basis: 46px;
+
+        font-size: 19px;
+    }
+
+    .feature-item h5 {
+        font-size: 13px;
+    }
+
+    .feature-item p {
+        font-size: 11px;
+    }
+
+    .left-quote {
+        margin-top: 27px;
+
+        font-size: 19px;
+    }
+
+    .login-form-side {
+        padding: 30px 18px;
+    }
+
+    .registration-card {
+        padding: 25px 20px;
+
+        border-radius: 23px;
+    }
+
+    .form-grid {
+        gap: 14px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 575px) {
+
+    .login-art {
+        min-height: 390px;
+
+        padding: 30px 18px 35px;
+
+        background-position: center;
+    }
+
+    .smartagri-brand {
+        gap: 10px;
+
+        margin-bottom: 28px;
+    }
+
+    .brand-icon {
+        width: 52px;
+        height: 52px;
+
+        border-radius: 15px;
+
+        font-size: 32px;
+    }
+
+    .smartagri-brand h1 {
+        font-size: 30px;
+
+        letter-spacing: -1px;
+    }
+
+    .smartagri-brand p {
+        font-size: 9.5px;
+    }
+
+    .hero-content h2 {
+        font-size: 27px;
+    }
+
+    .feature-list {
+        grid-template-columns: 1fr;
+
+        gap: 10px;
+
+        margin-top: 24px;
+    }
+
+    .feature-item {
+        gap: 11px;
+    }
+
+    .feature-icon {
+        width: 42px;
+        height: 42px;
+        flex-basis: 42px;
+
+        font-size: 17px;
+    }
+
+    .feature-item h5 {
+        font-size: 12px;
+    }
+
+    .feature-item p {
+        font-size: 10px;
+    }
+
+    .left-quote {
+        display: none;
+    }
+
+
+    /* Registration */
+
+    .login-form-side {
+        padding: 20px 12px;
+    }
+
+    .registration-card {
+        padding: 23px 16px;
+
+        border-radius: 20px;
+    }
+
+    .registration-header {
+        gap: 10px;
+
+        margin-bottom: 20px;
+    }
+
+    .registration-icon {
+        width: 50px;
+        height: 50px;
+        flex-basis: 50px;
+
+        font-size: 27px;
+
+        border-radius: 15px;
+    }
+
+    .registration-header h2 {
+        font-size: 24px;
+    }
+
+    .registration-header p {
+        font-size: 11px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+
+        gap: 13px;
+    }
+
+    .full-width {
+        grid-column: auto;
+    }
+
+    .form-label {
+        font-size: 12px;
+    }
+
+    .form-control,
+    .form-select {
+        height: 47px;
+        min-height: 47px;
+
+        font-size: 13px;
+    }
+
+    .register-button {
+        min-height: 49px;
+
+        font-size: 14px;
+    }
+
+    .login-link {
+        margin-top: 18px;
+
+        font-size: 11.5px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .login-art {
+        min-height: 360px;
+    }
+
+    .smartagri-brand h1 {
+        font-size: 27px;
+    }
+
+    .hero-content h2 {
+        font-size: 24px;
+    }
+
+    .registration-card {
+        padding: 20px 13px;
+    }
+
+    .registration-header h2 {
+        font-size: 22px;
+    }
+
+    .registration-header p {
+        font-size: 10px;
+    }
+}

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GST Tax Invoice | SmartAgri</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8faf9;
+            color: #212529;
+        }
+
+        .invoice-sheet {
+            max-width: 850px;
+            margin: 2rem auto;
+            background: #ffffff;
+            border: 1px solid #dce4dd;
+            border-radius: 12px;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+            padding: 2.5rem;
+        }
+
+        .invoice-brand {
+            color: #2e7d32;
+            font-size: 1.75rem;
+            font-weight: 800;
+        }
+
+        .table-invoice th {
+            background-color: #e8f5e9 !important;
+            color: #173f2f;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        .table-invoice td {
+            font-size: 0.88rem;
+            vertical-align: middle;
+        }
+
+        .info-box {
+            background-color: #f9fbf9;
+            border: 1px solid #e5ebe6;
+            border-radius: 8px;
+            padding: 1rem;
+            font-size: 0.88rem;
+        }
+
+        @media print {
+            body {
+                background-color: #ffffff;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .invoice-sheet {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+                margin: 0;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ACTION CONTROLS (HIDDEN WHEN PRINTING) -->
+    <div class="container py-3 no-print" style="max-width: 850px;">
+        <div class="d-flex justify-content-between align-items-center">
+            <button onclick="history.back()" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-arrow-left me-1"></i> Back
+            </button>
+            <div class="d-flex gap-2">
+                <button onclick="window.print()" class="btn btn-outline-dark btn-sm">
+                    <i class="bi bi-printer me-1"></i> Print Invoice
+                </button>
+                <a id="downloadPdfBtn" href="#" target="_blank" class="btn btn-success btn-sm">
+                    <i class="bi bi-file-earmark-pdf me-1"></i> Download PDF
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- INVOICE SHEET -->
+    <div class="container mb-5">
+        <div class="invoice-sheet" id="invoiceSheet">
+            <div class="text-center py-5">
+                <div class="spinner-border text-success" role="status"></div>
+                <p class="mt-2 text-muted">Generating Tax Invoice...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../JS/auth.js"></script>
+    <script src="../JS/config.js"></script>
+    <script src="../JS/api.js"></script>
+    <script src="../JS/utils.js"></script>
+    <script src="../JS/customer-invoice.js"></script>
+    <script src="../JS/i18n.js"></script>
+</body>
+</html>

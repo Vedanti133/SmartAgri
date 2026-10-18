@@ -1,0 +1,1665 @@
+/**
+ * =========================================================
+ * SMARTAGRI DASHBOARD CSS
+ * =========================================================
+ */
+
+
+/* =========================================================
+   GLOBAL DASHBOARD LAYOUT
+========================================================= */
+
+.main {
+
+    margin-left: 260px;
+
+    min-height: 100vh;
+
+    background-color:
+        var(--sa-bg-body, #f4f8f4);
+
+    display: flex;
+
+    flex-direction: column;
+
+    transition:
+        margin-left 0.25s ease;
+}
+
+
+.content {
+
+    padding:
+        1.75rem 2rem;
+
+    flex: 1;
+
+    width: 100%;
+
+    box-sizing: border-box;
+}
+
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar {
+
+    width: 260px;
+
+    height: 100vh;
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    background-color:
+        var(--sa-bg-sidebar, #173f2f);
+
+    color: #ffffff;
+
+    display: flex;
+
+    flex-direction: column;
+
+    z-index: 1040;
+
+    overflow-y: auto;
+
+    box-shadow:
+        2px 0 10px rgba(
+            0,
+            0,
+            0,
+            0.08
+        );
+
+    transition:
+        transform 0.25s ease;
+}
+
+
+.sidebar .brand {
+
+    padding:
+        1.5rem 1.25rem;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.75rem;
+
+    font-size: 1.35rem;
+
+    font-weight: 700;
+
+    color: #ffffff;
+
+    border-bottom:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.08
+        );
+}
+
+
+.sidebar .brand i {
+
+    color: #5cdb95;
+
+    font-size: 1.5rem;
+
+}
+
+
+.sidebar a {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.85rem;
+
+    padding:
+        0.75rem 1.25rem;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            0.78
+        );
+
+    text-decoration: none;
+
+    font-size: 0.92rem;
+
+    font-weight: 500;
+
+    transition:
+        all 0.18s ease;
+
+    border-left:
+        3px solid transparent;
+
+}
+
+
+.sidebar a:hover {
+
+    color: #ffffff;
+
+    background-color:
+        rgba(
+            255,
+            255,
+            255,
+            0.07
+        );
+
+    border-left-color:
+        #5cdb95;
+
+}
+
+
+.sidebar a.active {
+
+    color: #ffffff;
+
+    background-color:
+        rgba(
+            255,
+            255,
+            255,
+            0.12
+        );
+
+    border-left-color:
+        #5cdb95;
+
+    font-weight: 600;
+
+}
+
+
+.sidebar a i {
+
+    font-size: 1.15rem;
+
+    width: 24px;
+
+    min-width: 24px;
+
+    text-align: center;
+
+}
+
+
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.topbar {
+
+    height: 70px;
+
+    background-color:
+        var(--sa-bg-topbar, #ffffff);
+
+    border-bottom:
+        1px solid
+        var(--sa-border-color, #e2ebe4);
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding:
+        0 2rem;
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1020;
+
+}
+
+
+.topbar-title {
+
+    font-size: 1.25rem;
+
+    font-weight: 700;
+
+    color:
+        var(--sa-text-primary, #173f2f);
+
+    white-space: nowrap;
+
+}
+
+
+.topbar-search {
+
+    position: relative;
+
+    max-width: 380px;
+
+    width: 100%;
+
+    margin-left: auto;
+
+}
+
+
+.topbar-search input {
+
+    width: 100%;
+
+    padding:
+        0.5rem
+        1rem
+        0.5rem
+        2.4rem;
+
+    border-radius: 50px;
+
+    border:
+        1px solid
+        var(--sa-border-color, #e2ebe4);
+
+    background-color: #f7faf7;
+
+    font-size: 0.88rem;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease;
+
+}
+
+
+.topbar-search input:focus {
+
+    background-color: #ffffff;
+
+    border-color:
+        var(--sa-primary, #2e7d32);
+
+}
+
+
+.topbar-search .bi-search {
+
+    position: absolute;
+
+    left: 0.85rem;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    color:
+        var(--sa-text-muted, #6c7c74);
+
+}
+
+
+.search-close {
+
+    display: none;
+
+}
+
+
+.user-button {
+
+    background: none;
+
+    border: none;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.65rem;
+
+    color:
+        var(--sa-text-primary, #173f2f);
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    padding:
+        0.4rem 0.75rem;
+
+    border-radius:
+        var(--sa-radius-sm, 6px);
+
+}
+
+
+.user-button:hover {
+
+    background-color: #f4f8f4;
+
+}
+
+
+.mobile-search-button,
+.sidebar-toggle {
+
+    display: none;
+
+    border: none;
+
+    background: transparent;
+
+    color:
+        var(--sa-text-primary, #173f2f);
+
+    font-size: 1.4rem;
+
+}
+
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 25px;
+
+}
+
+
+.hero-text {
+
+    min-width: 0;
+
+}
+
+
+.hero h1 {
+
+    margin: 0 0 6px;
+
+    color:
+        var(--sa-text-primary, #173f2f);
+
+    font-size:
+        clamp(
+            1.5rem,
+            3vw,
+            2.2rem
+        );
+
+    font-weight: 700;
+
+}
+
+
+.hero p {
+
+    margin: 0;
+
+    color:
+        var(--sa-text-muted, #6c7c74);
+
+    font-size: 0.92rem;
+
+}
+
+
+.new-sale-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    padding:
+        10px 18px;
+
+    background:
+        #2e7d32;
+
+    color: white;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    font-weight: 600;
+
+}
+
+
+.new-sale-btn:hover {
+
+    background:
+        #256b29;
+
+    color: white;
+
+}
+
+
+
+/* =========================================================
+   MAIN DASHBOARD STATISTICS
+========================================================= */
+
+.dashboard-stat-grid {
+
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0, 1fr)
+        );
+
+    gap: 18px;
+
+    margin-bottom: 28px;
+
+}
+
+
+/* CARD */
+
+.dashboard-stat-card {
+
+    width: 100%;
+
+    min-width: 0;
+
+    min-height: 125px;
+
+    padding: 20px;
+
+    border:
+        1px solid
+        var(--sa-border-color, #e2ebe4);
+
+    border-radius:
+        12px;
+
+    background: #ffffff;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+.dashboard-stat-card:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 6px 18px
+        rgba(
+            0,
+            0,
+            0,
+            0.09
+        );
+
+}
+
+
+
+/* CARD CONTENT */
+
+.dashboard-stat-card
+.stat-content {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+}
+
+
+.dashboard-stat-card
+.stat-main {
+
+    min-width: 0;
+
+    flex: 1;
+
+}
+
+
+/* TITLE */
+
+.dashboard-stat-card
+.stat-title {
+
+    margin-bottom: 7px;
+
+    color:
+        var(--sa-text-muted, #6c7c74);
+
+    font-size: 0.78rem;
+
+    font-weight: 700;
+
+    line-height: 1.35;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.35px;
+
+    white-space: normal;
+
+    overflow-wrap: anywhere;
+
+}
+
+
+/* VALUE */
+
+.dashboard-stat-card
+.stat-value {
+
+    margin: 0;
+
+    color:
+        var(--sa-text-primary, #173f2f);
+
+    font-size:
+        clamp(
+            1.35rem,
+            2vw,
+            1.8rem
+        );
+
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+}
+
+
+/* DESCRIPTION */
+
+.dashboard-stat-card
+.stat-description {
+
+    margin-top: 5px;
+
+    color: #7a8780;
+
+    font-size: 0.7rem;
+
+    line-height: 1.35;
+
+    white-space: normal;
+
+    overflow-wrap: anywhere;
+
+}
+
+
+
+/* =========================================================
+   STAT ICON
+========================================================= */
+
+.dashboard-stat-card
+.stat-icon {
+
+    width: 50px;
+
+    height: 50px;
+
+    min-width: 50px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        #e8f5e9;
+
+    color:
+        #2e7d32;
+
+    font-size: 1.3rem;
+
+}
+
+
+.stat-icon-warning {
+
+    background:
+        #fff8e1 !important;
+
+    color:
+        #f57c00 !important;
+
+}
+
+
+.stat-icon-sales {
+
+    background:
+        #e8f5e9 !important;
+
+    color:
+        #2e7d32 !important;
+
+}
+
+
+.stat-icon-danger {
+
+    background:
+        #ffebee !important;
+
+    color:
+        #d32f2f !important;
+
+}
+
+
+.stat-icon-monthly {
+
+    background:
+        #e3f2fd !important;
+
+    color:
+        #1976d2 !important;
+
+}
+
+
+.stat-icon-customers {
+
+    background:
+        #f3e5f5 !important;
+
+    color:
+        #7b1fa2 !important;
+
+}
+
+
+.stat-icon-suppliers {
+
+    background:
+        #e0f2f1 !important;
+
+    color:
+        #00796b !important;
+
+}
+
+
+
+/* =========================================================
+   ORDER STATISTICS
+========================================================= */
+
+.order-stat-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            6,
+            minmax(0, 1fr)
+        );
+
+    gap: 15px;
+
+}
+
+
+.order-stat-grid
+.stat {
+
+    min-width: 0;
+
+}
+
+
+
+/* =========================================================
+   CHART CARDS
+========================================================= */
+
+.chart-card {
+
+    padding: 1.5rem;
+
+    border-radius:
+        var(--sa-radius-md, 10px);
+
+}
+
+
+.chart-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 1.25rem;
+
+}
+
+
+.chart-header h5 {
+
+    font-size: 1.1rem;
+
+    font-weight: 700;
+
+    color:
+        var(--sa-text-primary, #173f2f);
+
+    margin-bottom: 0.15rem;
+
+}
+
+
+.chart-header p {
+
+    font-size: 0.84rem;
+
+    color:
+        var(--sa-text-muted, #6c7c74);
+
+    margin-bottom: 0;
+
+}
+
+
+.sales-chart-wrapper {
+
+    height: 320px;
+
+    position: relative;
+
+}
+
+
+.stock-chart-wrapper {
+
+    height: 320px;
+
+    position: relative;
+
+}
+
+
+.stock-chart-center {
+
+    position: absolute;
+
+    top: 50%;
+
+    left: 50%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    text-align: center;
+
+    pointer-events: none;
+
+}
+
+
+.stock-chart-center span {
+
+    display: block;
+
+    color: #7a8780;
+
+    font-size: 0.72rem;
+
+}
+
+
+.stock-chart-center strong {
+
+    display: block;
+
+    color:
+        #173f2f;
+
+    font-size: 1.45rem;
+
+    font-weight: 700;
+
+}
+
+
+.stock-chart-center small {
+
+    color: #7a8780;
+
+    font-size: 0.7rem;
+
+}
+
+
+
+/* =========================================================
+   STOCK LEGEND
+========================================================= */
+
+.stock-legend {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 10px;
+
+    margin-top: 15px;
+
+}
+
+
+.legend-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    font-size: 0.78rem;
+
+}
+
+
+.legend-item strong {
+
+    margin-left: auto;
+
+}
+
+
+.legend-dot {
+
+    width: 9px;
+
+    height: 9px;
+
+    border-radius: 50%;
+
+    display: inline-block;
+
+}
+
+
+.legend-dot.nitrogen {
+
+    background: #2e7d32;
+
+}
+
+
+.legend-dot.npk {
+
+    background: #42a5f5;
+
+}
+
+
+.legend-dot.phosphate {
+
+    background: #ffb300;
+
+}
+
+
+.legend-dot.organic {
+
+    background: #8e24aa;
+
+}
+
+
+
+/* =========================================================
+   CONTENT CARDS
+========================================================= */
+
+.content-card {
+
+    padding: 1.5rem;
+
+    border-radius:
+        var(--sa-radius-md, 10px);
+
+}
+
+
+.card-heading {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 15px;
+
+}
+
+
+.card-heading h5 {
+
+    margin-bottom: 4px;
+
+    color:
+        #173f2f;
+
+    font-weight: 700;
+
+}
+
+
+.card-heading p {
+
+    margin: 0;
+
+    color: #7a8780;
+
+    font-size: 0.82rem;
+
+}
+
+
+.view-all-link {
+
+    color:
+        #2e7d32;
+
+    text-decoration: none;
+
+    font-size: 0.82rem;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+}
+
+
+.alert-heading-icon {
+
+    font-size: 1.4rem;
+
+    color:
+        #f57c00;
+
+}
+
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-responsive {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+}
+
+
+.table {
+
+    min-width: 550px;
+
+}
+
+
+.table th {
+
+    color:
+        #6c7c74;
+
+    font-size: 0.78rem;
+
+    text-transform: uppercase;
+
+    white-space: nowrap;
+
+}
+
+
+.table td {
+
+    font-size: 0.88rem;
+
+    white-space: nowrap;
+
+}
+
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media
+    (min-width: 768px)
+    and
+    (max-width: 1199px) {
+
+
+    .dashboard-stat-grid {
+
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(0, 1fr)
+            );
+
+        gap: 15px;
+
+    }
+
+
+    .order-stat-grid {
+
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(0, 1fr)
+            );
+
+    }
+
+
+    .content {
+
+        padding:
+            1.5rem;
+
+    }
+
+
+}
+
+
+
+/* =========================================================
+   SMALL TABLET
+========================================================= */
+
+@media
+    (min-width: 576px)
+    and
+    (max-width: 767px) {
+
+
+    .dashboard-stat-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+
+    }
+
+
+    .order-stat-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+
+    }
+
+}
+
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media
+    (max-width: 991px) {
+
+
+    .main {
+
+        margin-left: 0;
+
+    }
+
+
+    .sidebar {
+
+        transform:
+            translateX(-100%);
+
+    }
+
+
+    .sidebar.show {
+
+        transform:
+            translateX(0);
+
+    }
+
+
+    .sidebar-toggle {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+    }
+
+
+    .sidebar-overlay {
+
+        display: none;
+
+        position: fixed;
+
+        inset: 0;
+
+        background:
+            rgba(
+                0,
+                0,
+                0,
+                0.45
+            );
+
+        z-index: 1030;
+
+    }
+
+
+    .sidebar-overlay.show {
+
+        display: block;
+
+    }
+
+
+    .topbar {
+
+        padding:
+            0 1rem;
+
+        gap: 10px;
+
+    }
+
+
+    .topbar-title {
+
+        font-size: 1.05rem;
+
+    }
+
+
+    .topbar-search {
+
+        max-width: none;
+
+    }
+
+
+}
+
+
+
+/* =========================================================
+   MOBILE <= 767
+========================================================= */
+
+@media
+    (max-width: 767px) {
+
+
+    .content {
+
+        padding:
+            1.25rem;
+
+    }
+
+
+    .hero {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+    }
+
+
+    .new-sale-btn {
+
+        width: 100%;
+
+    }
+
+
+    .topbar-search {
+
+        display: none;
+
+    }
+
+
+    .topbar-search.active {
+
+        display: block;
+
+        position: absolute;
+
+        left: 15px;
+
+        right: 15px;
+
+        top: 70px;
+
+        max-width: none;
+
+        z-index: 1100;
+
+    }
+
+
+    .mobile-search-button {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+    }
+
+
+    .search-close {
+
+        display: block;
+
+        position: absolute;
+
+        right: 10px;
+
+        top: 50%;
+
+        transform:
+            translateY(-50%);
+
+        border: none;
+
+        background: transparent;
+
+        color: #6c7c74;
+
+    }
+
+
+    .user-arrow {
+
+        display: none;
+
+    }
+
+
+    .user-button span {
+
+        display: none;
+
+    }
+
+
+    .dashboard-stat-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+
+        gap: 12px;
+
+    }
+
+
+    .dashboard-stat-card {
+
+        min-height: 135px;
+
+        padding: 14px;
+
+    }
+
+
+    .dashboard-stat-card
+    .stat-content {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 10px;
+
+    }
+
+
+    .dashboard-stat-card
+    .stat-icon {
+
+        order: -1;
+
+        width: 40px;
+
+        height: 40px;
+
+        min-width: 40px;
+
+        font-size: 1rem;
+
+    }
+
+
+    .dashboard-stat-card
+    .stat-title {
+
+        font-size: 0.7rem;
+
+    }
+
+
+    .dashboard-stat-card
+    .stat-value {
+
+        font-size: 1.25rem;
+
+    }
+
+
+    .dashboard-stat-card
+    .stat-description {
+
+        font-size: 0.66rem;
+
+    }
+
+
+    .order-stat-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+
+        gap: 12px;
+
+    }
+
+
+    .stock-legend {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}
+
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media
+    (max-width: 380px) {
+
+
+    .content {
+
+        padding:
+            1rem;
+
+    }
+
+
+    .dashboard-stat-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .dashboard-stat-card {
+
+        min-height: auto;
+
+    }
+
+
+    .dashboard-stat-card
+    .stat-content {
+
+        flex-direction: row;
+
+        align-items: center;
+
+    }
+
+
+    .dashboard-stat-card
+    .stat-icon {
+
+        order: 0;
+
+    }
+
+
+    .order-stat-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .hero h1 {
+
+        font-size: 1.4rem;
+
+    }
+
+
+}
+
+
+
+/* =========================================================
+   EXTRA SMALL DEVICES
+========================================================= */
+
+@media
+    (max-width: 320px) {
+
+
+    .dashboard-stat-card {
+
+        padding: 12px;
+
+    }
+
+
+    .dashboard-stat-card
+    .stat-title {
+
+        font-size: 0.67rem;
+
+    }
+
+
+    .dashboard-stat-card
+    .stat-description {
+
+        font-size: 0.61rem;
+
+    }
+
+}
+/* =========================================================
+   PAYMENT & LEDGER PAGE FINAL RESPONSIVE FIX
+   ========================================================= */
+
+.main {
+    width: calc(100% - 255px);
+    min-height: 100vh;
+    margin-left: 255px;
+    overflow-x: hidden;
+}
+
+.payment-page-content {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.payment-table-wrapper {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto !important;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+#paymentsTable {
+    min-width: 1100px;
+}
+
+#paymentsTable th,
+#paymentsTable td {
+    white-space: nowrap;
+}
+
+@media (max-width: 991.98px) {
+
+    .main {
+        width: 100%;
+        margin-left: 0;
+    }
+
+}
+
+@media (max-width: 767.98px) {
+
+    .main {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .payment-page-content {
+        padding: 12px !important;
+    }
+
+    .payment-table-wrapper {
+        overflow-x: auto !important;
+    }
+
+    #paymentsTable {
+        min-width: 1100px;
+    }
+
+}

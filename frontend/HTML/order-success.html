@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Order Confirmed | SmartAgri</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- SmartAgri Styles -->
+    <link rel="stylesheet" href="../CSS/style2.css">
+    <link rel="stylesheet" href="../CSS/components.css">
+    <link rel="stylesheet" href="../CSS/ecommerce.css">
+    <link rel="stylesheet" href="../CSS/responsive.css">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f4f7f4;
+            color: #173f2f;
+        }
+        .success-card {
+            background: #ffffff;
+            border: 1px solid #e2ebe4;
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            max-width: 680px;
+            margin: 3rem auto;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(46, 125, 50, 0.08);
+        }
+        .success-icon-wrap {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .order-badge-pill {
+            display: inline-block;
+            background-color: #f1f8f3;
+            border: 1px solid #c8e6c9;
+            color: #1b5e20;
+            font-weight: 700;
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="customer-navbar py-2 px-3 mb-4">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <a class="navbar-brand fs-4" href="customer-catalog.html">
+                <i class="bi bi-flower1"></i>
+                <span>Smart<strong>Agri</strong> Store</span>
+            </a>
+
+            <div class="d-flex align-items-center gap-2 gap-md-3">
+                <a href="customer-catalog.html" class="customer-nav-link">
+                    <i class="bi bi-grid-fill"></i>
+                    <span class="d-none d-md-inline">Catalog</span>
+                </a>
+                <a href="customer-orders.html" class="customer-nav-link">
+                    <i class="bi bi-receipt fs-5"></i>
+                    <span class="d-none d-md-inline">My Orders</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <main class="container px-3">
+        <div class="success-card">
+            <div class="success-icon-wrap">
+                <i class="bi bi-check-circle-fill"></i>
+            </div>
+
+            <h2 class="fw-bold mb-2">Order Confirmed!</h2>
+            <p class="text-muted mb-3">
+                Thank you for ordering with SmartAgri. Your fertilizer requisition has been received and scheduled for dispatch.
+            </p>
+
+            <div>
+                <span class="order-badge-pill" id="displayOrderNumber">Order #...</span>
+            </div>
+
+            <div class="card bg-light border-0 rounded-3 p-3 text-start mb-4">
+                <div class="row g-2 small">
+                    <div class="col-sm-6">
+                        <span class="text-muted">Order Status:</span>
+                        <div class="fw-bold text-success" id="displayOrderStatus">PENDING</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <span class="text-muted">Payment Method & Status:</span>
+                        <div class="fw-bold" id="displayPaymentMethod">Cash on Delivery (Pending)</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <span class="text-muted">Transaction ID:</span>
+                        <div class="fw-bold font-monospace text-secondary small" id="displayTxnId">-</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <span class="text-muted">Total Amount:</span>
+                        <div class="fw-bold text-success fs-6" id="displayGrandTotal">₹0.00</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <span class="text-muted">Total Items:</span>
+                        <div class="fw-bold" id="displayTotalItems">0 items</div>
+                    </div>
+                    <div class="col-12 mt-2 pt-2 border-top">
+                        <span class="text-muted">Delivery To:</span>
+                        <div class="fw-semibold" id="displayAddress">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAYMENT FAILED NOTIFICATION & RETRY -->
+            <div id="paymentFailureBanner" class="alert alert-warning text-start mb-4 p-3 rounded-3" style="display: none;">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <i class="bi bi-exclamation-triangle-fill text-danger fs-5"></i>
+                    <strong class="text-danger">Payment Pending / Verification Failed</strong>
+                </div>
+                <p class="small mb-2 text-muted" id="failureReasonText">
+                    Your order has been created, but the online payment could not be completed or verified. You can retry payment now to confirm immediate dispatch.
+                </p>
+                <button type="button" class="btn btn-warning btn-sm fw-bold px-3" onclick="openRetryPaymentModalOnSuccess()">
+                    <i class="bi bi-arrow-clockwise me-1"></i> Retry Online Payment
+                </button>
+            </div>
+
+            <div class="d-flex flex-wrap justify-content-center gap-2 mt-4">
+                <a id="btnTrackDelivery" href="customer-orders.html" class="btn btn-outline-primary fw-bold px-3 py-2">
+                    <i class="bi bi-truck me-1"></i> Track Consignment
+                </a>
+                <a id="btnViewInvoice" href="#" target="_blank" class="btn btn-outline-secondary fw-semibold px-3 py-2" style="display: none;">
+                    <i class="bi bi-receipt me-1"></i> View GST Invoice
+                </a>
+                <button id="btnHeaderRetry" type="button" class="btn btn-warning fw-bold px-3 py-2" style="display: none;" onclick="openRetryPaymentModalOnSuccess()">
+                    <i class="bi bi-arrow-clockwise me-1"></i> Retry Payment
+                </button>
+                <a href="customer-orders.html" class="btn btn-success fw-bold px-3 py-2">
+                    <i class="bi bi-card-checklist me-1"></i> My Orders
+                </a>
+                <a href="customer-catalog.html" class="btn btn-outline-dark fw-semibold px-3 py-2">
+                    <i class="bi bi-shop me-1"></i> Shop More
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- RETRY PAYMENT MODAL -->
+    <div class="modal fade" id="paymentRetryModal" tabindex="-1" aria-labelledby="paymentRetryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg border-0 rounded-4">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title fw-bold" id="paymentRetryModalLabel">
+                        <i class="bi bi-shield-check me-2"></i>Retry Payment — SmartAgri Gateway
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="alert alert-info py-2 small mb-3">
+                        <i class="bi bi-info-circle me-1"></i>
+                        <strong>Secure Test Gateway:</strong> Retry payment for this order without re-entering cart or duplicating orders.
+                    </div>
+
+                    <div class="bg-light p-3 rounded-3 mb-3 border">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span class="text-muted small">Order Number:</span>
+                            <span class="fw-bold font-monospace" id="retryOrderNum">-</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-1">
+                            <span class="text-muted small">Payable Amount:</span>
+                            <span class="fw-bold text-success" id="retryAmount">₹0.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span class="text-muted small">Previous Txn ID:</span>
+                            <span class="small font-monospace text-muted" id="retryPrevTxnId">-</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small">Payment Simulation Mode (Test Mode)</label>
+                        <div class="d-flex flex-column gap-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="retrySimResult" id="retrySuccess" value="SUCCESS" checked>
+                                <label class="form-check-label fw-semibold text-success" for="retrySuccess">
+                                    <i class="bi bi-check-circle-fill me-1"></i> Simulate Successful Payment (Authorized)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="retrySimResult" id="retryFail" value="FAIL">
+                                <label class="form-check-label fw-bold text-danger" for="retryFail">
+                                    <i class="bi bi-x-circle-fill me-1"></i> Simulate Payment Failure
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="retryMsg"></div>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success fw-bold" id="btnExecuteRetry" onclick="executeRetryPaymentOnSuccess()">
+                        <i class="bi bi-lock-fill me-1"></i> Confirm Test Payment
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast align-items-center text-white bg-success border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body" id="toastMessage">Action completed!</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../JS/config.js"></script>
+    <script src="../JS/utils.js"></script>
+    <script src="../JS/api.js"></script>
+    <script src="../JS/auth.js"></script>
+    <script>
+        let currentOrder = null;
+        let currentPayment = null;
+
+        function showToast(message, type = 'success') {
+            const toastEl = document.getElementById('liveToast');
+            const toastMsg = document.getElementById('toastMessage');
+            if (toastEl && toastMsg) {
+                toastEl.className = `toast align-items-center text-white bg-${type === 'danger' ? 'danger' : 'success'} border-0 shadow`;
+                toastMsg.textContent = message;
+                const toast = new bootstrap.Toast(toastEl, { delay: 3000 });
+                toast.show();
+            }
+        }
+
+        async function loadOrderAndPayment() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('orderId');
+            const orderNumber = urlParams.get('orderNumber');
+            const forceFailed = urlParams.get('paymentFailed') === 'true';
+
+            const cached = sessionStorage.getItem('lastPlacedOrder');
+            if (cached) {
+                try {
+                    currentOrder = JSON.parse(cached);
+                } catch(e) {}
+            }
+
+            if ((!currentOrder || currentOrder.id != orderId) && orderId) {
+                try {
+                    const res = await ApiClient.get(`/orders/${orderId}`);
+                    if (res && res.success && res.data) {
+                        currentOrder = res.data;
+                    }
+                } catch (e) {}
+            }
+
+            if (currentOrder) {
+                // Fetch associated payment details
+                try {
+                    const payRes = await ApiClient.get(`/payments/order/${currentOrder.id}`);
+                    if (payRes && payRes.success && payRes.data) {
+                        currentPayment = payRes.data;
+                    }
+                } catch (e) {}
+
+                renderOrderDetails(forceFailed);
+            } else if (orderNumber) {
+                document.getElementById('displayOrderNumber').textContent = `Order #${orderNumber}`;
+            }
+
+            if (typeof updateCartBadge === 'function') {
+                updateCartBadge();
+            }
+        }
+
+        function renderOrderDetails(forceFailed) {
+            if (!currentOrder) return;
+
+            document.getElementById('displayOrderNumber').textContent = `Order #${currentOrder.orderNumber}`;
+            document.getElementById('displayOrderStatus').textContent = currentOrder.orderStatus || 'PENDING';
+            
+            const payStatus = currentPayment ? currentPayment.paymentStatus : (currentOrder.paymentStatus || 'PENDING');
+            const payMethod = currentPayment ? currentPayment.paymentMethod : (currentOrder.paymentMethod || 'COD');
+            const txnId = currentPayment ? (currentPayment.transactionId || '-') : (currentOrder.paymentTransactionId || '-');
+
+            document.getElementById('displayPaymentMethod').innerHTML = `
+                <span class="badge ${payStatus === 'PAID' || payStatus === 'SUCCESS' ? 'bg-success' : payStatus === 'FAILED' ? 'bg-danger' : 'bg-warning text-dark'}">
+                    ${payMethod} — ${payStatus}
+                </span>
+            `;
+            document.getElementById('displayTxnId').textContent = txnId;
+            document.getElementById('displayGrandTotal').textContent = `₹${(Number(currentOrder.grandTotal) || 0).toFixed(2)}`;
+            document.getElementById('displayTotalItems').textContent = `${currentOrder.totalItemsCount || (currentOrder.items ? currentOrder.items.length : 1)} items`;
+            document.getElementById('displayAddress').textContent = `${currentOrder.recipientName} (+91 ${currentOrder.recipientPhone}) - ${currentOrder.addressLine1}, ${currentOrder.city}, ${currentOrder.state} - ${currentOrder.pincode}`;
+
+            const btnTrack = document.getElementById('btnTrackDelivery');
+            if (btnTrack) {
+                btnTrack.href = `customer-order-tracking.html?orderId=${currentOrder.id}`;
+            }
+
+            const isFailed = forceFailed || payStatus === 'FAILED';
+            const banner = document.getElementById('paymentFailureBanner');
+            const btnHeaderRetry = document.getElementById('btnHeaderRetry');
+            const btnInv = document.getElementById('btnViewInvoice');
+
+            if (isFailed) {
+                if (banner) {
+                    banner.style.display = 'block';
+                    if (currentPayment && currentPayment.failureReason) {
+                        document.getElementById('failureReasonText').textContent = currentPayment.failureReason;
+                    }
+                }
+                if (btnHeaderRetry) btnHeaderRetry.style.display = 'inline-block';
+                if (btnInv) btnInv.style.display = 'none';
+            } else {
+                if (banner) banner.style.display = 'none';
+                if (btnHeaderRetry) btnHeaderRetry.style.display = 'none';
+                if (btnInv) {
+                    btnInv.href = `customer-invoice.html?orderId=${currentOrder.id}`;
+                    btnInv.style.display = 'inline-block';
+                }
+            }
+        }
+
+        function openRetryPaymentModalOnSuccess() {
+            if (!currentOrder) return;
+            document.getElementById('retryOrderNum').textContent = '#' + currentOrder.orderNumber;
+            document.getElementById('retryAmount').textContent = '₹' + (Number(currentOrder.grandTotal) || 0).toFixed(2);
+            document.getElementById('retryPrevTxnId').textContent = currentPayment ? (currentPayment.transactionId || 'None') : '-';
+            document.getElementById('retryMsg').innerHTML = '';
+
+            const modalEl = document.getElementById('paymentRetryModal');
+            const modal = new bootstrap.Modal(modalEl);
+            modal.show();
+        }
+
+        async function executeRetryPaymentOnSuccess() {
+            if (!currentOrder) return;
+            const btn = document.getElementById('btnExecuteRetry');
+            const msg = document.getElementById('retryMsg');
+            const simChoice = document.querySelector('input[name="retrySimResult"]:checked')?.value || 'SUCCESS';
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Processing...';
+            msg.innerHTML = '';
+
+            try {
+                const retryRef = simChoice === 'FAIL' ? 'TEST_SIMULATE_FAIL' : 'TEST_SIMULATE_SUCCESS';
+                const res = await ApiClient.post(`/payments/order/${currentOrder.id}/retry`, {
+                    paymentReference: retryRef
+                });
+
+                if (res && res.success && res.data) {
+                    const retriedPayment = res.data;
+                    const confirmRes = await ApiClient.post(`/payments/${retriedPayment.id}/confirm`, {
+                        gatewayOrderId: retriedPayment.gatewayOrderId,
+                        gatewayPaymentId: 'pay_mock_' + Date.now(),
+                        gatewaySignature: simChoice === 'FAIL' ? 'INVALID_TEST_SIGNATURE' : 'valid_test_signature',
+                        amount: retriedPayment.amount
+                    });
+
+                    if (confirmRes && confirmRes.success) {
+                        currentPayment = confirmRes.data;
+                        currentOrder.paymentStatus = currentPayment.paymentStatus;
+                        showToast('Payment completed successfully!', 'success');
+                    } else {
+                        throw new Error(confirmRes.message || 'Payment simulation failed.');
+                    }
+                } else {
+                    throw new Error(res.message || 'Failed to initialize payment retry.');
+                }
+
+                const modalEl = document.getElementById('paymentRetryModal');
+                const modalInstance = bootstrap.Modal.getInstance(modalEl);
+                if (modalInstance) modalInstance.hide();
+
+                renderOrderDetails(false);
+            } catch (err) {
+                msg.innerHTML = `<div class="alert alert-danger py-2 small mb-0">${err.message}</div>`;
+                showToast(err.message, 'danger');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="bi bi-lock-fill me-1"></i> Confirm Test Payment';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadOrderAndPayment);
+    </script>
+    <script src="../JS/i18n.js"></script>
+</body>
+</html>

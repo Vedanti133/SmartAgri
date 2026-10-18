@@ -1,0 +1,1 @@
+new Chart(document.getElementById('reportChart'),{type:'bar',data:{labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug'],datasets:[{label:'Sales',data:[42000,51000,48000,62000,71000,68000,79000,84000]},{label:'Purchases',data:[30000,36000,33000,44000,47000,45000,52000,56000]}]},options:{responsive:true}});

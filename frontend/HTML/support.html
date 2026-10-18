@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Customer Support & Helpdesk | SmartAgri</title>
+
+    <!-- Bootstrap 5.3.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- SmartAgri Styles -->
+    <link rel="stylesheet" href="../CSS/style2.css">
+    <link rel="stylesheet" href="../CSS/components.css">
+    <link rel="stylesheet" href="../CSS/ecommerce.css">
+    <link rel="stylesheet" href="../CSS/responsive.css">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f4f7f4;
+            color: #173f2f;
+        }
+        .page-header {
+            background: linear-gradient(135deg, #0d5c3a 0%, #1e824c 100%);
+            color: white;
+            padding: 2.5rem 0;
+            margin-bottom: 2rem;
+            border-radius: 0 0 20px 20px;
+        }
+        .ticket-card {
+            background: #ffffff;
+            border: 1px solid #e2ebe4;
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .ticket-card:hover {
+            border-color: #2e7d32;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
+        }
+        .ticket-card.active {
+            border-left: 5px solid #2e7d32;
+            background: #fdfefe;
+        }
+        .chat-bubble {
+            max-width: 80%;
+            padding: 0.85rem 1.15rem;
+            border-radius: 14px;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .chat-bubble-customer {
+            background-color: #e8f5e9;
+            color: #1b5e20;
+            margin-left: auto;
+            border-bottom-right-radius: 2px;
+        }
+        .chat-bubble-admin {
+            background-color: #ffffff;
+            color: #212529;
+            border: 1px solid #e2ebe4;
+            margin-right: auto;
+            border-bottom-left-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="customer-catalog.html">
+                <i class="bi bi-flower1 fs-4"></i> SmartAgri
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="customer-catalog.html"><i class="bi bi-grid"></i> Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="customer-orders.html"><i class="bi bi-box-seam"></i> My Orders</a></li>
+                    <li class="nav-item"><a class="nav-link" href="returns.html"><i class="bi bi-arrow-return-left"></i> Returns & Refunds</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="support.html"><i class="bi bi-headset"></i> Support</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <span id="userGreeting" class="text-white small fw-semibold"></span>
+                    <button class="btn btn-outline-light btn-sm" onclick="logout()"><i class="bi bi-box-arrow-right"></i> Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Banner -->
+    <div class="page-header">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                <div>
+                    <h2 class="fw-bold mb-1"><i class="bi bi-headset me-2"></i>Customer Support & Helpdesk</h2>
+                    <p class="mb-0 text-white-50">Reach our agronomy experts and customer care representatives 24/7</p>
+                </div>
+                <div>
+                    <button class="btn btn-light fw-bold text-success shadow-sm" data-bs-toggle="modal" data-bs-target="#newTicketModal">
+                        <i class="bi bi-pencil-square me-1"></i> Open New Ticket
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container mb-5">
+        <div class="row g-4">
+            <!-- Left: Ticket List -->
+            <div class="col-lg-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0">My Support Tickets (<span id="ticketCount">0</span>)</h5>
+                    <button class="btn btn-sm btn-outline-secondary" onclick="loadMyTickets()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+                </div>
+                <div id="ticketsListContainer" style="max-height: 650px; overflow-y: auto;">
+                    <div class="text-center py-5">
+                        <div class="spinner-border text-success"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Ticket Conversation View -->
+            <div class="col-lg-7">
+                <div class="card border-0 shadow-sm rounded-3" style="min-height: 550px;">
+                    <div class="card-header bg-white border-bottom p-3 d-flex justify-content-between align-items-center" id="conversationHeader">
+                        <span class="text-muted small">Select a ticket from the left to view conversation</span>
+                    </div>
+                    <div class="card-body p-4 bg-light" id="conversationBody" style="height: 420px; overflow-y: auto;">
+                        <div class="text-center py-5 text-muted">
+                            <i class="bi bi-chat-left-dots fs-1"></i>
+                            <p class="mt-2">No ticket selected</p>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white border-top p-3 d-none" id="replyFooter">
+                        <form id="replyForm" onsubmit="submitReply(event)">
+                            <div class="input-group">
+                                <textarea class="form-control" id="replyInput" rows="1" placeholder="Type your reply here..." required></textarea>
+                                <button class="btn btn-success fw-bold px-4" type="submit" id="btnSendReply">
+                                    <i class="bi bi-send me-1"></i> Send
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Open New Ticket Modal -->
+    <div class="modal fade" id="newTicketModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title"><i class="bi bi-headset me-2"></i>Create New Support Ticket</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="newTicketForm" onsubmit="submitNewTicket(event)">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Subject <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="ticketSubject" placeholder="e.g. Delayed Delivery / Product Query / Return Help" required>
+                        </div>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Priority</label>
+                                <select class="form-select" id="ticketPriority">
+                                    <option value="LOW">Low</option>
+                                    <option value="MEDIUM" selected>Medium</option>
+                                    <option value="HIGH">High</option>
+                                    <option value="URGENT">Urgent</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Related Order ID (Optional)</label>
+                                <input type="number" class="form-control" id="ticketOrderId" placeholder="e.g. 101">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Message / Issue Details <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="ticketDescription" rows="4" placeholder="Explain the problem or question in detail..." required></textarea>
+                        </div>
+                        <div class="text-end">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-success fw-bold" id="btnSubmitTicket">Submit Ticket</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../JS/auth.js"></script>
+    <script src="../JS/api.js"></script>
+    <script src="../JS/support.js"></script>
+    <script src="../JS/i18n.js"></script>
+</body>
+</html>

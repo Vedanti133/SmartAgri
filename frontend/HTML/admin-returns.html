@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Returns, Reverse Logistics & Refunds | SmartAgri Admin</title>
+
+    <!-- Bootstrap 5.3.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="../CSS/style4.css">
+    <style>
+        .kpi-card {
+            border-radius: 10px;
+            padding: 1.25rem;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        .nav-tabs .nav-link {
+            font-weight: 600;
+            color: #4b5563;
+        }
+        .nav-tabs .nav-link.active {
+            color: #2e7d32;
+            border-bottom: 3px solid #2e7d32;
+        }
+        .timeline-event-item {
+            position: relative;
+            padding-left: 28px;
+            margin-bottom: 18px;
+        }
+        .timeline-event-item::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 6px;
+            bottom: -18px;
+            width: 2px;
+            background-color: #cbd5e1;
+        }
+        .timeline-event-item:last-child::before {
+            display: none;
+        }
+        .timeline-event-dot {
+            position: absolute;
+            left: 0;
+            top: 4px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #2e7d32;
+            border: 3px solid #e8f5e9;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand fw-bold text-success" href="fulfillment.html">
+                <i class="bi bi-box-seam me-2"></i>SmartAgri Operations
+            </a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="fulfillment.html">Fulfillment</a></li>
+                    <li class="nav-item"><a class="nav-link" href="procurement.html">Procurement</a></li>
+                    <li class="nav-item"><a class="nav-link" href="warehouses.html">Warehouses</a></li>
+                    <li class="nav-item"><a class="nav-link active text-white fw-bold" href="admin-returns.html">Returns & Refunds</a></li>
+                    <li class="nav-item"><a class="nav-link" href="admin-support.html">Customer Service</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="text-white-50 small" id="adminUserGreeting">Admin Staff</span>
+                    <button class="btn btn-outline-danger btn-sm" onclick="logoutAdmin()">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid px-4 py-4">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3 class="fw-bold text-dark mb-1">Returns, Reverse Logistics & Customer Restitution</h3>
+                <p class="text-muted mb-0">Multi-warehouse reverse fulfillment, quality inspection, batch/bin stock restoration & refund processing</p>
+            </div>
+            <div>
+                <button class="btn btn-outline-success" onclick="loadDashboardData()"><i class="bi bi-arrow-clockwise me-1"></i> Refresh Dashboard</button>
+            </div>
+        </div>
+
+        <!-- KPI Summary Cards -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-2">
+                <div class="kpi-card text-center">
+                    <span class="text-muted small fw-semibold text-uppercase">Total Returns</span>
+                    <h3 class="fw-bold my-1 text-dark" id="kpiTotalReturns">0</h3>
+                    <small class="text-muted">All-time count</small>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="kpi-card text-center border-start border-warning border-4">
+                    <span class="text-muted small fw-semibold text-uppercase">Pending Review</span>
+                    <h3 class="fw-bold my-1 text-warning" id="kpiPendingReturns">0</h3>
+                    <small class="text-muted">Need approval</small>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="kpi-card text-center border-start border-primary border-4">
+                    <span class="text-muted small fw-semibold text-uppercase">Reverse Transit</span>
+                    <h3 class="fw-bold my-1 text-primary" id="kpiApprovedReturns">0</h3>
+                    <small class="text-muted">In pickup / transit</small>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="kpi-card text-center border-start border-info border-4">
+                    <span class="text-muted small fw-semibold text-uppercase">At Warehouse</span>
+                    <h3 class="fw-bold my-1 text-info" id="kpiInInspection">0</h3>
+                    <small class="text-muted">Pending inspection</small>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="kpi-card text-center border-start border-success border-4">
+                    <span class="text-muted small fw-semibold text-uppercase">Completed</span>
+                    <h3 class="fw-bold my-1 text-success" id="kpiCompletedReturns">0</h3>
+                    <small class="text-muted">Refunded / Replaced</small>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="kpi-card text-center border-start border-danger border-4">
+                    <span class="text-muted small fw-semibold text-uppercase">Total Refunded</span>
+                    <h3 class="fw-bold my-1 text-danger" id="kpiTotalRefunded">₹0.00</h3>
+                    <small class="text-muted">Disbursed amount</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Workspace Tabs -->
+        <ul class="nav nav-tabs mb-4" id="adminReturnTabs" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active" id="tab-requests" data-bs-toggle="tab" data-bs-target="#content-requests" type="button">
+                    <i class="bi bi-inbox me-1"></i> Return Requests
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="tab-logistics" data-bs-toggle="tab" data-bs-target="#content-logistics" type="button">
+                    <i class="bi bi-truck me-1"></i> Reverse Logistics & Dispatch
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="tab-inspections" data-bs-toggle="tab" data-bs-target="#content-inspections" type="button">
+                    <i class="bi bi-search me-1"></i> Quality Inspection & Restocking
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="tab-refunds" data-bs-toggle="tab" data-bs-target="#content-refunds" type="button">
+                    <i class="bi bi-cash-coin me-1"></i> Refunds Disbursal
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="adminReturnTabsContent">
+            <!-- Tab 1: Requests -->
+            <div class="tab-pane fade show active" id="content-requests">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white py-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <label class="small fw-bold text-muted">Filter Status:</label>
+                            <select class="form-select form-select-sm" id="requestStatusFilter" style="width: 220px;" onchange="loadReturnsTable()">
+                                <option value="">All Statuses</option>
+                                <option value="REQUESTED">REQUESTED</option>
+                                <option value="UNDER_REVIEW">UNDER_REVIEW</option>
+                                <option value="APPROVED">APPROVED</option>
+                                <option value="PICKUP_SCHEDULED">PICKUP_SCHEDULED</option>
+                                <option value="PICKED_UP">PICKED_UP</option>
+                                <option value="IN_TRANSIT">IN_TRANSIT</option>
+                                <option value="RECEIVED">RECEIVED</option>
+                                <option value="REFUND_PENDING">REFUND_PENDING</option>
+                                <option value="REFUNDED">REFUNDED</option>
+                                <option value="REPLACED">REPLACED</option>
+                                <option value="REJECTED">REJECTED</option>
+                                <option value="CANCELLED">CANCELLED</option>
+                            </select>
+                        </div>
+                        <input type="text" class="form-control form-control-sm" id="searchReturnsInput" placeholder="Search Return # or Order #..." style="width: 250px;" onkeyup="filterReturnsTable()">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0" id="returnsTable">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Return #</th>
+                                    <th>Order #</th>
+                                    <th>Customer</th>
+                                    <th>Reason</th>
+                                    <th>Items</th>
+                                    <th>Status</th>
+                                    <th>Requested At</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="returnsTableBody">
+                                <tr><td colspan="8" class="text-center py-4"><div class="spinner-border text-success"></div></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Reverse Logistics -->
+            <div class="tab-pane fade" id="content-logistics">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white py-3">
+                        <h6 class="fw-bold mb-0">Active Reverse Shipments</h6>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Return #</th>
+                                    <th>Tracking #</th>
+                                    <th>Carrier</th>
+                                    <th>Pickup Address</th>
+                                    <th>Destination Warehouse</th>
+                                    <th>Shipment Status</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logisticsTableBody">
+                                <tr><td colspan="7" class="text-center py-4">No active logistics shipments.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 3: Inspection -->
+            <div class="tab-pane fade" id="content-inspections">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white py-3">
+                        <h6 class="fw-bold mb-0">Returns Awaiting Warehouse Inspection & Restock Disposition</h6>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Return #</th>
+                                    <th>Customer</th>
+                                    <th>Warehouse</th>
+                                    <th>Received At</th>
+                                    <th>Items Received</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inspectionsTableBody">
+                                <tr><td colspan="6" class="text-center py-4">No returns awaiting inspection.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 4: Refunds -->
+            <div class="tab-pane fade" id="content-refunds">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                        <h6 class="fw-bold mb-0">Customer Refunds Processing</h6>
+                        <select class="form-select form-select-sm" id="refundStatusFilter" style="width: 200px;" onchange="loadRefundsTable()">
+                            <option value="">All Refunds</option>
+                            <option value="PENDING">PENDING</option>
+                            <option value="PENDING_CUSTOMER_REFUND_DETAILS">PENDING_BANK_DETAILS</option>
+                            <option value="PROCESSED">PROCESSED</option>
+                            <option value="FAILED">FAILED</option>
+                        </select>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Refund #</th>
+                                    <th>Return #</th>
+                                    <th>Order #</th>
+                                    <th>Amount</th>
+                                    <th>Payment Method</th>
+                                    <th>Bank Account Details</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="refundsTableBody">
+                                <tr><td colspan="8" class="text-center py-4"><div class="spinner-border text-success"></div></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Return Details Modal -->
+    <div class="modal fade" id="returnDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title" id="returnDetailTitle">Return Request Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="returnDetailBody"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Approve Return Modal -->
+    <div class="modal fade" id="approveReturnModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Approve Return Request</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="approveReturnForm" onsubmit="submitApproveReturn(event)">
+                        <input type="hidden" id="approveReturnId">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Admin Review Notes</label>
+                            <textarea class="form-control" id="approveAdminNotes" rows="2" placeholder="Approval justification / customer instructions..."></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Designated Receiving Warehouse</label>
+                            <select class="form-select" id="approveWarehouseSelect">
+                                <option value="">-- Select Warehouse (Optional) --</option>
+                            </select>
+                        </div>
+                        <div class="text-end">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-success fw-bold">Confirm Approval</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reject Return Modal -->
+    <div class="modal fade" id="rejectReturnModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Reject Return Request</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="rejectReturnForm" onsubmit="submitRejectReturn(event)">
+                        <input type="hidden" id="rejectReturnId">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Rejection Reason <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="rejectReasonInput" placeholder="e.g. Return window expired / Policy violation / Seal broken" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Internal Admin Notes</label>
+                            <textarea class="form-control" id="rejectAdminNotes" rows="2" placeholder="Details..."></textarea>
+                        </div>
+                        <div class="text-end">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger fw-bold">Confirm Rejection</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schedule Pickup Modal -->
+    <div class="modal fade" id="pickupModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Schedule Reverse Logistics Pickup</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="pickupForm" onsubmit="submitSchedulePickup(event)">
+                        <input type="hidden" id="pickupReturnId">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Logistics Partner / Carrier <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="pickupCarrier" value="SmartAgri Logistics" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Scheduled Pickup Date & Time</label>
+                            <input type="datetime-local" class="form-control" id="pickupTime">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Destination Warehouse</label>
+                            <select class="form-select" id="pickupWarehouseSelect" required></select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Pickup Address</label>
+                            <textarea class="form-control" id="pickupAddressField" rows="2" required></textarea>
+                        </div>
+                        <div class="text-end">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary fw-bold">Dispatch Pickup</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quality Inspection Modal -->
+    <div class="modal fade" id="inspectModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title"><i class="bi bi-shield-check me-2"></i>Quality Inspection & Stock Disposition</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="inspectForm" onsubmit="submitInspection(event)">
+                        <input type="hidden" id="inspectReturnId">
+                        <div class="alert alert-info small py-2 mb-3">
+                            <i class="bi bi-info-circle me-1"></i>
+                            <strong>FEFO / Traceability Notice:</strong> Accepted items will be automatically restocked into their original fulfillment batch and warehouse bin via an audited <code>RETURN_IN</code> transaction. Rejected or Quarantined items will NOT be added to saleable inventory.
+                        </div>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Inspection Result <span class="text-danger">*</span></label>
+                                <select class="form-select" id="inspectResult" required onchange="onInspectionResultChange()">
+                                    <option value="ACCEPTED">ACCEPTED (Restock item to saleable stock)</option>
+                                    <option value="PARTIALLY_ACCEPTED">PARTIALLY ACCEPTED</option>
+                                    <option value="REJECTED">REJECTED (Scrap / Return to customer)</option>
+                                    <option value="QUARANTINED">QUARANTINED (Hold in quarantine bin)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Product Physical Condition <span class="text-danger">*</span></label>
+                                <select class="form-select" id="inspectCondition" required>
+                                    <option value="UNOPENED">UNOPENED (Intact factory seal)</option>
+                                    <option value="OPENED">OPENED (Seal broken, good condition)</option>
+                                    <option value="DAMAGED">DAMAGED (Package leak / physical damage)</option>
+                                    <option value="CONTAMINATED">CONTAMINATED</option>
+                                    <option value="EXPIRED">EXPIRED</option>
+                                    <option value="DEFECTIVE">DEFECTIVE</option>
+                                    <option value="WRONG_ITEM">WRONG ITEM</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Per Item Disposition Table -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Item Inspection & Restock Quantities</label>
+                            <div class="table-responsive border rounded">
+                                <table class="table table-sm mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Product / Original Batch</th>
+                                            <th class="text-center">Received</th>
+                                            <th class="text-center">Accepted (Restock)</th>
+                                            <th class="text-center">Rejected / Quarantine</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="inspectItemsTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Inspector Notes / Observations</label>
+                            <textarea class="form-control" id="inspectNotes" rows="2" placeholder="QC inspection observations..."></textarea>
+                        </div>
+
+                        <div class="text-end">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-warning fw-bold">Finalize Inspection & Restock</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Process Refund Modal -->
+    <div class="modal fade" id="processRefundModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Disburse Customer Refund</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="processRefundForm" onsubmit="submitProcessRefund(event)">
+                        <input type="hidden" id="processRefundId">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Refund Amount (₹) <span class="text-danger">*</span></label>
+                            <input type="number" step="0.01" class="form-control" id="refundAmountInput" required>
+                            <div class="form-text" id="refundAmountHelp">Calculated proportional item value. Cannot exceed order total.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Payment Method</label>
+                            <input type="text" class="form-control" id="refundPaymentMethod" readonly>
+                        </div>
+                        <div class="mb-3" id="refundBankDetailsGroup">
+                            <label class="form-label fw-bold">Customer Bank Account Details</label>
+                            <textarea class="form-control" id="refundBankDetailsInput" rows="2"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Payment Gateway / Bank Reference #</label>
+                            <input type="text" class="form-control" id="refundPaymentRef" placeholder="e.g. UTR-2026-981726 or TXN-REF-109">
+                        </div>
+                        <div class="text-end">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-success fw-bold">Execute Refund</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5.3.3 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../JS/auth.js"></script>
+    <script src="../JS/api.js"></script>
+    <script src="../JS/returns.js"></script>
+    <script src="../JS/i18n.js"></script>
+</body>
+</html>

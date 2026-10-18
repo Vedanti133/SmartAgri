@@ -1,0 +1,208 @@
+/**
+ * SmartAgri Design System - Components & Design Tokens
+ * Provides unified theme colors, buttons, cards, forms, tables, badges, and modals.
+ */
+
+:root {
+    /* Brand Green Palette */
+    --sa-primary: #2e7d32;
+    --sa-primary-dark: #1b5e20;
+    --sa-primary-light: #e8f5e9;
+    --sa-primary-hover: #256628;
+
+    /* Secondary & Accent Colors */
+    --sa-secondary: #3fa3df;
+    --sa-secondary-dark: #2980b9;
+    --sa-accent: #f59b3e;
+    --sa-warning: #f4c34f;
+    --sa-danger: #e74c3c;
+    --sa-info: #17a2b8;
+
+    /* Backgrounds & Neutrals */
+    --sa-bg-body: #f4f8f4;
+    --sa-bg-card: #ffffff;
+    --sa-bg-sidebar: #173f2f;
+    --sa-bg-topbar: #ffffff;
+
+    /* Typography & Borders */
+    --sa-text-primary: #173f2f;
+    --sa-text-body: #2d3e36;
+    --sa-text-muted: #6c7c74;
+    --sa-border-color: #e2ebe4;
+
+    /* Spacing & Radii */
+    --sa-radius-sm: 6px;
+    --sa-radius-md: 10px;
+    --sa-radius-lg: 14px;
+    --sa-radius-pill: 50px;
+
+    /* Shadows */
+    --sa-shadow-xs: 0 1px 3px rgba(23, 63, 47, 0.05);
+    --sa-shadow-sm: 0 2px 8px rgba(23, 63, 47, 0.07);
+    --sa-shadow-md: 0 4px 16px rgba(23, 63, 47, 0.09);
+    --sa-shadow-lg: 0 8px 24px rgba(23, 63, 47, 0.12);
+}
+
+/* =========================================================
+   CARDS & CONTAINERS
+   ========================================================= */
+
+.card {
+    background-color: var(--sa-bg-card);
+    border: 1px solid var(--sa-border-color);
+    border-radius: var(--sa-radius-md);
+    box-shadow: var(--sa-shadow-xs);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: var(--sa-shadow-sm);
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.btn {
+    border-radius: var(--sa-radius-sm);
+    font-weight: 500;
+    padding: 0.5rem 1.1rem;
+    transition: all 0.2s ease;
+}
+
+.btn-success {
+    background-color: var(--sa-primary) !important;
+    border-color: var(--sa-primary) !important;
+    color: #ffffff !important;
+}
+
+.btn-success:hover,
+.btn-success:focus {
+    background-color: var(--sa-primary-dark) !important;
+    border-color: var(--sa-primary-dark) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(46, 125, 50, 0.25);
+}
+
+.btn-outline-success {
+    color: var(--sa-primary) !important;
+    border-color: var(--sa-primary) !important;
+}
+
+.btn-outline-success:hover {
+    background-color: var(--sa-primary) !important;
+    color: #ffffff !important;
+}
+
+/* =========================================================
+   FORMS & INPUTS
+   ========================================================= */
+
+.form-control,
+.form-select {
+    border: 1px solid var(--sa-border-color);
+    border-radius: var(--sa-radius-sm);
+    padding: 0.55rem 0.85rem;
+    color: var(--sa-text-body);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--sa-primary);
+    box-shadow: 0 0 0 0.2rem rgba(46, 125, 50, 0.15);
+    outline: none;
+}
+
+.form-label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--sa-text-primary);
+    margin-bottom: 0.35rem;
+}
+
+/* =========================================================
+   TABLES
+   ========================================================= */
+
+.table {
+    color: var(--sa-text-body);
+    vertical-align: middle;
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background-color: #f7faf7;
+    color: var(--sa-text-muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--sa-border-color);
+    padding: 0.75rem 1rem;
+}
+
+.table tbody td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--sa-border-color);
+    font-size: 0.92rem;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(46, 125, 50, 0.03);
+}
+
+/* =========================================================
+   BADGES
+   ========================================================= */
+
+.badge {
+    border-radius: var(--sa-radius-pill);
+    padding: 0.35em 0.75em;
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+
+.badge.text-bg-success,
+.badge-success {
+    background-color: var(--sa-primary-light) !important;
+    color: var(--sa-primary-dark) !important;
+}
+
+.badge.text-bg-warning,
+.badge-warning {
+    background-color: #fff8e1 !important;
+    color: #b78103 !important;
+}
+
+.badge.text-bg-danger,
+.badge-danger {
+    background-color: #ffebee !important;
+    color: #c62828 !important;
+}
+
+.badge.text-bg-info,
+.badge-info {
+    background-color: #e1f5fe !important;
+    color: #0277bd !important;
+}
+
+/* =========================================================
+   MODALS
+   ========================================================= */
+
+.modal-content {
+    border: none;
+    border-radius: var(--sa-radius-lg);
+    box-shadow: var(--sa-shadow-lg);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--sa-border-color);
+    padding: 1.25rem 1.5rem;
+}
+
+.modal-footer {
+    border-top: 1px solid var(--sa-border-color);
+    padding: 1rem 1.5rem;
+}

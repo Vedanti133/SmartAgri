@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Order Management | SmartAgri Admin</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- SmartAgri Styles -->
+    <link rel="stylesheet" href="../CSS/style2.css">
+    <link rel="stylesheet" href="../CSS/components.css">
+    <link rel="stylesheet" href="../CSS/dashboard.css">
+    <link rel="stylesheet" href="../CSS/responsive.css">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f6f8f6;
+            color: #173f2f;
+        }
+        .status-badge-pending { background-color: #fff3e0; color: #e65100; }
+        .status-badge-confirmed { background-color: #e3f2fd; color: #1565c0; }
+        .status-badge-processing { background-color: #e8eaf6; color: #283593; }
+        .status-badge-packed { background-color: #f3e5f5; color: #6a1b9a; }
+        .status-badge-shipped { background-color: #e0f2f1; color: #00695c; }
+        .status-badge-delivered { background-color: #e8f5e9; color: #2e7d32; }
+        .status-badge-cancelled { background-color: #ffebee; color: #c62828; }
+        .toast-container {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 1090;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ADMIN SIDEBAR -->
+    <aside class="sidebar" id="side">
+        <div class="brand">
+            <i class="bi bi-leaf-fill"></i>
+            <span>SmartAgri</span>
+        </div>
+
+        <a href="admin-dashboard.html">
+            <i class="bi bi-house-door"></i>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="admin-orders.html" class="active">
+            <i class="bi bi-bag-check"></i>
+            <span>Orders & Sales</span>
+        </a>
+
+        <a href="admin-delivery.html">
+            <i class="bi bi-truck"></i>
+            <span>Deliveries & Logistics</span>
+        </a>
+
+        <a href="admin-payments.html">
+            <i class="bi bi-credit-card-2-front"></i>
+            <span>Payments & Ledger</span>
+        </a>
+
+        <a href="fertilizers.html">
+            <i class="bi bi-eyedropper"></i>
+            <span>Fertilizers</span>
+        </a>
+
+        <a href="categories.html">
+            <i class="bi bi-tags"></i>
+            <span>Categories</span>
+        </a>
+
+        <a href="inventory.html">
+            <i class="bi bi-box-seam"></i>
+            <span>Inventory</span>
+        </a>
+
+        <a href="customer-catalog.html">
+            <i class="bi bi-shop"></i>
+            <span>Storefront (Shop)</span>
+        </a>
+
+        <a href="users.html">
+            <i class="bi bi-people"></i>
+            <span>Users</span>
+        </a>
+
+        <a href="settings.html">
+            <i class="bi bi-gear"></i>
+            <span>Settings</span>
+        </a>
+
+        <a href="#" onclick="logout()">
+            <i class="bi bi-box-arrow-right"></i>
+            <span>Logout</span>
+        </a>
+    </aside>
+
+    <!-- MAIN BODY -->
+    <div class="main" id="main">
+        <!-- TOPBAR -->
+        <header class="topbar">
+            <button class="toggle-btn" id="toggleBtn" aria-label="Toggle sidebar">
+                <i class="bi bi-list"></i>
+            </button>
+
+            <div class="search-box">
+                <i class="bi bi-search"></i>
+                <input type="text" id="adminOrderSearchInput" placeholder="Search by Order #, customer name, or city...">
+            </div>
+
+            <div class="user-menu">
+                <div class="user-info">
+                    <span class="name" data-user-name>Administrator</span>
+                    <span class="role badge bg-success-subtle text-success" data-user-role>ADMIN</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- PAGE CONTENT -->
+        <div class="content p-3 p-md-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h3 class="fw-bold mb-1">Customer Orders Management</h3>
+                    <p class="text-muted small mb-0">Track order fulfillment lifecycle from confirmation to dispatch and delivery.</p>
+                </div>
+                <button class="btn btn-outline-success btn-sm" onclick="loadAdminOrders()">
+                    <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+                </button>
+            </div>
+
+            <!-- STATUS TABS -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-2">
+                    <ul class="nav nav-pills gap-1 flex-wrap" id="statusFilterTabs">
+                        <li class="nav-item">
+                            <button class="nav-link active small py-1 px-3" data-status="ALL">All Orders</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link small py-1 px-3" data-status="PENDING">Pending</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link small py-1 px-3" data-status="CONFIRMED">Confirmed</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link small py-1 px-3" data-status="PROCESSING">Processing</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link small py-1 px-3" data-status="PACKED">Packed</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link small py-1 px-3" data-status="SHIPPED">Shipped</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link small py-1 px-3" data-status="DELIVERED">Delivered</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link small py-1 px-3" data-status="CANCELLED">Cancelled</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ORDERS TABLE -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light small text-secondary">
+                                <tr>
+                                    <th class="ps-3">Order Number</th>
+                                    <th>Customer & Phone</th>
+                                    <th>Date Placed</th>
+                                    <th>Items</th>
+                                    <th>Total Amount</th>
+                                    <th>Payment</th>
+                                    <th>Delivery</th>
+                                    <th>Order Status</th>
+                                    <th class="text-end pe-3">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminOrdersTableBody">
+                                <tr>
+                                    <td colspan="9" class="text-center py-5 text-muted">
+                                        <div class="spinner-border spinner-border-sm text-success" role="status"></div>
+                                        <span class="ms-2">Loading orders...</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN ORDER DETAILS MODAL -->
+    <div class="modal fade" id="adminOrderModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-light">
+                    <div>
+                        <h5 class="modal-title fw-bold" id="adminModalOrderNumber">Order Details</h5>
+                        <div class="text-muted small" id="adminModalOrderDate">Date: -</div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4" id="adminModalOrderBody">
+                    <!-- Populated dynamically -->
+                </div>
+                <div class="modal-footer bg-light" id="adminModalOrderFooter">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast-container">
+        <div id="liveToast" class="toast align-items-center text-white bg-success border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body" id="toastMessage">Action completed!</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../JS/config.js"></script>
+    <script src="../JS/utils.js"></script>
+    <script src="../JS/api.js"></script>
+    <script src="../JS/auth.js"></script>
+    <script src="../JS/admin-orders.js"></script>
+    <script src="../JS/i18n.js"></script>
+</body>
+</html>

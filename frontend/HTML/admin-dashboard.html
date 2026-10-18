@@ -1,0 +1,1991 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="SmartAgri Admin Dashboard"
+    >
+
+    <title>Dashboard | SmartAgri</title>
+
+
+    <!-- =====================================================
+         BOOTSTRAP
+    ====================================================== -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         BOOTSTRAP ICONS
+    ====================================================== -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         MAIN SMARTAGRI CSS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="../CSS/style1.css"
+    >
+
+
+    <!-- =====================================================
+         DASHBOARD CSS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="../CSS/dashboard.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside
+    class="sidebar"
+    id="side"
+>
+
+    <!-- BRAND -->
+
+    <div class="brand">
+
+        <i class="bi bi-leaf-fill"></i>
+
+        <span>
+            SmartAgri
+        </span>
+
+    </div>
+
+
+    <!-- DASHBOARD -->
+
+    <a href="admin-dashboard.html">
+
+        <i class="bi bi-house-door"></i>
+
+        <span>
+            Dashboard
+        </span>
+
+    </a>
+
+
+    <!-- ORDERS -->
+
+    <a href="admin-orders.html">
+
+        <i class="bi bi-bag-check"></i>
+
+        <span>
+            Orders &amp; Sales
+        </span>
+
+    </a>
+
+
+    <!-- DELIVERY -->
+
+    <a href="admin-delivery.html">
+
+        <i class="bi bi-truck"></i>
+
+        <span>
+            Deliveries &amp; Logistics
+        </span>
+
+    </a>
+
+
+    <!-- FULFILLMENT -->
+
+    <a href="fulfillment.html">
+
+        <i class="bi bi-box2-heart"></i>
+
+        <span>
+            Fulfillment &amp; Dispatch
+        </span>
+
+    </a>
+
+
+    <!-- PAYMENTS -->
+
+    <a href="admin-payments.html">
+
+        <i class="bi bi-credit-card-2-front"></i>
+
+        <span>
+            Payments &amp; Ledger
+        </span>
+
+    </a>
+
+
+    <!-- FERTILIZERS -->
+
+    <a href="fertilizers.html">
+
+        <i class="bi bi-eyedropper"></i>
+
+        <span>
+            Fertilizers
+        </span>
+
+    </a>
+
+
+    <!-- CATEGORIES -->
+
+    <a href="categories.html">
+
+        <i class="bi bi-tags"></i>
+
+        <span>
+            Categories
+        </span>
+
+    </a>
+
+
+    <!-- INVENTORY -->
+
+    <a href="inventory.html">
+
+        <i class="bi bi-box-seam"></i>
+
+        <span>
+            Inventory
+        </span>
+
+    </a>
+
+
+    <!-- BATCHES -->
+
+    <a href="batches.html">
+
+        <i class="bi bi-calendar2-range"></i>
+
+        <span>
+            Batches &amp; FEFO
+        </span>
+
+    </a>
+
+
+    <!-- PROCUREMENT -->
+
+    <a href="procurement.html">
+
+        <i class="bi bi-cart-check"></i>
+
+        <span>
+            Procurement &amp; GRN
+        </span>
+
+    </a>
+
+
+    <!-- WAREHOUSES -->
+
+    <a href="warehouses.html">
+
+        <i class="bi bi-buildings"></i>
+
+        <span>
+            Warehouses &amp; Bins
+        </span>
+
+    </a>
+
+
+    <!-- TRANSFERS -->
+
+    <a href="transfers.html">
+
+        <i class="bi bi-arrow-left-right"></i>
+
+        <span>
+            Stock Transfers
+        </span>
+
+    </a>
+
+
+    <!-- RETURNS -->
+
+    <a href="admin-returns.html">
+
+        <i class="bi bi-arrow-return-left"></i>
+
+        <span>
+            Returns &amp; Refunds
+        </span>
+
+    </a>
+
+
+    <!-- SUPPORT -->
+
+    <a href="admin-support.html">
+
+        <i class="bi bi-headset"></i>
+
+        <span>
+            Customer Support
+        </span>
+
+    </a>
+
+
+    <!-- STOCK IN -->
+
+    <a href="stock-in.html">
+
+        <i class="bi bi-box-arrow-in-down"></i>
+
+        <span>
+            Stock In
+        </span>
+
+    </a>
+
+
+    <!-- STOCK OUT -->
+
+    <a href="stock-out.html">
+
+        <i class="bi bi-box-arrow-up"></i>
+
+        <span>
+            Stock Out
+        </span>
+
+    </a>
+
+
+    <!-- STOCK ALERTS -->
+
+    <a href="stock-alerts.html">
+
+        <i class="bi bi-exclamation-triangle"></i>
+
+        <span>
+            Stock Alerts
+        </span>
+
+    </a>
+
+
+    <!-- PURCHASES -->
+
+    <a href="purchases.html">
+
+        <i class="bi bi-cart3"></i>
+
+        <span>
+            Purchases
+        </span>
+
+    </a>
+
+
+    <!-- NEW PURCHASE -->
+
+    <a href="new-purchase.html">
+
+        <i class="bi bi-plus-circle"></i>
+
+        <span>
+            New Purchase
+        </span>
+
+    </a>
+
+
+    <!-- SALES -->
+
+    <a href="sales.html">
+
+        <i class="bi bi-currency-rupee"></i>
+
+        <span>
+            Sales
+        </span>
+
+    </a>
+
+
+    <!-- NEW SALE -->
+
+    <a href="new-sale.html">
+
+        <i class="bi bi-plus-circle"></i>
+
+        <span>
+            New Sale
+        </span>
+
+    </a>
+
+
+    <!-- CUSTOMERS -->
+
+    <a href="customers.html">
+
+        <i class="bi bi-people"></i>
+
+        <span>
+            Customers
+        </span>
+
+    </a>
+
+
+    <!-- SUPPLIERS -->
+
+    <a href="suppliers.html">
+
+        <i class="bi bi-truck"></i>
+
+        <span>
+            Suppliers
+        </span>
+
+    </a>
+
+
+    <!-- REPORTS -->
+
+    <a href="reports.html">
+
+        <i class="bi bi-file-earmark-bar-graph"></i>
+
+        <span>
+            Reports
+        </span>
+
+    </a>
+
+
+    <!-- USERS -->
+
+    <a href="users.html">
+
+        <i class="bi bi-person-badge"></i>
+
+        <span>
+            Users
+        </span>
+
+    </a>
+
+
+    <!-- SHOP -->
+
+    <a href="customer-catalog.html">
+
+        <i class="bi bi-shop"></i>
+
+        <span>
+            Storefront (Shop)
+        </span>
+
+    </a>
+
+
+    <!-- SETTINGS -->
+
+    <a href="settings.html">
+
+        <i class="bi bi-gear"></i>
+
+        <span>
+            Settings
+        </span>
+
+    </a>
+
+
+    <!-- PROFILE -->
+
+    <a href="profile.html">
+
+        <i class="bi bi-person-circle"></i>
+
+        <span>
+            Profile
+        </span>
+
+    </a>
+
+
+    <!-- HELP -->
+
+    <a href="about.html">
+
+        <i class="bi bi-question-circle"></i>
+
+        <span>
+            Help
+        </span>
+
+    </a>
+
+
+    <!-- LOGOUT -->
+
+    <a
+        href="#"
+        onclick="logout(); return false;"
+    >
+
+        <i class="bi bi-box-arrow-right"></i>
+
+        <span>
+            Logout
+        </span>
+
+    </a>
+
+</aside>
+
+
+
+<!-- =========================================================
+     MOBILE SIDEBAR OVERLAY
+========================================================= -->
+
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay"
+    onclick="closeSidebar()"
+></div>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="main">
+
+
+    <!-- =====================================================
+         TOPBAR
+    ====================================================== -->
+
+    <header class="topbar">
+
+
+        <!-- MOBILE MENU -->
+
+        <button
+            class="sidebar-toggle"
+            id="sidebarToggle"
+            type="button"
+            onclick="toggleSidebar()"
+            aria-label="Open menu"
+        >
+
+            <i class="bi bi-list"></i>
+
+        </button>
+
+
+        <!-- TITLE -->
+
+        <div class="topbar-title">
+
+            Dashboard
+
+        </div>
+
+
+        <!-- SEARCH -->
+
+        <div
+            class="topbar-search"
+            id="topbarSearch"
+        >
+
+            <i class="bi bi-search"></i>
+
+            <input
+                type="search"
+                id="dashboardSearch"
+                placeholder="Search dashboard..."
+                aria-label="Search dashboard"
+            >
+
+            <button
+                type="button"
+                class="search-close"
+                id="searchClose"
+                aria-label="Close search"
+            >
+
+                <i class="bi bi-x"></i>
+
+            </button>
+
+        </div>
+
+
+        <!-- MOBILE SEARCH -->
+
+        <button
+            type="button"
+            class="mobile-search-button"
+            id="mobileSearchButton"
+            aria-label="Open search"
+        >
+
+            <i class="bi bi-search"></i>
+
+        </button>
+
+
+        <!-- USER MENU -->
+
+        <div class="dropdown">
+
+            <button
+                class="user-button"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+            >
+
+                <i class="bi bi-person-circle"></i>
+
+                <span data-user-name>
+                    Admin
+                </span>
+
+                <i class="bi bi-chevron-down user-arrow"></i>
+
+            </button>
+
+
+            <ul class="dropdown-menu dropdown-menu-end">
+
+                <li>
+
+                    <a
+                        class="dropdown-item"
+                        href="profile.html"
+                    >
+
+                        <i class="bi bi-person me-2"></i>
+
+                        Profile
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <button
+                        class="dropdown-item"
+                        type="button"
+                        onclick="logout()"
+                    >
+
+                        <i class="bi bi-box-arrow-right me-2"></i>
+
+                        Logout
+
+                    </button>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         CONTENT
+    ====================================================== -->
+
+    <section class="content">
+
+
+        <!-- =================================================
+             HERO
+        ================================================== -->
+
+        <section class="hero">
+
+
+            <div class="hero-text">
+
+                <h1>
+                    SmartAgri Dashboard
+                </h1>
+
+                <p>
+                    A single place to manage fertilizer sales,
+                    purchases and inventory.
+                </p>
+
+            </div>
+
+
+            <a
+                href="new-sale.html"
+                class="new-sale-btn"
+            >
+
+                <i class="bi bi-plus-circle"></i>
+
+                <span>
+                    New Sale
+                </span>
+
+            </a>
+
+        </section>
+
+
+
+        <!-- =================================================
+             MAIN STATISTICS
+        ================================================== -->
+
+        <section
+            class="dashboard-stat-grid"
+            id="dashboardStatGrid"
+        >
+
+
+            <!-- TOTAL STOCK -->
+
+            <div
+                class="card stat dashboard-stat-card dashboard-search-item"
+            >
+
+                <div class="stat-content">
+
+                    <div class="stat-main">
+
+                        <div class="stat-title">
+
+                            <i class="bi bi-box-seam me-1"></i>
+
+                            Total Stock
+
+                        </div>
+
+
+                        <div
+                            class="stat-value"
+                            id="statTotalStock"
+                        >
+                            0
+                        </div>
+
+
+                        <div class="stat-description">
+
+                            Available stock quantity
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-icon">
+
+                        <i class="bi bi-box-seam"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TOTAL FERTILIZERS -->
+
+            <div
+                class="card stat dashboard-stat-card dashboard-search-item"
+            >
+
+                <div class="stat-content">
+
+                    <div class="stat-main">
+
+                        <div class="stat-title">
+
+                            <i class="bi bi-droplet me-1"></i>
+
+                            Total Fertilizers
+
+                        </div>
+
+
+                        <div
+                            class="stat-value"
+                            id="statTotalFertilizers"
+                        >
+                            0
+                        </div>
+
+
+                        <div class="stat-description">
+
+                            Fertilizer products
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-icon">
+
+                        <i class="bi bi-droplet"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- LOW STOCK -->
+
+            <div
+                class="card stat dashboard-stat-card dashboard-search-item"
+            >
+
+                <div class="stat-content">
+
+                    <div class="stat-main">
+
+                        <div class="stat-title">
+
+                            <i class="bi bi-exclamation-triangle me-1"></i>
+
+                            Low Stock
+
+                        </div>
+
+
+                        <div
+                            class="stat-value"
+                            id="statLowStock"
+                        >
+                            0
+                        </div>
+
+
+                        <div class="stat-description">
+
+                            Products requiring attention
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-icon stat-icon-warning">
+
+                        <i class="bi bi-exclamation-triangle"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TODAY'S SALES -->
+
+            <div
+                class="card stat dashboard-stat-card dashboard-search-item"
+            >
+
+                <div class="stat-content">
+
+                    <div class="stat-main">
+
+                        <div class="stat-title">
+
+                            <i class="bi bi-currency-rupee me-1"></i>
+
+                            Today's Sales
+
+                        </div>
+
+
+                        <div
+                            class="stat-value"
+                            id="statTodaySales"
+                        >
+                            ₹0
+                        </div>
+
+
+                        <div class="stat-description">
+
+                            Sales generated today
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-icon stat-icon-sales">
+
+                        <i class="bi bi-currency-rupee"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- OUT OF STOCK -->
+
+            <div
+                class="card stat dashboard-stat-card dashboard-search-item"
+            >
+
+                <div class="stat-content">
+
+                    <div class="stat-main">
+
+                        <div class="stat-title">
+
+                            <i class="bi bi-x-circle me-1"></i>
+
+                            Out of Stock
+
+                        </div>
+
+
+                        <div
+                            class="stat-value"
+                            id="statOutOfStock"
+                        >
+                            0
+                        </div>
+
+
+                        <div class="stat-description">
+
+                            Products unavailable
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-icon stat-icon-danger">
+
+                        <i class="bi bi-x-circle"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- MONTHLY SALES -->
+
+            <div
+                class="card stat dashboard-stat-card dashboard-search-item"
+            >
+
+                <div class="stat-content">
+
+                    <div class="stat-main">
+
+                        <div class="stat-title">
+
+                            <i class="bi bi-graph-up me-1"></i>
+
+                            Monthly Sales
+
+                        </div>
+
+
+                        <div
+                            class="stat-value"
+                            id="statMonthlySales"
+                        >
+                            ₹0
+                        </div>
+
+
+                        <div class="stat-description">
+
+                            Sales generated this month
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-icon stat-icon-monthly">
+
+                        <i class="bi bi-graph-up"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CUSTOMERS -->
+
+            <div
+                class="card stat dashboard-stat-card dashboard-search-item"
+            >
+
+                <div class="stat-content">
+
+                    <div class="stat-main">
+
+                        <div class="stat-title">
+
+                            <i class="bi bi-people me-1"></i>
+
+                            Customers
+
+                        </div>
+
+
+                        <div
+                            class="stat-value"
+                            id="statCustomers"
+                        >
+                            0
+                        </div>
+
+
+                        <div class="stat-description">
+
+                            Registered customers
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-icon stat-icon-customers">
+
+                        <i class="bi bi-people"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SUPPLIERS -->
+
+            <div
+                class="card stat dashboard-stat-card dashboard-search-item"
+            >
+
+                <div class="stat-content">
+
+                    <div class="stat-main">
+
+                        <div class="stat-title">
+
+                            <i class="bi bi-truck me-1"></i>
+
+                            Suppliers
+
+                        </div>
+
+
+                        <div
+                            class="stat-value"
+                            id="statSuppliers"
+                        >
+                            0
+                        </div>
+
+
+                        <div class="stat-description">
+
+                            Registered suppliers
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-icon stat-icon-suppliers">
+
+                        <i class="bi bi-truck"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             ORDER LIFECYCLE
+        ================================================== -->
+
+        <div
+            class="d-flex justify-content-between align-items-center mb-3"
+        >
+
+            <h5 class="fw-bold mb-0">
+
+                Customer Order Lifecycle Metrics
+
+            </h5>
+
+
+            <a
+                href="admin-orders.html"
+                class="btn btn-outline-success btn-sm"
+            >
+
+                <i class="bi bi-box-arrow-up-right me-1"></i>
+
+                Manage Orders
+
+            </a>
+
+        </div>
+
+
+
+        <div class="order-stat-grid mb-4">
+
+
+            <!-- TOTAL ORDERS -->
+
+            <div class="card stat border-0 shadow-sm">
+
+                <div class="stat-content">
+
+                    <div>
+
+                        <div class="stat-title">
+                            Total Orders
+                        </div>
+
+                        <div
+                            class="stat-value"
+                            id="statTotalOrders"
+                        >
+                            0
+                        </div>
+
+                    </div>
+
+                    <div class="stat-icon">
+
+                        <i class="bi bi-bag-check"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PENDING -->
+
+            <div class="card stat border-0 shadow-sm">
+
+                <div class="stat-content">
+
+                    <div>
+
+                        <div class="stat-title">
+                            Pending
+                        </div>
+
+                        <div
+                            class="stat-value text-warning"
+                            id="statPendingOrders"
+                        >
+                            0
+                        </div>
+
+                    </div>
+
+                    <div class="stat-icon text-warning">
+
+                        <i class="bi bi-hourglass-split"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PROCESSING -->
+
+            <div class="card stat border-0 shadow-sm">
+
+                <div class="stat-content">
+
+                    <div>
+
+                        <div class="stat-title">
+                            Processing
+                        </div>
+
+                        <div
+                            class="stat-value text-primary"
+                            id="statProcessingOrders"
+                        >
+                            0
+                        </div>
+
+                    </div>
+
+                    <div class="stat-icon text-primary">
+
+                        <i class="bi bi-gear"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SHIPPED -->
+
+            <div class="card stat border-0 shadow-sm">
+
+                <div class="stat-content">
+
+                    <div>
+
+                        <div class="stat-title">
+                            Shipped
+                        </div>
+
+                        <div
+                            class="stat-value text-info"
+                            id="statShippedOrders"
+                        >
+                            0
+                        </div>
+
+                    </div>
+
+                    <div class="stat-icon text-info">
+
+                        <i class="bi bi-truck"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DELIVERED -->
+
+            <div class="card stat border-0 shadow-sm">
+
+                <div class="stat-content">
+
+                    <div>
+
+                        <div class="stat-title">
+                            Delivered
+                        </div>
+
+                        <div
+                            class="stat-value text-success"
+                            id="statDeliveredOrders"
+                        >
+                            0
+                        </div>
+
+                    </div>
+
+                    <div class="stat-icon text-success">
+
+                        <i class="bi bi-check-circle"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CANCELLED -->
+
+            <div class="card stat border-0 shadow-sm">
+
+                <div class="stat-content">
+
+                    <div>
+
+                        <div class="stat-title">
+                            Cancelled
+                        </div>
+
+                        <div
+                            class="stat-value text-danger"
+                            id="statCancelledOrders"
+                        >
+                            0
+                        </div>
+
+                    </div>
+
+                    <div class="stat-icon text-danger">
+
+                        <i class="bi bi-x-circle"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             CHARTS
+        ================================================== -->
+
+        <div class="row g-4 mb-4">
+
+
+            <!-- MONTHLY SALES CHART -->
+
+            <div class="col-lg-8">
+
+                <div class="card chart-card">
+
+                    <div class="chart-header">
+
+                        <div>
+
+                            <h5>
+                                Monthly Sales
+                            </h5>
+
+                            <p>
+                                Sales performance over the year
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="sales-chart-wrapper">
+
+                        <canvas
+                            id="salesChart"
+                        ></canvas>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- STOCK CATEGORY CHART -->
+
+            <div class="col-lg-4">
+
+                <div
+                    class="card chart-card stock-category-card"
+                >
+
+                    <div class="chart-header">
+
+                        <div>
+
+                            <h5>
+                                Stock by Category
+                            </h5>
+
+                            <p>
+                                Current inventory distribution
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="chart-options"
+                            title="Chart options"
+                        >
+
+                            <i class="bi bi-three-dots"></i>
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="stock-chart-wrapper">
+
+                        <canvas
+                            id="stockChart"
+                        ></canvas>
+
+
+                        <div class="stock-chart-center">
+
+                            <span>
+                                Total Stock
+                            </span>
+
+
+                            <strong id="stockChartTotal">
+                                0
+                            </strong>
+
+
+                            <small>
+                                Units
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- LEGEND -->
+
+                    <div class="stock-legend">
+
+
+                        <div class="legend-item">
+
+                            <span class="legend-dot nitrogen"></span>
+
+                            <span>
+                                Nitrogen
+                            </span>
+
+                            <strong>
+                                38%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="legend-item">
+
+                            <span class="legend-dot npk"></span>
+
+                            <span>
+                                NPK
+                            </span>
+
+                            <strong>
+                                27%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="legend-item">
+
+                            <span class="legend-dot phosphate"></span>
+
+                            <span>
+                                Phosphate
+                            </span>
+
+                            <strong>
+                                20%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="legend-item">
+
+                            <span class="legend-dot organic"></span>
+
+                            <span>
+                                Organic
+                            </span>
+
+                            <strong>
+                                15%
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             RECENT SALES
+        ================================================== -->
+
+        <div class="row g-4">
+
+
+            <div class="col-lg-7">
+
+                <div class="card content-card">
+
+                    <div class="card-heading">
+
+                        <div>
+
+                            <h5>
+                                Recent Sales
+                            </h5>
+
+                            <p>
+                                Latest fertilizer transactions
+                            </p>
+
+                        </div>
+
+
+                        <a
+                            href="sales.html"
+                            class="view-all-link"
+                        >
+                            View All
+                        </a>
+
+                    </div>
+
+
+                    <div class="table-responsive">
+
+                        <table class="table align-middle">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Invoice
+                                    </th>
+
+                                    <th>
+                                        Customer
+                                    </th>
+
+                                    <th>
+                                        Amount
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+
+                                <tr>
+
+                                    <td>
+                                        INV-1024
+                                    </td>
+
+                                    <td>
+                                        Raj Farms
+                                    </td>
+
+                                    <td>
+                                        ₹12,400
+                                    </td>
+
+                                    <td>
+
+                                        <span
+                                            class="badge text-bg-success"
+                                        >
+                                            Paid
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        INV-1023
+                                    </td>
+
+                                    <td>
+                                        Green Valley
+                                    </td>
+
+                                    <td>
+                                        ₹8,750
+                                    </td>
+
+                                    <td>
+
+                                        <span
+                                            class="badge text-bg-warning"
+                                        >
+                                            Pending
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        INV-1022
+                                    </td>
+
+                                    <td>
+                                        Shiv Agro
+                                    </td>
+
+                                    <td>
+                                        ₹17,200
+                                    </td>
+
+                                    <td>
+
+                                        <span
+                                            class="badge text-bg-success"
+                                        >
+                                            Paid
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 LOW STOCK ALERTS
+            ================================================== -->
+
+            <div class="col-lg-5">
+
+                <div class="card content-card">
+
+                    <div class="card-heading">
+
+                        <div>
+
+                            <h5>
+                                Low Stock Alerts
+                            </h5>
+
+                            <p>
+                                Items that need attention
+                            </p>
+
+                        </div>
+
+
+                        <i
+                            class="bi bi-bell alert-heading-icon"
+                        ></i>
+
+                    </div>
+
+
+                    <div class="alert alert-warning">
+
+                        <strong>
+                            DAP
+                        </strong>
+
+                        — 20 bags left
+                        (minimum 50)
+
+                    </div>
+
+
+                    <div class="alert alert-danger">
+
+                        <strong>
+                            NPK 20:20:20
+                        </strong>
+
+                        — Out of stock
+
+                    </div>
+
+
+                    <a
+                        href="stock-alerts.html"
+                        class="btn btn-outline-success w-100"
+                    >
+
+                        View Alerts
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+</main>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+
+<!-- Bootstrap -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+></script>
+
+
+<!-- Chart.js -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"
+></script>
+
+
+<!-- SmartAgri scripts -->
+
+<script src="../JS/config.js"></script>
+
+<script src="../JS/api.js"></script>
+
+<script src="../JS/utils.js"></script>
+
+<script src="../JS/auth.js"></script>
+
+<script src="../JS/app.js"></script>
+
+<script src="../JS/dashboard.js"></script>
+
+<script src="../JS/i18n.js"></script>
+
+
+
+<!-- =========================================================
+     DASHBOARD CARD DATA
+========================================================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        /*
+         * The existing dashboard.js handles the
+         * order metrics and charts.
+         *
+         * This section makes the eight main cards
+         * responsive to the available fertilizer data.
+         */
+
+
+        loadMainDashboardStatistics();
+
+    }
+);
+
+
+
+async function loadMainDashboardStatistics() {
+
+    try {
+
+        if (
+            typeof ApiClient === "undefined"
+        ) {
+
+            return;
+
+        }
+
+
+        /*
+         * Load fertilizer information.
+         */
+
+        const fertilizerResponse =
+            await ApiClient.get(
+                "/fertilizers"
+            );
+
+
+        if (
+            fertilizerResponse &&
+            fertilizerResponse.success &&
+            Array.isArray(
+                fertilizerResponse.data
+            )
+        ) {
+
+            const fertilizers =
+                fertilizerResponse.data;
+
+
+            /*
+             * Total fertilizer products
+             */
+
+            setDashboardValue(
+                "statTotalFertilizers",
+                fertilizers.length
+            );
+
+
+            /*
+             * Total stock
+             */
+
+            const totalStock =
+                fertilizers.reduce(
+                    function (
+                        total,
+                        fertilizer
+                    ) {
+
+                        return (
+                            total +
+                            (
+                                Number(
+                                    fertilizer.stock
+                                ) || 0
+                            )
+                        );
+
+                    },
+                    0
+                );
+
+
+            setDashboardValue(
+                "statTotalStock",
+                totalStock.toLocaleString(
+                    "en-IN"
+                )
+            );
+
+
+            /*
+             * Low stock
+             */
+
+            const lowStock =
+                fertilizers.filter(
+                    function (fertilizer) {
+
+                        const stock =
+                            Number(
+                                fertilizer.stock
+                            ) || 0;
+
+                        const minimum =
+                            Number(
+                                fertilizer.minimumStock
+                            ) || 10;
+
+
+                        return (
+                            stock > 0 &&
+                            stock <= minimum
+                        );
+
+                    }
+                ).length;
+
+
+            setDashboardValue(
+                "statLowStock",
+                lowStock
+            );
+
+
+            /*
+             * Out of stock
+             */
+
+            const outOfStock =
+                fertilizers.filter(
+                    function (fertilizer) {
+
+                        return (
+                            (
+                                Number(
+                                    fertilizer.stock
+                                ) || 0
+                            ) <= 0
+                        );
+
+                    }
+                ).length;
+
+
+            setDashboardValue(
+                "statOutOfStock",
+                outOfStock
+            );
+
+
+            /*
+             * Update chart center.
+             */
+
+            setDashboardValue(
+                "stockChartTotal",
+                totalStock.toLocaleString(
+                    "en-IN"
+                )
+            );
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Dashboard statistics error:",
+            error
+        );
+
+    }
+
+}
+
+
+
+/*
+ * Safe dashboard value updater.
+ */
+
+function setDashboardValue(
+    elementId,
+    value
+) {
+
+    const element =
+        document.getElementById(
+            elementId
+        );
+
+
+    if (element) {
+
+        element.textContent =
+            value;
+
+    }
+
+}
+
+</script>
+
+
+</body>
+
+</html>

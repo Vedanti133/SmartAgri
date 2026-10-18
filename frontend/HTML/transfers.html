@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stock Transfers & Inter-Warehouse Movement | SmartAgri</title>
+
+    <!-- Bootstrap 5.3.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="../CSS/style4.css">
+    <style>
+        .transfer-kpi-card {
+            border-radius: 10px;
+            padding: 1.25rem;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .transfer-kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 0.35em 0.65em;
+            font-weight: 600;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+<aside class="sidebar" id="side">
+    <div class="brand">
+        <i class="bi bi-leaf-fill"></i>
+        <span>SmartAgri</span>
+    </div>
+
+    <nav class="sidebar-menu">
+        <a href="admin-dashboard.html">
+            <i class="bi bi-house-door"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="admin-orders.html">
+            <i class="bi bi-bag-check"></i>
+            <span>Orders & Sales</span>
+        </a>
+        <a href="admin-delivery.html">
+            <i class="bi bi-truck"></i>
+            <span>Deliveries & Logistics</span>
+        </a>
+        <a href="fulfillment.html">
+            <i class="bi bi-box2-heart"></i>
+            <span>Fulfillment & Dispatch</span>
+        </a>
+        <a href="admin-payments.html">
+            <i class="bi bi-credit-card"></i>
+            <span>Payments</span>
+        </a>
+        <a href="fertilizers.html">
+            <i class="bi bi-eyedropper"></i>
+            <span>Fertilizers</span>
+        </a>
+        <a href="categories.html">
+            <i class="bi bi-tags"></i>
+            <span>Categories</span>
+        </a>
+        <a href="inventory.html">
+            <i class="bi bi-box-seam"></i>
+            <span>Inventory</span>
+        </a>
+        <a href="batches.html">
+            <i class="bi bi-calendar2-range"></i>
+            <span>Batches & FEFO</span>
+        </a>
+        <a href="procurement.html">
+            <i class="bi bi-cart-check"></i>
+            <span>Procurement & GRN</span>
+        </a>
+        <a href="warehouses.html">
+            <i class="bi bi-buildings"></i>
+            <span>Warehouses & Bins</span>
+        </a>
+        <a href="transfers.html" class="active">
+            <i class="bi bi-arrow-left-right"></i>
+            <span>Stock Transfers</span>
+        </a>
+        <a href="admin-returns.html">
+            <i class="bi bi-arrow-return-left"></i>
+            <span>Returns & Refunds</span>
+        </a>
+        <a href="admin-support.html">
+            <i class="bi bi-headset"></i>
+            <span>Customer Support</span>
+        </a>
+        <a href="stock-alerts.html">
+            <i class="bi bi-exclamation-triangle"></i>
+            <span>Stock Alerts</span>
+        </a>
+        <a href="reports.html">
+            <i class="bi bi-graph-up"></i>
+            <span>Reports</span>
+        </a>
+        <a href="users.html">
+            <i class="bi bi-people"></i>
+            <span>Users</span>
+        </a>
+    </nav>
+</aside>
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+<div class="main-content">
+
+    <!-- Top Navigation -->
+    <header class="top-nav d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center gap-3">
+            <button class="btn btn-outline-secondary d-md-none" id="sidebarToggle">
+                <i class="bi bi-list"></i>
+            </button>
+            <h4 class="mb-0 fw-bold"><i class="bi bi-arrow-left-right text-primary me-2"></i>Stock Transfers & Internal Movement</h4>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <button class="btn btn-outline-primary btn-sm" onclick="loadTransfers(); loadTransfersKPIs();">
+                <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+            </button>
+            <button class="btn btn-primary btn-sm" onclick="openCreateTransferModal()">
+                <i class="bi bi-plus-circle me-1"></i> New Transfer
+            </button>
+            <div class="dropdown">
+                <button class="btn btn-light btn-sm dropdown-toggle d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown">
+                    <i class="bi bi-person-circle fs-5"></i>
+                    <span id="currentUserName">Admin</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                    <li><a class="dropdown-item text-danger" href="javascript:void(0)" onclick="logout()"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Alert Container -->
+    <div id="alertContainer"></div>
+
+    <!-- KPI Summary Row -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3 col-sm-6">
+            <div class="transfer-kpi-card d-flex align-items-center gap-3">
+                <div class="rounded-circle bg-primary bg-opacity-10 p-3 text-primary fs-3">
+                    <i class="bi bi-arrow-left-right"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-0 small text-uppercase fw-semibold">Total Transfers</h6>
+                    <h3 class="mb-0 fw-bold text-dark" id="kpiTotalTransfers">0</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="transfer-kpi-card d-flex align-items-center gap-3">
+                <div class="rounded-circle bg-warning bg-opacity-10 p-3 text-warning fs-3">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-0 small text-uppercase fw-semibold">Pending Approval</h6>
+                    <h3 class="mb-0 fw-bold text-dark" id="kpiPendingApproval">0</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="transfer-kpi-card d-flex align-items-center gap-3">
+                <div class="rounded-circle bg-info bg-opacity-10 p-3 text-info fs-3">
+                    <i class="bi bi-truck"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-0 small text-uppercase fw-semibold">In Transit / Dispatched</h6>
+                    <h3 class="mb-0 fw-bold text-dark" id="kpiDispatched">0</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="transfer-kpi-card d-flex align-items-center gap-3">
+                <div class="rounded-circle bg-success bg-opacity-10 p-3 text-success fs-3">
+                    <i class="bi bi-check2-circle"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-0 small text-uppercase fw-semibold">Completed / Received</h6>
+                    <h3 class="mb-0 fw-bold text-dark" id="kpiCompleted">0</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters & Search Toolbar -->
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold text-muted">Search Transfer #</label>
+                    <input type="text" class="form-control" id="searchTransferInput" placeholder="e.g. TR-2026..." onkeyup="filterTransfers()">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold text-muted">Status</label>
+                    <select class="form-select" id="filterStatusSelect" onchange="filterTransfers()">
+                        <option value="">All Statuses</option>
+                        <option value="DRAFT">Draft</option>
+                        <option value="PENDING_APPROVAL">Pending Approval</option>
+                        <option value="APPROVED">Approved</option>
+                        <option value="DISPATCHED">Dispatched</option>
+                        <option value="PARTIALLY_RECEIVED">Partially Received</option>
+                        <option value="FULLY_RECEIVED">Fully Received</option>
+                        <option value="CANCELLED">Cancelled</option>
+                        <option value="REJECTED">Rejected</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold text-muted">Source Facility</label>
+                    <select class="form-select" id="filterSourceWhSelect" onchange="filterTransfers()">
+                        <option value="">All Warehouses</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold text-muted">Dest Facility</label>
+                    <select class="form-select" id="filterDestWhSelect" onchange="filterTransfers()">
+                        <option value="">All Warehouses</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-outline-secondary w-100" onclick="resetTransferFilters()">
+                        <i class="bi bi-x-circle me-1"></i> Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transfers Table Card -->
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold text-dark"><i class="bi bi-list-check me-2 text-primary"></i>Stock Transfer Orders</h5>
+            <span class="badge bg-light text-muted border px-2 py-1" id="transfersTableCount">0 Transfers</span>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0" id="transfersTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Transfer #</th>
+                            <th>Source Facility</th>
+                            <th>Destination Facility</th>
+                            <th>Items / Quantities</th>
+                            <th>Status</th>
+                            <th>Created / Dispatched</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transfersTableBody">
+                        <tr>
+                            <td colspan="7" class="text-center py-4 text-muted">
+                                <div class="spinner-border spinner-border-sm text-primary me-2" role="status"></div>
+                                Loading stock transfers...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- =====================================================
+     CREATE STOCK TRANSFER MODAL
+===================================================== -->
+<div class="modal fade" id="createTransferModal" tabindex="-1" aria-labelledby="createTransferModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title fw-bold" id="createTransferModalLabel"><i class="bi bi-arrow-left-right me-2"></i>Create New Stock Transfer</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form id="createTransferForm">
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Source Facility (Dispatch From) <span class="text-danger">*</span></label>
+                            <select class="form-select" id="newSourceWh" onchange="onSourceWarehouseChange()" required>
+                                <option value="">-- Select Source Facility --</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Destination Facility (Receive At) <span class="text-danger">*</span></label>
+                            <select class="form-select" id="newDestWh" required>
+                                <option value="">-- Select Destination Facility --</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-semibold">Transfer Reason / Remarks</label>
+                            <input type="text" class="form-control" id="newTransferReason" placeholder="e.g. Inter-warehouse rebalancing, retail restocking, etc.">
+                        </div>
+                    </div>
+
+                    <h6 class="fw-bold border-bottom pb-2 mb-3 text-secondary">
+                        <i class="bi bi-boxes me-2"></i>Transfer Items & Allocation
+                    </h6>
+
+                    <div id="transferItemsContainer">
+                        <!-- Dynamic Item Rows -->
+                    </div>
+
+                    <button type="button" class="btn btn-outline-primary btn-sm mt-2" onclick="addTransferItemRow()">
+                        <i class="bi bi-plus-circle me-1"></i> Add Another Item
+                    </button>
+                </form>
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-outline-primary" onclick="submitTransfer('DRAFT')"><i class="bi bi-file-earmark me-1"></i>Save as Draft</button>
+                <button type="button" class="btn btn-primary" onclick="submitTransfer('PENDING_APPROVAL')"><i class="bi bi-send-check me-1"></i>Submit for Approval</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+     RECEIVE STOCK TRANSFER MODAL
+===================================================== -->
+<div class="modal fade" id="receiveTransferModal" tabindex="-1" aria-labelledby="receiveTransferModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title fw-bold" id="receiveTransferModalLabel"><i class="bi bi-box-arrow-in-down me-2"></i>Receive Transfer: <span id="receiveModalTrNumber" class="text-warning"></span></h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <input type="hidden" id="receiveTransferId">
+                <div class="alert alert-info py-2 small mb-3">
+                    <i class="bi bi-info-circle me-1"></i> Select destination bin/location for each item and enter the accepted received quantity.
+                </div>
+                <div class="table-responsive mb-3">
+                    <table class="table table-bordered align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Product & Batch</th>
+                                <th>Dispatched</th>
+                                <th>Already Rcvd</th>
+                                <th style="width: 130px;">Receive Qty</th>
+                                <th style="width: 220px;">Destination Bin</th>
+                            </tr>
+                        </thead>
+                        <tbody id="receiveItemsTableBody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Receipt Notes / Condition</label>
+                    <input type="text" class="form-control" id="receiveNotes" placeholder="e.g. Received in good condition, seals verified.">
+                </div>
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" onclick="confirmReceiveTransfer()"><i class="bi bi-check2-circle me-1"></i>Confirm Stock Receipt</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+     VIEW TRANSFER DETAILS MODAL
+===================================================== -->
+<div class="modal fade" id="transferDetailsModal" tabindex="-1" aria-labelledby="transferDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title fw-bold" id="transferDetailsModalLabel"><i class="bi bi-file-earmark-text me-2"></i>Transfer Order: <span id="viewTrNumber" class="text-warning"></span></h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded">
+                            <h6 class="fw-bold text-muted small text-uppercase">Source Facility</h6>
+                            <div class="fw-bold" id="viewSourceWh"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded">
+                            <h6 class="fw-bold text-muted small text-uppercase">Destination Facility</h6>
+                            <div class="fw-bold" id="viewDestWh"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="small text-muted">Status</div>
+                        <div id="viewStatusBadge"></div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="small text-muted">Created Date</div>
+                        <div class="fw-semibold" id="viewCreatedDate"></div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="small text-muted">Requested By</div>
+                        <div class="fw-semibold" id="viewRequestedBy"></div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="small text-muted">Approved By</div>
+                        <div class="fw-semibold" id="viewApprovedBy"></div>
+                    </div>
+                </div>
+
+                <h6 class="fw-bold border-bottom pb-2 mb-3 text-secondary"><i class="bi bi-list-ul me-2"></i>Transferred Items</h6>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Product</th>
+                                <th>Batch / Lot #</th>
+                                <th>Source Bin</th>
+                                <th>Requested</th>
+                                <th>Dispatched</th>
+                                <th>Received</th>
+                            </tr>
+                        </thead>
+                        <tbody id="viewItemsTableBody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap 5 JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../JS/auth.js"></script>
+    <script src="../JS/api.js"></script>
+<script src="../JS/transfers.js"></script>
+    <script src="../JS/i18n.js"></script>
+</body>
+</html>

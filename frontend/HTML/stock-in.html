@@ -1,0 +1,1187 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Stock In | SmartAgri</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet"
+    >
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="../CSS/style5.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar" id="side">
+
+        <div class="brand">
+            <i class="bi bi-leaf-fill"></i>
+            <span>SmartAgri</span>
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <a href="admin-dashboard.html">
+                <i class="bi bi-house-door"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="fertilizers.html">
+                <i class="bi bi-eyedropper"></i>
+                <span>Fertilizers</span>
+            </a>
+
+            <a href="categories.html">
+                <i class="bi bi-tags"></i>
+                <span>Categories</span>
+            </a>
+
+            <a href="inventory.html">
+                <i class="bi bi-box-seam"></i>
+                <span>Inventory</span>
+            </a>
+
+            <a href="stock-in.html" class="active">
+                <i class="bi bi-box-arrow-in-down"></i>
+                <span>Stock In</span>
+            </a>
+
+            <a href="stock-out.html">
+                <i class="bi bi-box-arrow-up"></i>
+                <span>Stock Out</span>
+            </a>
+
+            <a href="stock-alerts.html">
+                <i class="bi bi-exclamation-triangle"></i>
+                <span>Stock Alerts</span>
+            </a>
+
+            <a href="purchases.html">
+                <i class="bi bi-cart3"></i>
+                <span>Purchases</span>
+            </a>
+
+            <a href="new-purchase.html">
+                <i class="bi bi-plus-circle"></i>
+                <span>New Purchase</span>
+            </a>
+
+            <a href="sales.html">
+                <i class="bi bi-currency-rupee"></i>
+                <span>Sales</span>
+            </a>
+
+            <a href="new-sale.html">
+                <i class="bi bi-plus-circle"></i>
+                <span>New Sale</span>
+            </a>
+
+            <a href="customers.html">
+                <i class="bi bi-people"></i>
+                <span>Customers</span>
+            </a>
+
+            <a href="suppliers.html">
+                <i class="bi bi-truck"></i>
+                <span>Suppliers</span>
+            </a>
+
+            <a href="reports.html">
+                <i class="bi bi-file-earmark-bar-graph"></i>
+                <span>Reports</span>
+            </a>
+
+            <a href="users.html">
+                <i class="bi bi-person-badge"></i>
+                <span>Users</span>
+            </a>
+
+            <a href="settings.html">
+                <i class="bi bi-gear"></i>
+                <span>Settings</span>
+            </a>
+
+            <a href="profile.html">
+                <i class="bi bi-person-circle"></i>
+                <span>Profile</span>
+            </a>
+
+            <a href="about.html">
+                <i class="bi bi-question-circle"></i>
+                <span>Help</span>
+            </a>
+
+            <a
+                href="#"
+                onclick="logout(); return false;"
+            >
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Logout</span>
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- Mobile sidebar overlay -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+        onclick="closeStockInSidebar()">
+    </div>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="main">
+
+        <!-- =================================================
+             TOPBAR
+        ================================================== -->
+
+        <header class="topbar">
+
+            <!-- Mobile menu -->
+
+            <button
+                type="button"
+                class="mobile-menu-btn"
+                id="menuBtn"
+                aria-label="Open menu"
+            >
+                <i class="bi bi-list"></i>
+            </button>
+
+
+            <!-- Page title -->
+
+            <div class="topbar-title">
+                Stock In
+            </div>
+
+
+            <!-- Search -->
+
+            <div
+                class="stock-top-search"
+                id="stockTopSearch">
+
+                <i class="bi bi-search"></i>
+
+                <input
+                    type="search"
+                    id="stockTopSearchInput"
+                    placeholder="Search stock-in records..."
+                    autocomplete="off"
+                >
+
+                <button
+                    type="button"
+                    id="stockTopSearchClear"
+                    aria-label="Clear search"
+                >
+                    <i class="bi bi-x"></i>
+                </button>
+
+            </div>
+
+
+            <!-- User -->
+
+            <div class="dropdown">
+
+                <button
+                    type="button"
+                    class="user-btn dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                >
+
+                    <i class="bi bi-person-circle"></i>
+
+                    <span data-user-name>
+                        raj
+                    </span>
+
+                </button>
+
+
+                <ul class="dropdown-menu dropdown-menu-end">
+
+                    <li>
+                        <a
+                            class="dropdown-item"
+                            href="profile.html">
+
+                            <i class="bi bi-person me-2"></i>
+                            Profile
+
+                        </a>
+                    </li>
+
+                    <li>
+                        <button
+                            type="button"
+                            class="dropdown-item"
+                            onclick="logout()">
+
+                            <i class="bi bi-box-arrow-right me-2"></i>
+                            Logout
+
+                        </button>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             CONTENT
+        ================================================== -->
+
+        <section class="content stock-in-page">
+
+
+            <!-- =================================================
+                 PAGE HEADER
+            ================================================== -->
+
+            <div class="stock-page-header">
+
+                <div>
+
+                    <h1>
+                        Stock In
+                    </h1>
+
+                    <p>
+                        Record incoming fertilizer stock and update inventory automatically.
+                    </p>
+
+                </div>
+
+
+                <span class="stock-live-badge">
+
+                    <i class="bi bi-circle-fill"></i>
+
+                    Live Inventory
+
+                </span>
+
+            </div>
+
+
+            <!-- =================================================
+                 SUMMARY CARDS
+            ================================================== -->
+
+            <div class="stock-summary">
+
+
+                <!-- Today's Stock In -->
+
+                <div class="stock-summary-card">
+
+                    <div class="stock-summary-icon green">
+
+                        <i class="bi bi-box-arrow-in-down"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Today's Stock In
+                        </span>
+
+                        <strong id="todayStockIn">
+                            0
+                        </strong>
+
+                        <small>
+                            Units received
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- This Month -->
+
+                <div class="stock-summary-card">
+
+                    <div class="stock-summary-icon blue">
+
+                        <i class="bi bi-calendar3"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>
+                            This Month
+                        </span>
+
+                        <strong id="monthStockIn">
+                            0
+                        </strong>
+
+                        <small>
+                            Units received
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Transactions -->
+
+                <div class="stock-summary-card">
+
+                    <div class="stock-summary-icon purple">
+
+                        <i class="bi bi-arrow-repeat"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Transactions
+                        </span>
+
+                        <strong id="transactionCount">
+                            0
+                        </strong>
+
+                        <small>
+                            Stock-in entries
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Current Inventory -->
+
+                <div class="stock-summary-card">
+
+                    <div class="stock-summary-icon orange">
+
+                        <i class="bi bi-box-seam"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Current Inventory
+                        </span>
+
+                        <strong id="currentInventory">
+                            0
+                        </strong>
+
+                        <small>
+                            Total units
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 MAIN STOCK-IN LAYOUT
+            ================================================== -->
+
+            <div class="stock-in-layout">
+
+
+                <!-- =================================================
+                     STOCK-IN FORM
+                ================================================== -->
+
+                <div class="card stock-form-card">
+
+                    <div class="stock-card-header">
+
+                        <div>
+
+                            <h5>
+                                Add Stock
+                            </h5>
+
+                            <p>
+                                Enter incoming fertilizer details.
+                            </p>
+
+                        </div>
+
+
+                        <div class="stock-header-icon">
+
+                            <i class="bi bi-box-arrow-in-down"></i>
+
+                        </div>
+
+                    </div>
+
+
+                    <form id="stockInForm">
+
+                        <!-- PRODUCT INFORMATION -->
+
+                        <div class="form-section">
+
+                            <h6>
+                                Product Information
+                            </h6>
+
+
+                            <div class="row g-3">
+
+
+                                <!-- Fertilizer -->
+
+                                <div class="col-12">
+
+                                    <label
+                                        for="fertilizerSelect"
+                                        class="form-label">
+
+                                        Fertilizer
+
+                                    </label>
+
+
+                                    <select
+                                        id="fertilizerSelect"
+                                        class="form-select"
+                                        required
+                                    >
+
+                                        <option value="">
+                                            Loading fertilizers...
+                                        </option>
+
+                                    </select>
+
+
+                                    <div
+                                        id="currentStockInfo"
+                                        class="current-stock-info">
+
+                                        Select a fertilizer to view current stock.
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Quantity -->
+
+                                <div class="col-md-6">
+
+                                    <label
+                                        for="quantity"
+                                        class="form-label">
+
+                                        Quantity Received
+
+                                    </label>
+
+
+                                    <div class="quantity-input">
+
+                                        <input
+                                            type="number"
+                                            id="quantity"
+                                            class="form-control"
+                                            min="1"
+                                            step="1"
+                                            placeholder="Enter quantity"
+                                            required
+                                        >
+
+
+                                        <span id="unitLabel">
+                                            Units
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Purchase cost -->
+
+                                <div class="col-md-6">
+
+                                    <label
+                                        for="purchasePrice"
+                                        class="form-label">
+
+                                        Purchase Cost / Unit (₹)
+
+                                    </label>
+
+
+                                    <input
+                                        type="number"
+                                        id="purchasePrice"
+                                        class="form-control"
+                                        min="0"
+                                        step="0.01"
+                                        placeholder="Optional"
+                                    >
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- SUPPLIER INFORMATION -->
+
+                        <div class="form-section">
+
+                            <h6>
+                                Supplier & Reference
+                            </h6>
+
+
+                            <div class="row g-3">
+
+
+                                <!-- Supplier -->
+
+                                <div class="col-md-6">
+
+                                    <label
+                                        for="supplier"
+                                        class="form-label">
+
+                                        Supplier
+
+                                    </label>
+
+
+                                    <input
+                                        type="text"
+                                        id="supplier"
+                                        class="form-control"
+                                        placeholder="Enter supplier name"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <!-- Reference -->
+
+                                <div class="col-md-6">
+
+                                    <label
+                                        for="reference"
+                                        class="form-label">
+
+                                        Invoice / Reference Number
+
+                                    </label>
+
+
+                                    <input
+                                        type="text"
+                                        id="reference"
+                                        class="form-control"
+                                        placeholder="e.g. PO-2026-001"
+                                    >
+
+                                </div>
+
+
+                                <!-- Batch -->
+
+                                <div class="col-md-6">
+
+                                    <label
+                                        for="batchNumber"
+                                        class="form-label">
+
+                                        Batch Number
+
+                                    </label>
+
+
+                                    <input
+                                        type="text"
+                                        id="batchNumber"
+                                        class="form-control"
+                                        placeholder="e.g. BATCH-0926"
+                                    >
+
+                                </div>
+
+
+                                <!-- Date -->
+
+                                <div class="col-md-6">
+
+                                    <label
+                                        for="stockInDate"
+                                        class="form-label">
+
+                                        Stock In Date
+
+                                    </label>
+
+
+                                    <input
+                                        type="date"
+                                        id="stockInDate"
+                                        class="form-control"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ADDITIONAL INFORMATION -->
+
+                        <div class="form-section">
+
+                            <h6>
+                                Additional Information
+                            </h6>
+
+
+                            <label
+                                for="remarks"
+                                class="form-label">
+
+                                Remarks
+
+                            </label>
+
+
+                            <textarea
+                                id="remarks"
+                                class="form-control"
+                                rows="3"
+                                placeholder="Enter any additional notes..."
+                            ></textarea>
+
+                        </div>
+
+
+                        <!-- MESSAGE -->
+
+                        <div
+                            id="stockFormMessage"
+                            class="stock-form-message">
+                        </div>
+
+
+                        <!-- STOCK PREVIEW -->
+
+                        <div
+                            id="stockPreview"
+                            class="stock-preview d-none">
+
+                            <div>
+
+                                <span>
+                                    Current Stock
+                                </span>
+
+                                <strong id="previewCurrent">
+                                    0
+                                </strong>
+
+                            </div>
+
+
+                            <i class="bi bi-arrow-right"></i>
+
+
+                            <div>
+
+                                <span>
+                                    After Stock In
+                                </span>
+
+                                <strong id="previewAfter">
+                                    0
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- FORM BUTTONS -->
+
+                        <div class="stock-form-actions">
+
+                            <button
+                                type="button"
+                                class="cancel-stock-btn"
+                                id="clearFormBtn">
+
+                                Clear
+
+                            </button>
+
+
+                            <button
+                                type="submit"
+                                class="save-stock-btn">
+
+                                <i class="bi bi-check-circle"></i>
+
+                                Save Stock In
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+                <!-- =================================================
+                     RIGHT INFORMATION COLUMN
+                ================================================== -->
+
+                <div class="stock-info-column">
+
+
+                    <!-- Automatic update card -->
+
+                    <div class="card stock-info-card">
+
+                        <div class="stock-info-icon">
+
+                            <i class="bi bi-lightbulb"></i>
+
+                        </div>
+
+
+                        <h5>
+                            Automatic Update
+                        </h5>
+
+
+                        <p>
+                            Saving Stock In immediately updates the selected fertilizer and inventory records.
+                        </p>
+
+
+                        <div class="flow-step">
+
+                            <span>
+                                1
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Stock In
+                                </strong>
+
+                                <small>
+                                    Enter received quantity
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="flow-line"></div>
+
+
+                        <div class="flow-step">
+
+                            <span>
+                                2
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Fertilizers
+                                </strong>
+
+                                <small>
+                                    Stock quantity increases
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="flow-line"></div>
+
+
+                        <div class="flow-step">
+
+                            <span>
+                                3
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Categories
+                                </strong>
+
+                                <small>
+                                    Category data updates
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="flow-line"></div>
+
+
+                        <div class="flow-step">
+
+                            <span>
+                                4
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Inventory
+                                </strong>
+
+                                <small>
+                                    Status updates automatically
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Selected product card -->
+
+                    <div
+                        class="card selected-product-card"
+                        id="selectedProductCard">
+
+                        <div class="selected-product-top">
+
+                            <div class="selected-product-icon">
+
+                                <i class="bi bi-box-seam"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Selected Product
+                                </span>
+
+                                <strong id="selectedProductName">
+                                    None
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="selected-product-details">
+
+
+                            <div>
+
+                                <span>
+                                    Category
+                                </span>
+
+                                <strong id="selectedCategory">
+                                    -
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Current Stock
+                                </span>
+
+                                <strong id="selectedStock">
+                                    -
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Reorder Level
+                                </span>
+
+                                <strong id="selectedReorder">
+                                    -
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Unit
+                                </span>
+
+                                <strong id="selectedUnit">
+                                    -
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 RECENT STOCK IN
+            ================================================== -->
+
+            <div class="card recent-stock-card">
+
+
+                <!-- Header -->
+
+                <div class="recent-stock-header">
+
+                    <div>
+
+                        <h5>
+                            Recent Stock In
+                        </h5>
+
+                        <p>
+                            Latest inventory additions.
+                        </p>
+
+                    </div>
+
+
+                    <div class="recent-search">
+
+                        <i class="bi bi-search"></i>
+
+                        <input
+                            type="search"
+                            id="recordSearch"
+                            placeholder="Search records..."
+                            autocomplete="off"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- History table -->
+
+                <div class="table-responsive">
+
+                    <table class="table stock-history-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Date
+                                </th>
+
+                                <th>
+                                    Fertilizer
+                                </th>
+
+                                <th>
+                                    Category
+                                </th>
+
+                                <th>
+                                    Quantity
+                                </th>
+
+                                <th>
+                                    Supplier
+                                </th>
+
+                                <th>
+                                    Reference
+                                </th>
+
+                                <th>
+                                    Stock After
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="stockHistoryBody">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- Empty state -->
+
+                <div
+                    id="stockHistoryEmpty"
+                    class="stock-history-empty">
+
+                    <div>
+
+                        <i class="bi bi-box-arrow-in-down"></i>
+
+                    </div>
+
+
+                    <h6>
+                        No stock-in records yet
+                    </h6>
+
+
+                    <p>
+                        Saved stock-in transactions will appear here.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+    <div
+        class="toast-container position-fixed bottom-0 end-0 p-3">
+
+        <div
+            id="stockToast"
+            class="toast"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true">
+
+            <div class="toast-body">
+
+                <i
+                    class="bi bi-check-circle-fill text-success me-2">
+                </i>
+
+                <span id="stockToastMessage">
+                    Done
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+    <script src="../JS/config.js"></script>
+
+    <script src="../JS/auth.js"></script>
+
+    <script src="../JS/app.js"></script>
+
+    <!-- IMPORTANT:
+         Use stock-in.js here.
+         Do NOT use inventory.js on this page.
+    -->
+
+    <script src="../JS/stock-in.js"></script>
+
+    <script src="../JS/i18n.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,1610 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Payments & Ledger | SmartAgri Admin</title>
+
+    <!-- =====================================================
+         BOOTSTRAP
+    ====================================================== -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- =====================================================
+         BOOTSTRAP ICONS
+    ====================================================== -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet">
+
+    <!-- =====================================================
+         GOOGLE FONT
+    ====================================================== -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- =====================================================
+         SMARTAGRI CSS
+    ====================================================== -->
+    <link rel="stylesheet" href="../CSS/style2.css">
+    <link rel="stylesheet" href="../CSS/components.css">
+    <link rel="stylesheet" href="../CSS/dashboard.css">
+    <link rel="stylesheet" href="../CSS/responsive.css">
+
+    <!-- =====================================================
+         PAYMENT PAGE CSS
+    ====================================================== -->
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ====================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #f3f7f5;
+            color: #173f2f;
+            overflow-x: hidden;
+        }
+
+
+        /* =====================================================
+           MAIN LAYOUT
+        ====================================================== */
+
+        .main {
+            width: calc(100% - 255px);
+            min-height: 100vh;
+            margin-left: 255px;
+            background: #f3f7f5;
+            overflow-x: hidden;
+        }
+
+
+        /* =====================================================
+           TOP BAR
+        ====================================================== */
+
+        .payment-topbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            width: 100%;
+            min-height: 70px;
+
+            background: #ffffff;
+            border-bottom: 1px solid #e3eae5;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 12px 24px;
+
+            gap: 15px;
+        }
+
+        .payment-title-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            min-width: 0;
+        }
+
+        .payment-title-area h4 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 800;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .payment-title-area small {
+            display: block;
+            margin-top: 3px;
+
+            color: #6c757d;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .payment-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            flex-shrink: 0;
+        }
+
+
+        /* =====================================================
+           PAGE CONTENT
+        ====================================================== */
+
+        .payment-page-content {
+            width: 100%;
+            max-width: 100%;
+
+            padding: 24px;
+
+            overflow-x: hidden;
+        }
+
+
+        /* =====================================================
+           METRIC CARDS
+        ====================================================== */
+
+        .payment-metrics {
+            width: 100%;
+        }
+
+        .metric-card {
+            width: 100%;
+            min-width: 0;
+            min-height: 105px;
+
+            background: #ffffff;
+
+            border: 1px solid #e1ebe3;
+            border-radius: 14px;
+
+            padding: 18px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+            display: flex;
+            align-items: center;
+
+            gap: 14px;
+
+            transition:
+                transform 0.15s ease,
+                box-shadow 0.15s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 5px 16px rgba(0, 0, 0, 0.07);
+        }
+
+        .metric-icon {
+            width: 46px;
+            height: 46px;
+
+            min-width: 46px;
+
+            border-radius: 11px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 1.35rem;
+        }
+
+        .metric-content {
+            min-width: 0;
+        }
+
+        .metric-content span {
+            display: block;
+
+            color: #6c757d;
+
+            font-size: 0.78rem;
+            font-weight: 600;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .metric-content h4 {
+            margin: 3px 0 0;
+
+            font-size: 1.35rem;
+            font-weight: 800;
+
+            color: #212529;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+
+        /* =====================================================
+           FILTER CARD
+        ====================================================== */
+
+        .payment-filter-card {
+            width: 100%;
+
+            background: #ffffff;
+
+            border: 1px solid #e1ebe3;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.04);
+
+            overflow: hidden;
+        }
+
+        .filter-card-body {
+            padding: 16px;
+        }
+
+        .filter-section {
+            min-width: 0;
+        }
+
+        .filter-title {
+            color: #6c757d;
+            font-size: 0.78rem;
+            font-weight: 700;
+
+            margin-right: 4px;
+        }
+
+        .filter-chip {
+            border: 1px solid #d0dfd4;
+
+            background: #ffffff;
+
+            color: #2b5338;
+
+            padding: 6px 14px;
+
+            border-radius: 50px;
+
+            font-size: 0.78rem;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                background 0.15s ease,
+                border-color 0.15s ease,
+                color 0.15s ease;
+        }
+
+        .filter-chip:hover {
+            background: #e8f5e9;
+            border-color: #a5d6a7;
+        }
+
+        .filter-chip.active {
+            background: #2e7d32;
+            color: #ffffff;
+            border-color: #2e7d32;
+        }
+
+        .payment-filter-select {
+            min-width: 170px;
+        }
+
+        .payment-search {
+            width: 280px;
+            max-width: 100%;
+        }
+
+
+        /* =====================================================
+           PAYMENT TABLE
+        ====================================================== */
+
+        .payment-table-card {
+            width: 100%;
+            max-width: 100%;
+
+            background: #ffffff;
+
+            border: 1px solid #e1ebe3;
+
+            border-radius: 14px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .payment-table-wrapper {
+            width: 100%;
+            max-width: 100%;
+
+            overflow-x: auto;
+            overflow-y: hidden;
+
+            -webkit-overflow-scrolling: touch;
+        }
+
+        #paymentsTable {
+            width: 100%;
+
+            /*
+             * Minimum width keeps all columns readable.
+             * On small screens the wrapper scrolls horizontally.
+             */
+            min-width: 1100px;
+
+            margin: 0;
+        }
+
+        #paymentsTable th {
+            background: #f7f9f8;
+
+            color: #66736c;
+
+            font-size: 0.75rem;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.02em;
+
+            white-space: nowrap;
+
+            padding: 14px 12px;
+        }
+
+        #paymentsTable td {
+            font-size: 0.82rem;
+
+            padding: 13px 12px;
+
+            vertical-align: middle;
+
+            white-space: nowrap;
+        }
+
+        #paymentsTable tbody tr:hover {
+            background: #f7fbf8;
+        }
+
+
+        /* =====================================================
+           STATUS BADGES
+        ====================================================== */
+
+        .status-badge-paid,
+        .status-badge-success {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-badge-pending,
+        .status-badge-initiated {
+            background: #fff8e1;
+            color: #f57f17;
+        }
+
+        .status-badge-failed,
+        .status-badge-cancelled {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .status-badge-refunded,
+        .status-badge-partially_refunded {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+
+        /* =====================================================
+           EMPTY STATE
+        ====================================================== */
+
+        .no-payments-state {
+            background: #ffffff;
+
+            border: 1px solid #e1ebe3;
+
+            border-radius: 14px;
+
+            padding: 50px 20px;
+        }
+
+
+        /* =====================================================
+           MODALS
+        ====================================================== */
+
+        .payment-modal-content {
+            border: none;
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .payment-modal-content .modal-header {
+            padding: 16px 20px;
+        }
+
+        .payment-modal-content .modal-body {
+            padding: 20px;
+        }
+
+        .payment-detail-box {
+            background: #f7f9f8;
+
+            border-radius: 12px;
+
+            padding: 16px;
+
+            height: 100%;
+        }
+
+        .payment-detail-box h6 {
+            font-weight: 800;
+        }
+
+        .payment-detail-row {
+            margin-bottom: 8px;
+        }
+
+
+        /* =====================================================
+           TOAST
+        ====================================================== */
+
+        .toast-container {
+            position: fixed;
+
+            right: 20px;
+            bottom: 20px;
+
+            z-index: 1090;
+        }
+
+
+        /* =====================================================
+           TABLET
+        ====================================================== */
+
+        @media (max-width: 991.98px) {
+
+            .main {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            .payment-topbar {
+                padding: 12px 18px;
+            }
+
+            .payment-page-content {
+                padding: 18px;
+            }
+
+            .payment-title-area h4 {
+                font-size: 1rem;
+            }
+
+            .payment-title-area small {
+                font-size: 0.72rem;
+            }
+
+            .payment-search {
+                width: 230px;
+            }
+
+            #paymentsTable {
+                min-width: 1050px;
+            }
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ====================================================== */
+
+        @media (max-width: 767.98px) {
+
+            .main {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            .payment-topbar {
+                position: relative;
+
+                padding: 10px 12px;
+
+                align-items: center;
+            }
+
+            .payment-title-area {
+                gap: 8px;
+            }
+
+            .payment-title-area h4 {
+                font-size: 0.9rem;
+            }
+
+            .payment-title-area small {
+                display: none;
+            }
+
+            .payment-header-actions .dropdown {
+                display: none;
+            }
+
+            .payment-header-actions .btn {
+                font-size: 0.75rem;
+            }
+
+            .payment-page-content {
+                padding: 12px;
+            }
+
+            .metric-card {
+                min-height: 90px;
+
+                padding: 13px;
+
+                gap: 10px;
+            }
+
+            .metric-icon {
+                width: 38px;
+                height: 38px;
+
+                min-width: 38px;
+
+                font-size: 1.05rem;
+            }
+
+            .metric-content span {
+                font-size: 0.68rem;
+            }
+
+            .metric-content h4 {
+                font-size: 1rem;
+            }
+
+            .filter-card-body {
+                padding: 12px;
+            }
+
+            .filter-title {
+                width: 100%;
+            }
+
+            .payment-filter-select {
+                width: 100%;
+                min-width: 0;
+            }
+
+            .payment-search {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .payment-table-card {
+                border-radius: 12px;
+            }
+
+            #paymentsTable {
+                min-width: 1050px;
+            }
+
+            #paymentsTable th,
+            #paymentsTable td {
+                font-size: 0.75rem;
+            }
+
+            .toast-container {
+                left: 12px;
+                right: 12px;
+                bottom: 12px;
+            }
+
+            .toast {
+                width: 100%;
+            }
+        }
+
+
+        /* =====================================================
+           VERY SMALL MOBILE
+        ====================================================== */
+
+        @media (max-width: 400px) {
+
+            .payment-page-content {
+                padding: 8px;
+            }
+
+            .payment-topbar {
+                padding: 8px;
+            }
+
+            .payment-title-area h4 {
+                font-size: 0.82rem;
+            }
+
+            .metric-card {
+                padding: 10px;
+            }
+
+            .metric-icon {
+                width: 34px;
+                height: 34px;
+
+                min-width: 34px;
+            }
+
+            .metric-content h4 {
+                font-size: 0.9rem;
+            }
+
+            .filter-chip {
+                padding: 5px 10px;
+                font-size: 0.7rem;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<!-- =========================================================
+     SIDEBAR
+========================================================== -->
+
+<aside class="sidebar" id="side">
+
+    <div class="brand">
+        <i class="bi bi-leaf-fill"></i>
+        <span>SmartAgri</span>
+    </div>
+
+    <a href="admin-dashboard.html">
+        <i class="bi bi-house-door"></i>
+        <span>Dashboard</span>
+    </a>
+
+    <a href="admin-orders.html">
+        <i class="bi bi-bag-check"></i>
+        <span>Orders & Sales</span>
+    </a>
+
+    <a href="admin-delivery.html">
+        <i class="bi bi-truck"></i>
+        <span>Deliveries & Logistics</span>
+    </a>
+
+    <a href="admin-payments.html" class="active">
+        <i class="bi bi-credit-card-2-front"></i>
+        <span>Payments & Ledger</span>
+    </a>
+
+    <a href="fertilizers.html">
+        <i class="bi bi-eyedropper"></i>
+        <span>Fertilizers</span>
+    </a>
+
+    <a href="categories.html">
+        <i class="bi bi-tags"></i>
+        <span>Categories</span>
+    </a>
+
+    <a href="inventory.html">
+        <i class="bi bi-box-seam"></i>
+        <span>Inventory</span>
+    </a>
+
+    <a href="customer-catalog.html">
+        <i class="bi bi-shop"></i>
+        <span>Storefront (Shop)</span>
+    </a>
+
+    <a href="users.html">
+        <i class="bi bi-people"></i>
+        <span>Users</span>
+    </a>
+
+    <a href="settings.html">
+        <i class="bi bi-gear"></i>
+        <span>Settings</span>
+    </a>
+
+    <div class="sidebar-footer mt-auto p-3">
+        <button
+            class="btn btn-outline-danger w-100 btn-sm"
+            onclick="logout()">
+
+            <i class="bi bi-box-arrow-right me-1"></i>
+            Sign Out
+
+        </button>
+    </div>
+
+</aside>
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================== -->
+
+<div class="main">
+
+
+    <!-- =====================================================
+         TOP BAR
+    ====================================================== -->
+
+    <header class="payment-topbar">
+
+        <div class="payment-title-area">
+
+            <button
+                class="btn btn-light d-md-none"
+                id="sidebarToggleBtn"
+                onclick="toggleSidebar()">
+
+                <i class="bi bi-list fs-5"></i>
+
+            </button>
+
+            <div>
+
+                <h4 class="text-success">
+
+                    <i class="bi bi-credit-card-2-front me-2"></i>
+
+                    Payment Management & Gateway Ledger
+
+                </h4>
+
+                <small>
+                    Monitor online gateway transactions,
+                    COD settlements, and refund statuses
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="payment-header-actions">
+
+            <button
+                class="btn btn-outline-success btn-sm"
+                onclick="loadPayments()">
+
+                <i class="bi bi-arrow-clockwise me-1"></i>
+
+                Refresh
+
+            </button>
+
+
+            <div class="dropdown">
+
+                <button
+                    class="btn btn-light dropdown-toggle d-flex align-items-center gap-2"
+                    type="button"
+                    data-bs-toggle="dropdown">
+
+                    <i class="bi bi-person-circle fs-5 text-success"></i>
+
+                    <span
+                        class="fw-semibold small"
+                        data-user-name>
+                        Administrator
+                    </span>
+
+                </button>
+
+
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+
+                    <li>
+
+                        <a
+                            class="dropdown-item"
+                            href="settings.html">
+
+                            <i class="bi bi-gear me-2"></i>
+
+                            Settings
+
+                        </a>
+
+                    </li>
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li>
+
+                        <button
+                            class="dropdown-item text-danger"
+                            onclick="logout()">
+
+                            <i class="bi bi-box-arrow-right me-2"></i>
+
+                            Sign Out
+
+                        </button>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         PAGE CONTENT
+    ====================================================== -->
+
+    <main class="payment-page-content">
+
+
+        <!-- =================================================
+             PAGE HEADING
+        ================================================== -->
+
+        <div class="mb-4">
+
+            <h3 class="fw-bold mb-1">
+                Payments & Ledger
+            </h3>
+
+            <p class="text-muted mb-0 small">
+                View and manage all customer payment transactions.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             METRIC CARDS
+        ================================================== -->
+
+        <div class="row g-3 mb-4 payment-metrics">
+
+
+            <!-- TOTAL REVENUE -->
+
+            <div class="col-12 col-sm-6 col-xl-3">
+
+                <div class="metric-card">
+
+                    <div class="metric-icon bg-success-subtle text-success">
+
+                        <i class="bi bi-currency-rupee"></i>
+
+                    </div>
+
+                    <div class="metric-content">
+
+                        <span>
+                            Total Revenue (Paid)
+                        </span>
+
+                        <h4 id="metricTotalRevenue">
+                            ₹0.00
+                        </h4>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SUCCESSFUL PAYMENTS -->
+
+            <div class="col-12 col-sm-6 col-xl-3">
+
+                <div class="metric-card">
+
+                    <div class="metric-icon bg-primary-subtle text-primary">
+
+                        <i class="bi bi-check2-circle"></i>
+
+                    </div>
+
+                    <div class="metric-content">
+
+                        <span>
+                            Successful Payments
+                        </span>
+
+                        <h4 id="metricSuccessCount">
+                            0
+                        </h4>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PENDING -->
+
+            <div class="col-12 col-sm-6 col-xl-3">
+
+                <div class="metric-card">
+
+                    <div class="metric-icon bg-warning-subtle text-warning">
+
+                        <i class="bi bi-clock-history"></i>
+
+                    </div>
+
+                    <div class="metric-content">
+
+                        <span>
+                            Pending Settlements
+                        </span>
+
+                        <h4 id="metricPendingCount">
+                            0
+                        </h4>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FAILED -->
+
+            <div class="col-12 col-sm-6 col-xl-3">
+
+                <div class="metric-card">
+
+                    <div class="metric-icon bg-danger-subtle text-danger">
+
+                        <i class="bi bi-x-circle"></i>
+
+                    </div>
+
+                    <div class="metric-content">
+
+                        <span>
+                            Failed / Declined
+                        </span>
+
+                        <h4 id="metricFailedCount">
+                            0
+                        </h4>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             FILTER CARD
+        ================================================== -->
+
+        <div class="payment-filter-card mb-4">
+
+            <div class="filter-card-body">
+
+                <div class="row g-3 align-items-center">
+
+
+                    <!-- STATUS FILTER -->
+
+                    <div class="col-12 col-lg-7 filter-section">
+
+                        <div class="d-flex flex-wrap align-items-center gap-2">
+
+                            <span class="filter-title">
+                                Status:
+                            </span>
+
+
+                            <button
+                                type="button"
+                                class="filter-chip active"
+                                data-status="ALL"
+                                onclick="filterByStatus('ALL')">
+
+                                All
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="filter-chip"
+                                data-status="PAID"
+                                onclick="filterByStatus('PAID')">
+
+                                Paid / Success
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="filter-chip"
+                                data-status="PENDING"
+                                onclick="filterByStatus('PENDING')">
+
+                                Pending
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="filter-chip"
+                                data-status="FAILED"
+                                onclick="filterByStatus('FAILED')">
+
+                                Failed
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="filter-chip"
+                                data-status="REFUNDED"
+                                onclick="filterByStatus('REFUNDED')">
+
+                                Refunded
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- METHOD + SEARCH -->
+
+                    <div class="col-12 col-lg-5 filter-section">
+
+                        <div class="d-flex flex-column flex-sm-row justify-content-lg-end gap-2">
+
+                            <select
+                                id="methodFilterSelect"
+                                class="form-select form-select-sm payment-filter-select"
+                                onchange="filterByMethod(this.value)">
+
+                                <option value="ALL">
+                                    All Methods
+                                </option>
+
+                                <option value="COD">
+                                    Cash on Delivery (COD)
+                                </option>
+
+                                <option value="ONLINE">
+                                    Online Gateway
+                                </option>
+
+                            </select>
+
+
+                            <div class="input-group input-group-sm payment-search">
+
+                                <span class="input-group-text bg-white">
+
+                                    <i class="bi bi-search text-muted"></i>
+
+                                </span>
+
+                                <input
+                                    type="text"
+                                    id="paymentSearchInput"
+                                    class="form-control"
+                                    placeholder="Search order, transaction, name..."
+                                    oninput="onSearchInput(this.value)">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PAYMENT LEDGER TABLE
+        ================================================== -->
+
+        <div class="payment-table-card">
+
+            <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+
+                <div>
+
+                    <h5 class="fw-bold mb-1">
+                        Payment Ledger
+                    </h5>
+
+                    <small class="text-muted">
+                        Complete payment transaction history
+                    </small>
+
+                </div>
+
+                <span class="badge bg-success-subtle text-success">
+                    <i class="bi bi-database-check me-1"></i>
+                    Live Data
+                </span>
+
+            </div>
+
+
+            <div class="payment-table-wrapper">
+
+                <table
+                    class="table table-hover align-middle mb-0"
+                    id="paymentsTable">
+
+                    <thead>
+
+                        <tr>
+
+                            <th class="ps-3">
+                                Txn ID / Payment Ref
+                            </th>
+
+                            <th>
+                                Order #
+                            </th>
+
+                            <th>
+                                Customer
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                            <th>
+                                Method
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Gateway / Info
+                            </th>
+
+                            <th>
+                                Date & Time
+                            </th>
+
+                            <th class="text-end pe-3">
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="paymentsTableBody">
+
+                        <tr>
+
+                            <td
+                                colspan="9"
+                                class="text-center py-5">
+
+                                <div
+                                    class="spinner-border spinner-border-sm text-success"
+                                    role="status">
+                                </div>
+
+                                <span class="ms-2 text-muted">
+                                    Loading payments ledger...
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             NO PAYMENTS
+        ================================================== -->
+
+        <div
+            id="noPaymentsState"
+            class="no-payments-state text-center mt-3"
+            style="display:none;">
+
+            <i
+                class="bi bi-credit-card-2-front text-muted"
+                style="font-size:3rem;">
+            </i>
+
+            <h6 class="fw-bold mt-3 text-dark">
+                No payments found
+            </h6>
+
+            <p class="text-muted small mb-0">
+                Try modifying the search keyword or filters.
+            </p>
+
+        </div>
+
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     PAYMENT DETAILS MODAL
+========================================================== -->
+
+<div
+    class="modal fade"
+    id="paymentDetailsModal"
+    tabindex="-1"
+    aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+
+        <div class="modal-content payment-modal-content shadow">
+
+            <div class="modal-header bg-dark text-white">
+
+                <h5 class="modal-title fw-bold">
+
+                    <i class="bi bi-receipt-cutoff me-2"></i>
+
+                    Payment Transaction Audit
+
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close btn-close-white"
+                    data-bs-dismiss="modal"
+                    aria-label="Close">
+                </button>
+
+            </div>
+
+
+            <div
+                class="modal-body"
+                id="paymentDetailsBody">
+
+                <!-- Filled by JavaScript -->
+
+            </div>
+
+
+            <div class="modal-footer bg-light">
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal">
+
+                    Close
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     UPDATE PAYMENT STATUS MODAL
+========================================================== -->
+
+<div
+    class="modal fade"
+    id="updatePaymentModal"
+    tabindex="-1"
+    aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content payment-modal-content shadow">
+
+            <div class="modal-header bg-success text-white">
+
+                <h5 class="modal-title fw-bold">
+
+                    <i class="bi bi-pencil-square me-2"></i>
+
+                    Update Payment Status
+
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close btn-close-white"
+                    data-bs-dismiss="modal"
+                    aria-label="Close">
+                </button>
+
+            </div>
+
+
+            <div class="modal-body">
+
+                <form id="updatePaymentForm">
+
+
+                    <input
+                        type="hidden"
+                        id="editPaymentOrderId">
+
+
+                    <!-- ORDER -->
+
+                    <div class="mb-3">
+
+                        <label
+                            class="form-label fw-bold small">
+
+                            Order Number
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="editPaymentOrderNum"
+                            class="form-control form-control-sm bg-light"
+                            readonly>
+
+                    </div>
+
+
+                    <!-- AMOUNT -->
+
+                    <div class="mb-3">
+
+                        <label
+                            class="form-label fw-bold small">
+
+                            Payable Amount
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="editPaymentAmount"
+                            class="form-control form-control-sm bg-light"
+                            readonly>
+
+                    </div>
+
+
+                    <!-- STATUS -->
+
+                    <div class="mb-3">
+
+                        <label
+                            class="form-label fw-bold small">
+
+                            New Payment Status
+
+                        </label>
+
+                        <select
+                            id="editPaymentStatusSelect"
+                            class="form-select"
+                            required>
+
+                            <option value="PAID">
+                                PAID (Settled / Cash Received)
+                            </option>
+
+                            <option value="SUCCESS">
+                                SUCCESS (Gateway Approved)
+                            </option>
+
+                            <option value="PENDING">
+                                PENDING (Awaiting Cash/Transfer)
+                            </option>
+
+                            <option value="FAILED">
+                                FAILED (Payment Declined / Bounced)
+                            </option>
+
+                            <option value="REFUNDED">
+                                REFUNDED (Full Refund Issued)
+                            </option>
+
+                            <option value="PARTIALLY_REFUNDED">
+                                PARTIALLY_REFUNDED
+                            </option>
+
+                            <option value="CANCELLED">
+                                CANCELLED
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- NOTES -->
+
+                    <div class="mb-3">
+
+                        <label
+                            class="form-label fw-bold small">
+
+                            Failure Reason / Audit Notes
+
+                        </label>
+
+                        <textarea
+                            id="editPaymentNotes"
+                            class="form-control"
+                            rows="3"
+                            placeholder="Enter audit notes if required...">
+                        </textarea>
+
+                    </div>
+
+
+                    <div id="editPaymentMsg"></div>
+
+
+                    <!-- BUTTONS -->
+
+                    <div
+                        class="d-flex justify-content-end gap-2 mt-4">
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+
+                            Cancel
+
+                        </button>
+
+                        <button
+                            type="submit"
+                            class="btn btn-success fw-bold"
+                            id="btnSaveStatus">
+
+                            <i class="bi bi-check2-circle me-1"></i>
+
+                            Save Changes
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     TOAST
+========================================================== -->
+
+<div class="toast-container">
+
+    <div
+        id="liveToast"
+        class="toast align-items-center text-white bg-success border-0 shadow"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true">
+
+        <div class="d-flex">
+
+            <div
+                class="toast-body"
+                id="toastMessage">
+
+                Action completed!
+
+            </div>
+
+            <button
+                type="button"
+                class="btn-close btn-close-white me-2 m-auto"
+                data-bs-dismiss="toast"
+                aria-label="Close">
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================== -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+<script src="../JS/config.js"></script>
+<script src="../JS/utils.js"></script>
+<script src="../JS/api.js"></script>
+<script src="../JS/auth.js"></script>
+<script src="../JS/admin-payments.js"></script>
+<script src="../JS/i18n.js"></script>
+
+</body>
+</html>

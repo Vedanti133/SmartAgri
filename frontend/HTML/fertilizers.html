@@ -1,0 +1,981 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Fertilizers | SmartAgri</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet"
+    >
+
+    <!-- SmartAgri CSS -->
+    <link rel="stylesheet" href="../CSS/style2.css">
+    <link rel="stylesheet" href="../CSS/components.css">
+    <link rel="stylesheet" href="../CSS/ecommerce.css">
+    <link rel="stylesheet" href="../CSS/responsive.css">
+</head>
+
+<body>
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar" id="side">
+
+    <div class="brand">
+        <i class="bi bi-leaf-fill"></i>
+        <span>SmartAgri</span>
+    </div>
+
+    <a href="admin-dashboard.html">
+        <i class="bi bi-house-door"></i>
+        <span>Dashboard</span>
+    </a>
+
+    <a href="admin-orders.html">
+        <i class="bi bi-bag-check"></i>
+        <span>Orders & Sales</span>
+    </a>
+
+    <a href="admin-delivery.html">
+        <i class="bi bi-truck"></i>
+        <span>Deliveries & Logistics</span>
+    </a>
+
+    <a href="fertilizers.html" class="active">
+        <i class="bi bi-eyedropper"></i>
+        <span>Fertilizers</span>
+    </a>
+
+    <a href="categories.html">
+        <i class="bi bi-tags"></i>
+        <span>Categories</span>
+    </a>
+
+    <a href="inventory.html">
+        <i class="bi bi-box-seam"></i>
+        <span>Inventory</span>
+    </a>
+
+    <a href="stock-in.html">
+        <i class="bi bi-box-arrow-in-down"></i>
+        <span>Stock In</span>
+    </a>
+
+    <a href="stock-out.html">
+        <i class="bi bi-box-arrow-up"></i>
+        <span>Stock Out</span>
+    </a>
+
+    <a href="stock-alerts.html">
+        <i class="bi bi-exclamation-triangle"></i>
+        <span>Stock Alerts</span>
+    </a>
+
+    <a href="purchases.html">
+        <i class="bi bi-cart3"></i>
+        <span>Purchases</span>
+    </a>
+
+    <a href="new-purchase.html">
+        <i class="bi bi-plus-circle"></i>
+        <span>New Purchase</span>
+    </a>
+
+    <a href="sales.html">
+        <i class="bi bi-currency-rupee"></i>
+        <span>Sales</span>
+    </a>
+
+    <a href="new-sale.html">
+        <i class="bi bi-plus-circle"></i>
+        <span>New Sale</span>
+    </a>
+
+    <a href="customers.html">
+        <i class="bi bi-people"></i>
+        <span>Customers</span>
+    </a>
+
+    <a href="suppliers.html">
+        <i class="bi bi-truck"></i>
+        <span>Suppliers</span>
+    </a>
+
+    <a href="reports.html">
+        <i class="bi bi-file-earmark-bar-graph"></i>
+        <span>Reports</span>
+    </a>
+
+    <a href="users.html">
+        <i class="bi bi-person-badge"></i>
+        <span>Users</span>
+    </a>
+
+    <a href="customer-catalog.html">
+        <i class="bi bi-shop"></i>
+        <span>Storefront (Shop)</span>
+    </a>
+
+    <a href="settings.html">
+        <i class="bi bi-gear"></i>
+        <span>Settings</span>
+    </a>
+
+    <a href="profile.html">
+        <i class="bi bi-person-circle"></i>
+        <span>Profile</span>
+    </a>
+
+    <a href="about.html">
+        <i class="bi bi-question-circle"></i>
+        <span>Help</span>
+    </a>
+
+    <a href="#" onclick="logout()">
+        <i class="bi bi-box-arrow-right"></i>
+        <span>Logout</span>
+    </a>
+
+</aside>
+
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay"
+    onclick="saCloseSidebar()">
+</div>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+
+        <button
+            type="button"
+            class="sidebar-toggle"
+            onclick="saToggleSidebar()"
+            aria-label="Open menu">
+            <i class="bi bi-list"></i>
+        </button>
+
+        <div class="topbar-title">
+            Fertilizers
+        </div>
+
+        <!-- Desktop Search -->
+        <div class="topbar-search" id="topbarSearch">
+
+            <i class="bi bi-search"></i>
+
+            <input
+                type="search"
+                id="globalSearch"
+                placeholder="Search fertilizers..."
+                autocomplete="off"
+            >
+
+            <button
+                type="button"
+                class="search-close"
+                id="searchClose">
+                <i class="bi bi-x"></i>
+            </button>
+
+        </div>
+
+        <!-- Mobile search -->
+        <button
+            type="button"
+            class="mobile-search-button"
+            id="mobileSearchButton"
+            aria-label="Open search">
+
+            <i class="bi bi-search"></i>
+
+        </button>
+
+
+        <!-- User -->
+        <div class="dropdown">
+
+            <button
+                type="button"
+                class="user-button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false">
+
+                <i class="bi bi-person-circle"></i>
+
+                <span data-user-name>
+                    Admin
+                </span>
+
+                <i class="bi bi-chevron-down user-arrow"></i>
+
+            </button>
+
+            <ul class="dropdown-menu dropdown-menu-end">
+
+                <li>
+                    <a
+                        class="dropdown-item"
+                        href="profile.html">
+                        <i class="bi bi-person me-2"></i>
+                        Profile
+                    </a>
+                </li>
+
+                <li>
+                    <button
+                        type="button"
+                        class="dropdown-item"
+                        onclick="logout()">
+                        <i class="bi bi-box-arrow-right me-2"></i>
+                        Logout
+                    </button>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTENT -->
+    <section class="content fertilizer-page">
+
+        <!-- PAGE HEADER -->
+        <div class="page-heading">
+
+            <div>
+                <h2>
+                    Fertilizer Management
+                </h2>
+
+                <p>
+                    Manage products, pricing, stock and reorder thresholds.
+                </p>
+            </div>
+
+            <button
+                type="button"
+                class="add-fertilizer-btn"
+                onclick="openAddFertilizerModal()">
+
+                <i class="bi bi-plus-circle"></i>
+                <span>Add Fertilizer</span>
+
+            </button>
+
+        </div>
+
+
+        <!-- SUMMARY -->
+        <div class="fertilizer-summary">
+
+            <div class="summary-card">
+                <div class="summary-icon">
+                    <i class="bi bi-box-seam"></i>
+                </div>
+
+                <div>
+                    <span>Total Products</span>
+                    <strong id="summaryTotal">50</strong>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-icon available">
+                    <i class="bi bi-check-circle"></i>
+                </div>
+
+                <div>
+                    <span>Available</span>
+                    <strong id="summaryAvailable">0</strong>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-icon warning">
+                    <i class="bi bi-exclamation-triangle"></i>
+                </div>
+
+                <div>
+                    <span>Low Stock</span>
+                    <strong id="summaryLow">0</strong>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-icon danger">
+                    <i class="bi bi-x-circle"></i>
+                </div>
+
+                <div>
+                    <span>Out of Stock</span>
+                    <strong id="summaryOut">0</strong>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- FILTER CARD -->
+        <div class="card filter-card">
+
+            <div class="filter-grid">
+
+                <div class="filter-search">
+
+                    <i class="bi bi-search"></i>
+
+                    <input
+                        type="search"
+                        id="fertilizerSearch"
+                        placeholder="Search by fertilizer, brand, category or SKU..."
+                        autocomplete="off"
+                    >
+
+                    <button
+                        type="button"
+                        id="clearSearch"
+                        class="clear-search"
+                        aria-label="Clear search">
+
+                        <i class="bi bi-x"></i>
+
+                    </button>
+
+                </div>
+
+
+                <div>
+                    <select
+                        id="categoryFilter"
+                        class="form-select">
+
+                        <option value="all">
+                            All Categories
+                        </option>
+
+                    </select>
+                </div>
+
+
+                <div>
+                    <select
+                        id="brandFilter"
+                        class="form-select">
+
+                        <option value="all">
+                            All Brands
+                        </option>
+
+                    </select>
+                </div>
+
+
+                <div>
+                    <select
+                        id="statusFilter"
+                        class="form-select">
+
+                        <option value="all">
+                            All Status
+                        </option>
+
+                        <option value="Available">
+                            Available
+                        </option>
+
+                        <option value="Low Stock">
+                            Low Stock
+                        </option>
+
+                        <option value="Out of Stock">
+                            Out of Stock
+                        </option>
+
+                    </select>
+                </div>
+
+
+                <button
+                    type="button"
+                    class="filter-reset-btn"
+                    id="resetFilters">
+
+                    <i class="bi bi-arrow-counterclockwise"></i>
+                    Reset
+
+                </button>
+
+            </div>
+
+
+            <div class="filter-info">
+
+                <span id="resultCount">
+                    Showing 50 products
+                </span>
+
+                <span>
+                    <i class="bi bi-database"></i>
+                    SmartAgri Inventory
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- TABLE -->
+        <div class="card fertilizer-table-card">
+
+            <div class="table-responsive">
+
+                <table class="table fertilizer-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+                            <th>SKU</th>
+                            <th>Fertilizer</th>
+                            <th>Brand</th>
+                            <th>Category</th>
+                            <th>Unit</th>
+                            <th>Buy Price</th>
+                            <th>Sell Price</th>
+                            <th>Stock</th>
+                            <th>Reorder Level</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="fertilizerTableBody">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- Empty state -->
+            <div
+                id="emptyState"
+                class="empty-state d-none">
+
+                <div class="empty-icon">
+                    <i class="bi bi-search"></i>
+                </div>
+
+                <h5>
+                    No fertilizers found
+                </h5>
+
+                <p>
+                    Try changing your search or filters.
+                </p>
+
+                <button
+                    type="button"
+                    class="btn btn-outline-success"
+                    onclick="resetFertilizerFilters()">
+
+                    Reset Filters
+
+                </button>
+
+            </div>
+
+
+            <!-- PAGINATION -->
+            <div class="pagination-wrapper">
+
+                <div class="page-size-box">
+
+                    <span>
+                        Rows:
+                    </span>
+
+                    <select
+                        id="pageSize"
+                        class="form-select form-select-sm">
+
+                        <option value="10">
+                            10
+                        </option>
+
+                        <option value="15">
+                            15
+                        </option>
+
+                        <option value="20">
+                            20
+                        </option>
+
+                        <option value="50">
+                            50
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div
+                    id="pagination"
+                    class="pagination-container">
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =====================================================
+     ADD / EDIT MODAL
+===================================================== -->
+
+<div
+    class="modal fade"
+    id="fertilizerModal"
+    tabindex="-1"
+    aria-hidden="true">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+
+        <div class="modal-content fertilizer-modal">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h5
+                        class="modal-title"
+                        id="fertilizerModalTitle">
+
+                        Add Fertilizer
+
+                    </h5>
+
+                    <p class="modal-subtitle">
+                        Enter complete fertilizer details.
+                    </p>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close">
+                </button>
+
+            </div>
+
+
+            <form id="fertilizerForm">
+
+                <div class="modal-body">
+
+                    <input
+                        type="hidden"
+                        id="editId"
+                    >
+
+
+                    <div class="row g-3">
+
+                        <!-- Name -->
+                        <div class="col-md-6">
+
+                            <label
+                                for="fertilizerName"
+                                class="form-label">
+
+                                Fertilizer Name
+
+                            </label>
+
+                            <input
+                                type="text"
+                                id="fertilizerName"
+                                class="form-control"
+                                placeholder="e.g. Urea"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- SKU -->
+                        <div class="col-md-6">
+
+                            <label
+                                for="fertilizerSku"
+                                class="form-label">
+
+                                SKU
+
+                            </label>
+
+                            <input
+                                type="text"
+                                id="fertilizerSku"
+                                class="form-control"
+                                placeholder="e.g. FRT-051"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Brand -->
+                        <div class="col-md-6">
+
+                            <label
+                                for="fertilizerBrand"
+                                class="form-label">
+
+                                Brand
+
+                            </label>
+
+                            <input
+                                type="text"
+                                id="fertilizerBrand"
+                                class="form-control"
+                                placeholder="Brand name"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Category -->
+                        <div class="col-md-6">
+
+                            <label
+                                for="fertilizerCategory"
+                                class="form-label">
+
+                                Category
+
+                            </label>
+
+                            <select
+                                id="fertilizerCategory"
+                                class="form-select"
+                                required>
+
+                                <option value="">
+                                    Select category
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Unit -->
+                        <div class="col-md-4">
+
+                            <label
+                                for="fertilizerUnit"
+                                class="form-label">
+
+                                Unit
+
+                            </label>
+
+                            <select
+                                id="fertilizerUnit"
+                                class="form-select"
+                                required>
+
+                                <option value="Bag">
+                                    Bag
+                                </option>
+
+                                <option value="Kg">
+                                    Kg
+                                </option>
+
+                                <option value="Litre">
+                                    Litre
+                                </option>
+
+                                <option value="Packet">
+                                    Packet
+                                </option>
+
+                                <option value="Bottle">
+                                    Bottle
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Buy price -->
+                        <div class="col-md-4">
+
+                            <label
+                                for="fertilizerBuyPrice"
+                                class="form-label">
+
+                                Buy Price (₹)
+
+                            </label>
+
+                            <input
+                                type="number"
+                                id="fertilizerBuyPrice"
+                                class="form-control"
+                                min="0"
+                                step="0.01"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Sell price -->
+                        <div class="col-md-4">
+
+                            <label
+                                for="fertilizerSellPrice"
+                                class="form-label">
+
+                                Sell Price (₹)
+
+                            </label>
+
+                            <input
+                                type="number"
+                                id="fertilizerSellPrice"
+                                class="form-control"
+                                min="0"
+                                step="0.01"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Stock -->
+                        <div class="col-md-6">
+
+                            <label
+                                for="fertilizerStock"
+                                class="form-label">
+
+                                Current Stock
+
+                            </label>
+
+                            <input
+                                type="number"
+                                id="fertilizerStock"
+                                class="form-control"
+                                min="0"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Reorder -->
+                        <div class="col-md-6">
+
+                            <label
+                                for="fertilizerReorder"
+                                class="form-label">
+
+                                Reorder Level
+
+                            </label>
+
+                            <input
+                                type="number"
+                                id="fertilizerReorder"
+                                class="form-control"
+                                min="0"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="formMessage"
+                        class="form-message">
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button
+                        type="button"
+                        class="btn btn-light"
+                        data-bs-dismiss="modal">
+
+                        Cancel
+
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-success">
+
+                        <i class="bi bi-check-circle"></i>
+
+                        <span id="saveButtonText">
+                            Save Fertilizer
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Product Details Modal (Phase 2 Catalog Foundation) -->
+<div class="modal fade" id="productDetailsModal" tabindex="-1" aria-labelledby="productDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header product-detail-header">
+                <div>
+                    <h5 class="modal-title fw-bold" id="detailProductName">Product Name</h5>
+                    <div class="mt-1 d-flex flex-wrap gap-1 align-items-center">
+                        <span class="badge bg-success" id="detailProductBrand">Brand</span>
+                        <span class="badge bg-secondary" id="detailProductSku">SKU</span>
+                        <span class="badge bg-info text-dark" id="detailProductCategory">Category</span>
+                    </div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-4">
+                    <div class="col-md-5 text-center">
+                        <div class="product-detail-img-wrap mb-3">
+                            <img id="detailProductImage" src="../img/img1.jpeg" alt="Product Image" class="img-fluid rounded">
+                        </div>
+                        <div class="d-flex justify-content-center align-items-baseline mb-2">
+                            <span class="product-detail-price" id="detailProductPrice">₹0.00</span>
+                            <span class="product-detail-original-price" id="detailProductOriginalPrice"></span>
+                        </div>
+                        <div id="detailProductStatusBadge" class="mb-3">
+                            <span class="status-badge status-active">Available</span>
+                        </div>
+                        <button type="button" class="btn btn-success w-100 py-2 fw-semibold" id="detailAddToCartBtn" onclick="handleAddToCartClick()">
+                            <i class="bi bi-cart-plus me-1"></i> Add to Cart
+                        </button>
+                        <small class="text-muted d-block mt-1">E-Commerce Ready (Future Cart Module)</small>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="table-responsive">
+                            <table class="table table-sm product-spec-table mb-2">
+                                <tbody>
+                                    <tr><th>Packaging Unit:</th><td id="detailProductUnit">Bag (50 kg)</td></tr>
+                                    <tr><th>Current Stock:</th><td id="detailProductStock">150 units</td></tr>
+                                    <tr><th>Reorder Level:</th><td id="detailProductReorder">50 units</td></tr>
+                                    <tr><th>Tax Rate (GST):</th><td id="detailProductTax">5% (Inclusive)</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="product-detail-section-title"><i class="bi bi-shield-check text-success me-1"></i> Chemical / Fertilizer Composition</div>
+                        <div class="product-detail-info-box" id="detailProductComposition">Standard agricultural formulation</div>
+
+                        <div class="product-detail-section-title"><i class="bi bi-tree text-success me-1"></i> Suitable Crops</div>
+                        <div class="product-detail-info-box" id="detailProductCrops">All major agricultural crops</div>
+
+                        <div class="product-detail-section-title"><i class="bi bi-layers text-success me-1"></i> Soil Compatibility & Application</div>
+                        <div class="product-detail-info-box" id="detailProductSoil">Suitable for all soil types</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div
+    class="toast-container position-fixed bottom-0 end-0 p-3">
+
+    <div
+        id="actionToast"
+        class="toast"
+        role="alert">
+
+        <div class="toast-body">
+            <i class="bi bi-check-circle-fill text-success me-2"></i>
+            <span id="toastMessage">
+                Done
+            </span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     SCRIPTS
+===================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="../JS/config.js"></script>
+<script src="../JS/api.js"></script>
+<script src="../JS/utils.js"></script>
+<script src="../JS/auth.js"></script>
+<script src="../JS/app.js"></script>
+
+<script src="../JS/fertilizers.js"></script>
+
+    <script src="../JS/i18n.js"></script>
+</body>
+</html>

@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Checkout | SmartAgri</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- SmartAgri Styles -->
+    <link rel="stylesheet" href="../CSS/style2.css">
+    <link rel="stylesheet" href="../CSS/components.css">
+    <link rel="stylesheet" href="../CSS/ecommerce.css">
+    <link rel="stylesheet" href="../CSS/responsive.css">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f4f7f4;
+            color: #173f2f;
+        }
+        .checkout-stepper-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #ffffff;
+            border: 1px solid #e2ebe4;
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            overflow-x: auto;
+        }
+        .checkout-step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+        .step-num {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            border: 1px solid #a5d6a7;
+        }
+        .step-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #496355;
+        }
+        .step-line {
+            flex: 1;
+            height: 2px;
+            background-color: #e2ebe4;
+            margin: 0 0.75rem;
+            min-width: 20px;
+        }
+        .checkout-step.active .step-num {
+            background-color: #2e7d32;
+            color: #ffffff;
+            border-color: #2e7d32;
+        }
+        .checkout-step.active .step-label {
+            color: #173f2f;
+            font-weight: 700;
+        }
+        .step-line.active {
+            background-color: #a5d6a7;
+        }
+        .checkout-section-card {
+            background: #ffffff;
+            border: 1px solid #e2ebe4;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+        .address-select-card {
+            border: 2px solid #e2ebe4;
+            border-radius: 10px;
+            padding: 1.15rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            background-color: #ffffff;
+        }
+        .address-select-card:hover {
+            border-color: #a5d6a7;
+            background-color: #fbfdfb;
+        }
+        .address-select-card.selected {
+            border-color: #2e7d32;
+            background-color: #f2f8f3;
+            box-shadow: 0 0 0 1px #2e7d32;
+        }
+        .address-select-card input[type="radio"] {
+            cursor: pointer;
+        }
+        .cart-mini-thumb {
+            width: 54px;
+            height: 54px;
+            object-fit: cover;
+            border-radius: 8px;
+            background-color: #f7faf7;
+            border: 1px solid #e2ebe4;
+        }
+        .payment-option-card {
+            border: 2px solid #e2ebe4;
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #ffffff;
+        }
+        .payment-option-card:hover {
+            border-color: #a5d6a7;
+        }
+        .payment-option-card.selected {
+            border-color: #2e7d32;
+            background-color: #f2f8f3;
+        }
+        .toast-container {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 1090;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CUSTOMER NAVBAR -->
+    <nav class="customer-navbar py-2 px-3 mb-4">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <a class="navbar-brand fs-4" href="customer-catalog.html">
+                <i class="bi bi-flower1"></i>
+                <span>Smart<strong>Agri</strong> Store</span>
+            </a>
+
+            <div class="d-flex align-items-center gap-2 gap-md-3">
+                <a href="customer-catalog.html" class="customer-nav-link">
+                    <i class="bi bi-grid-fill"></i>
+                    <span class="d-none d-md-inline">Catalog</span>
+                </a>
+
+                <a href="customer-cart.html" class="customer-nav-link position-relative">
+                    <i class="bi bi-cart3 fs-5"></i>
+                    <span class="d-none d-md-inline">Cart</span>
+                    <span id="cartCountBadge" class="nav-badge-count" style="display: none;">0</span>
+                </a>
+
+                <a href="customer-orders.html" class="customer-nav-link">
+                    <i class="bi bi-receipt fs-5"></i>
+                    <span class="d-none d-md-inline">My Orders</span>
+                </a>
+
+                <a href="customer-order-tracking.html" class="customer-nav-link">
+                    <i class="bi bi-truck fs-5"></i>
+                    <span class="d-none d-md-inline">Track Order</span>
+                </a>
+
+                <a href="customer-profile.html" class="customer-nav-link">
+                    <i class="bi bi-person-circle fs-5"></i>
+                    <span class="d-none d-md-inline" data-user-name>Account</span>
+                </a>
+
+                <button class="btn btn-outline-danger btn-sm ms-2" onclick="logout()">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span class="d-none d-md-inline">Sign Out</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <main class="container px-3 px-md-4 mb-5" style="max-width: 1100px;">
+        <div class="mb-3">
+            <h2 class="fw-bold mb-1">Customer Checkout & Order Review</h2>
+            <p class="text-muted small mb-0">Select your farm delivery location, review order items, choose payment method, and confirm your order.</p>
+        </div>
+
+        <!-- 5-STEP VISUAL PROGRESS STEPPER -->
+        <div class="checkout-stepper-wrap">
+            <div class="checkout-step active" id="step1">
+                <div class="step-num"><i class="bi bi-geo-alt-fill"></i></div>
+                <div class="step-label">1. Address</div>
+            </div>
+            <div class="step-line active"></div>
+            <div class="checkout-step active" id="step2">
+                <div class="step-num"><i class="bi bi-bag-check-fill"></i></div>
+                <div class="step-label">2. Items</div>
+            </div>
+            <div class="step-line active"></div>
+            <div class="checkout-step active" id="step3">
+                <div class="step-num"><i class="bi bi-credit-card-fill"></i></div>
+                <div class="step-label">3. Payment</div>
+            </div>
+            <div class="step-line active"></div>
+            <div class="checkout-step active" id="step4">
+                <div class="step-num"><i class="bi bi-file-earmark-text-fill"></i></div>
+                <div class="step-label">4. Review</div>
+            </div>
+            <div class="step-line active"></div>
+            <div class="checkout-step active" id="step5">
+                <div class="step-num"><i class="bi bi-check2-circle"></i></div>
+                <div class="step-label">5. Place Order</div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- LEFT COLUMN: ADDRESS, ITEMS, PAYMENT, REVIEW -->
+            <div class="col-lg-7">
+                <!-- STEP 1: DELIVERY ADDRESS -->
+                <div class="checkout-section-card">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h5 class="fw-bold mb-0">
+                                <i class="bi bi-geo-alt text-success me-1"></i> Step 1: Select Delivery Address
+                            </h5>
+                            <small class="text-muted">Choose where your fertilizer consignment should be dispatched</small>
+                        </div>
+                        <button class="btn btn-outline-success btn-sm" onclick="openAddressModal()">
+                            <i class="bi bi-plus-lg me-1"></i> Add New Address
+                        </button>
+                    </div>
+
+                    <div id="addressSelectionContainer" class="d-flex flex-column gap-3">
+                        <div class="text-center py-4">
+                            <div class="spinner-border spinner-border-sm text-success" role="status"></div>
+                            <span class="ms-2 text-muted small">Loading saved addresses...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: ORDER ITEMS -->
+                <div class="checkout-section-card">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h5 class="fw-bold mb-0">
+                                <i class="bi bi-box-seam text-success me-1"></i> Step 2: Order Items
+                            </h5>
+                            <small class="text-muted">Review items in your order</small>
+                        </div>
+                        <a href="customer-cart.html" class="btn btn-outline-secondary btn-sm">
+                            <i class="bi bi-pencil me-1"></i> Edit Cart
+                        </a>
+                    </div>
+
+                    <div id="checkoutFullCartItemsList" class="d-flex flex-column gap-2">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+
+                <!-- STEP 3: PAYMENT METHOD -->
+                <div class="checkout-section-card">
+                    <h5 class="fw-bold mb-1">
+                        <i class="bi bi-cash-coin text-success me-1"></i> Step 3: Payment Method
+                    </h5>
+                    <p class="text-muted small mb-3">Select your preferred payment mode</p>
+
+                    <div class="d-flex flex-column gap-2">
+                        <!-- COD Option -->
+                        <div class="payment-option-card selected" id="codOptionCard" onclick="selectPaymentMethod('COD')">
+                            <div class="form-check d-flex align-items-start gap-2 m-0 p-0">
+                                <input class="form-check-input mt-1 ms-0 me-2" type="radio" name="paymentMethodRadio" id="payCOD" value="COD" checked>
+                                <div class="flex-grow-1">
+                                    <label class="form-check-label fw-bold d-flex align-items-center gap-2 cursor-pointer" for="payCOD">
+                                        <i class="bi bi-cash-stack text-success fs-5"></i> Cash on Delivery (COD) / Pay upon Farm Delivery
+                                    </label>
+                                    <div class="text-muted small mt-1">
+                                        Pay with cash or UPI directly to our agricultural dispatch partner upon delivery of fertilizer sacks.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Online Payment Option (Phase 9 Gateway Integration) -->
+                        <div class="payment-option-card" id="onlineOptionCard" onclick="selectPaymentMethod('ONLINE')">
+                            <div class="form-check d-flex align-items-start gap-2 m-0 p-0">
+                                <input class="form-check-input mt-1 ms-0 me-2" type="radio" name="paymentMethodRadio" id="payONLINE" value="ONLINE">
+                                <div class="flex-grow-1">
+                                    <label class="form-check-label fw-bold d-flex align-items-center gap-2 cursor-pointer" for="payONLINE">
+                                        <i class="bi bi-credit-card-2-front text-primary fs-5"></i> Online Payment (UPI / Card / NetBanking)
+                                        <span class="badge bg-primary-subtle text-primary small">Test Mode</span>
+                                    </label>
+                                    <div class="text-muted small mt-1">
+                                        Simulate immediate digital payment via SmartAgri Secure Mock Gateway.
+                                    </div>
+                                    <!-- Online Simulation Selector -->
+                                    <div id="onlineSimPanel" class="mt-3 p-3 bg-light rounded-3 border" style="display: none;" onclick="event.stopPropagation();">
+                                        <label class="form-label fw-bold small text-dark mb-2">
+                                            <i class="bi bi-sliders me-1 text-primary"></i> Gateway Simulation Outcome:
+                                        </label>
+                                        <div class="d-flex flex-column gap-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="onlineSimChoice" id="simPaySuccess" value="SUCCESS" checked>
+                                                <label class="form-check-label small fw-semibold text-success" for="simPaySuccess">
+                                                    <i class="bi bi-check-circle-fill me-1"></i> Authorized Success (Auto-verify payment)
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="onlineSimChoice" id="simPayFailure" value="FAIL">
+                                                <label class="form-check-label small fw-bold text-danger" for="simPayFailure">
+                                                    <i class="bi bi-x-circle-fill me-1"></i> Gateway Decline / Failure (Test failure & retry)
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 4: ORDER REVIEW & DISPATCH NOTES -->
+                <div class="checkout-section-card">
+                    <h5 class="fw-bold mb-1">
+                        <i class="bi bi-pencil-square text-success me-1"></i> Step 4: Dispatch Notes & Instructions
+                    </h5>
+                    <p class="text-muted small mb-2">Provide any instructions for farm gate access or logistics</p>
+                    <textarea id="orderNotesInput" class="form-control" rows="2" placeholder="e.g. Near Kisan Mandi gate, call 30 mins before arrival, unload near storehouse..."></textarea>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: STEP 4 & 5 ORDER SUMMARY & PLACE ORDER -->
+            <div class="col-lg-5">
+                <div class="cart-summary-card position-sticky" style="top: 80px;">
+                    <h5 class="fw-bold mb-3 border-bottom pb-2">
+                        <i class="bi bi-receipt text-success me-1"></i> Order Summary & Review
+                    </h5>
+
+                    <!-- Selected Delivery Destination Preview -->
+                    <div class="p-3 mb-3 border rounded-3 bg-light" id="selectedAddressPreview">
+                        <div class="text-muted small">Select an address on the left to preview delivery details.</div>
+                    </div>
+
+                    <!-- Mini item count -->
+                    <div class="d-flex justify-content-between align-items-center mb-2 small text-muted">
+                        <span>Items Count:</span>
+                        <strong class="text-dark" id="checkoutItemCount">0 items</strong>
+                    </div>
+
+                    <!-- Financial Summary Breakdown -->
+                    <div class="border-top pt-3">
+                        <div class="summary-row">
+                            <span>Subtotal (Gross MRP):</span>
+                            <span class="fw-bold" id="checkoutSubtotal">₹0.00</span>
+                        </div>
+
+                        <div class="summary-row text-success">
+                            <span>Agricultural Subsidy / Discount:</span>
+                            <span class="fw-bold" id="checkoutDiscounts">- ₹0.00</span>
+                        </div>
+
+                        <div class="summary-row">
+                            <span>Net Product Amount:</span>
+                            <span class="fw-bold" id="checkoutNet">₹0.00</span>
+                        </div>
+
+                        <div class="summary-row">
+                            <span>Fertilizer GST (5%):</span>
+                            <span class="fw-bold text-muted" id="checkoutTax">₹0.00</span>
+                        </div>
+
+                        <div class="summary-row">
+                            <span>Farm Dispatch / Shipping:</span>
+                            <span class="fw-bold text-muted" id="checkoutShipping">₹0.00</span>
+                        </div>
+
+                        <div class="summary-row total-row">
+                            <span>Grand Total:</span>
+                            <span class="text-success" id="checkoutGrandTotal">₹0.00</span>
+                        </div>
+                    </div>
+
+                    <div id="checkoutMsg" class="mt-3"></div>
+
+                    <!-- STEP 5: PLACE ORDER BUTTON -->
+                    <div class="d-grid gap-2 mt-4">
+                        <button class="btn btn-success btn-lg fw-bold" id="placeOrderBtn" onclick="onPlaceOrder()">
+                            <i class="bi bi-bag-check-fill me-1"></i> Step 5: Place Order
+                        </button>
+                        <a href="customer-cart.html" class="btn btn-outline-secondary btn-sm">
+                            <i class="bi bi-arrow-left me-1"></i> Return to Cart
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ADD / EDIT ADDRESS MODAL -->
+    <div class="modal fade" id="addressModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title fw-bold" id="addressModalTitle">Add Delivery Address</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="addressForm">
+                    <input type="hidden" id="modalAddressId" value="">
+                    <div class="modal-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Recipient Full Name *</label>
+                                <input type="text" id="modalFullName" class="form-control" required placeholder="e.g. Ramesh Patel">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">10-Digit Mobile Number *</label>
+                                <input type="tel" id="modalPhone" class="form-control" pattern="^[0-9]{10}$" required placeholder="9876543210">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Address Line 1 (Farm / Plot / House No, Village) *</label>
+                                <input type="text" id="modalLine1" class="form-control" required placeholder="e.g. Survey No. 42, Green Farm">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Address Line 2 (Taluka, Post Office)</label>
+                                <input type="text" id="modalLine2" class="form-control" placeholder="e.g. Post Haveli, Locality">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold">City *</label>
+                                <input type="text" id="modalCity" class="form-control" required placeholder="e.g. Pune">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold">District</label>
+                                <input type="text" id="modalDistrict" class="form-control" placeholder="e.g. Pune">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold">State *</label>
+                                <input type="text" id="modalState" class="form-control" required placeholder="e.g. Maharashtra">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold">PIN Code (6-digit) *</label>
+                                <input type="text" id="modalPincode" class="form-control" pattern="^[1-9][0-9]{5}$" maxlength="6" required placeholder="412210">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Landmark (Optional)</label>
+                                <input type="text" id="modalLandmark" class="form-control" placeholder="e.g. Near Kisan Mandi">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Address Type</label>
+                                <select id="modalType" class="form-select">
+                                    <option value="HOME">Home</option>
+                                    <option value="FARM" selected>Farm / Warehouse</option>
+                                    <option value="WORK">Work / Shop</option>
+                                    <option value="OTHER">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="checkbox" id="modalIsDefault">
+                                    <label class="form-check-label fw-semibold" for="modalIsDefault">
+                                        Set as default delivery address
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="modalAddrMsg" class="mt-3"></div>
+                    </div>
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success fw-bold" id="modalSaveAddrBtn">Save Address</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast-container">
+        <div id="liveToast" class="toast align-items-center text-white bg-success border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body" id="toastMessage">Action completed!</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../JS/config.js"></script>
+    <script src="../JS/utils.js"></script>
+    <script src="../JS/api.js"></script>
+    <script src="../JS/auth.js"></script>
+    <script src="../JS/checkout.js"></script>
+    <script src="../JS/i18n.js"></script>
+</body>
+</html>

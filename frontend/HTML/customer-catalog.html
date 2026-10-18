@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Farmer Store & Fertilizer Catalog | SmartAgri</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- SmartAgri Styles -->
+    <link rel="stylesheet" href="../CSS/style2.css">
+    <link rel="stylesheet" href="../CSS/components.css">
+    <link rel="stylesheet" href="../CSS/ecommerce.css">
+    <link rel="stylesheet" href="../CSS/responsive.css">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f4f7f4;
+            color: #173f2f;
+        }
+        .store-header {
+            background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+            color: #ffffff;
+            border-radius: 16px;
+            padding: 2.25rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 25px rgba(46, 125, 50, 0.15);
+        }
+        .toast-container {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 1090;
+        }
+        .sticky-sidebar {
+            position: sticky;
+            top: 5rem;
+            max-height: calc(100vh - 6rem);
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CUSTOMER NAVBAR -->
+    <nav class="customer-navbar py-2 px-3 mb-4">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <a class="navbar-brand fs-4" href="customer-catalog.html">
+                <i class="bi bi-flower1"></i>
+                <span>Smart<strong>Agri</strong> Store</span>
+            </a>
+
+            <div class="d-flex align-items-center gap-2 gap-md-3">
+                <a href="customer-catalog.html" class="customer-nav-link active">
+                    <i class="bi bi-grid-fill"></i>
+                    <span class="d-none d-md-inline">Catalog</span>
+                </a>
+
+                <a href="customer-wishlist.html" class="customer-nav-link position-relative">
+                    <i class="bi bi-heart fs-5"></i>
+                    <span class="d-none d-md-inline">Wishlist</span>
+                    <span id="wishlistCountBadge" class="nav-badge-count" style="display: none;">0</span>
+                </a>
+
+                <a href="customer-cart.html" class="customer-nav-link position-relative">
+                    <i class="bi bi-cart3 fs-5"></i>
+                    <span class="d-none d-md-inline">Cart</span>
+                    <span id="cartCountBadge" class="nav-badge-count" style="display: none;">0</span>
+                </a>
+
+                <a href="customer-orders.html" class="customer-nav-link">
+                    <i class="bi bi-receipt fs-5"></i>
+                    <span class="d-none d-md-inline">My Orders</span>
+                </a>
+
+                <a href="customer-order-tracking.html" class="customer-nav-link">
+                    <i class="bi bi-truck fs-5"></i>
+                    <span class="d-none d-md-inline">Track Order</span>
+                </a>
+
+                <a href="returns.html" class="customer-nav-link">
+                    <i class="bi bi-arrow-counterclockwise fs-5"></i>
+                    <span class="d-none d-md-inline">Returns</span>
+                </a>
+
+                <a href="support.html" class="customer-nav-link">
+                    <i class="bi bi-headset fs-5"></i>
+                    <span class="d-none d-md-inline">Support</span>
+                </a>
+
+                <a href="customer-profile.html" class="customer-nav-link">
+                    <i class="bi bi-person-circle fs-5"></i>
+                    <span class="d-none d-md-inline" data-user-name>Account</span>
+                </a>
+
+                <button class="btn btn-outline-danger btn-sm ms-2" onclick="logout()">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span class="d-none d-md-inline">Sign Out</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <main class="container-fluid px-3 px-md-4 mb-5">
+
+        <!-- HERO BANNER -->
+        <div class="store-header">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <span class="badge bg-light text-success fw-bold px-3 py-2 mb-2 rounded-pill">
+                        🌱 Certified Agri-Products & Soil Nutrients
+                    </span>
+                    <h1 class="display-6 fw-bold mb-2">Smart Fertilizer Store</h1>
+                    <p class="lead mb-0 text-white-50">
+                        Explore certified fertilizers, organic conditioners, and micronutrients at government-compliant rates with direct doorstep delivery.
+                    </p>
+                </div>
+                <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                    <a href="customer-cart.html" class="btn btn-light btn-lg text-success fw-bold px-4 py-2 rounded-pill shadow-sm">
+                        <i class="bi bi-cart-check-fill me-1"></i> View My Cart
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- TOP SEARCH & VOICE BAR -->
+        <div class="card border-0 shadow-sm rounded-4 p-3 mb-4 bg-white">
+            <div class="row g-2 align-items-center">
+                <div class="col-12 col-md-8 col-lg-9">
+                    <div class="catalog-search-wrap">
+                        <i class="bi bi-search text-muted fs-5 me-2"></i>
+                        <input type="text" id="searchInput" class="catalog-search-input" 
+                               placeholder="Search fertilizers by name, brand, crop, nutrient, or NPK (e.g. Urea, DAP, 20-20-20)..." 
+                               autocomplete="off">
+                        
+                        <!-- Clear Search Button -->
+                        <button type="button" id="clearSearchBtn" class="search-action-btn" title="Clear search" style="display: none;">
+                            <i class="bi bi-x-circle-fill text-muted"></i>
+                        </button>
+                        
+                        <!-- Voice Search Microphone Button -->
+                        <button type="button" id="voiceSearchBtn" class="search-action-btn voice-search-btn" title="Search by Voice (English / Indian accents)">
+                            <i class="bi bi-mic-fill"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sort Control -->
+                <div class="col-12 col-md-4 col-lg-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <label for="sortSelect" class="small fw-bold text-muted text-nowrap d-none d-sm-inline">Sort by:</label>
+                        <select id="sortSelect" class="form-select bg-light border-0 fw-semibold py-2">
+                            <option value="relevance">Relevance</option>
+                            <option value="price_asc">Price: Low to High</option>
+                            <option value="price_desc">Price: High to Low</option>
+                            <option value="name_asc">Name: A to Z</option>
+                            <option value="name_desc">Name: Z to A</option>
+                            <option value="newest">Newest Arrivals</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Voice Listening Banner -->
+            <div id="voiceIndicator" class="voice-indicator-banner">
+                <div class="d-flex align-items-center">
+                    <div class="voice-wave">
+                        <span></span><span></span><span></span><span></span>
+                    </div>
+                    <div>
+                        <span class="fw-bold">Listening...</span>
+                        <span class="small ms-2 text-danger">Speak fertilizer name, brand, crop, or NPK ratio (e.g. "Urea", "IFFCO", "20-20-20")</span>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-danger py-0 px-2 rounded-pill" id="stopVoiceBtn">
+                    Stop
+                </button>
+            </div>
+
+            <!-- Voice Unsupported Notice (Hidden by default) -->
+            <div id="voiceUnsupportedAlert" class="alert alert-warning alert-dismissible fade show mt-2 mb-0 py-2 small" style="display: none;" role="alert">
+                <i class="bi bi-info-circle-fill me-1"></i> Voice recognition is not supported in this browser. Please use Chrome, Edge, or Safari.
+                <button type="button" class="btn-close py-2" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+
+        <!-- CONTROLS & ACTIVE FILTERS BAR -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
+            <div class="d-flex align-items-center gap-2">
+                <!-- Mobile Filter Trigger -->
+                <button class="btn btn-outline-success d-lg-none fw-semibold" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileFilterDrawer">
+                    <i class="bi bi-sliders me-1"></i> Filters
+                    <span id="mobileFilterCountBadge" class="badge bg-success ms-1" style="display: none;">0</span>
+                </button>
+
+                <div id="resultsCountText" class="text-muted fw-semibold small">
+                    Loading products...
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center gap-2">
+                <button id="clearAllFiltersTopBtn" class="btn btn-sm btn-link text-decoration-none text-danger fw-semibold" style="display: none;" onclick="clearAllFilters()">
+                    <i class="bi bi-trash3 me-1"></i> Clear All Filters
+                </button>
+            </div>
+        </div>
+
+        <!-- Active Filter Pills Container -->
+        <div id="activeFiltersContainer" class="active-filters-wrap" style="display: none;">
+            <!-- Injected dynamically -->
+        </div>
+
+        <!-- MAIN LAYOUT: SIDEBAR + PRODUCT GRID -->
+        <div class="row g-4">
+            <!-- DESKTOP FILTER SIDEBAR -->
+            <aside class="col-lg-3 d-none d-lg-block">
+                <div class="filter-card sticky-sidebar" id="desktopFilterSidebar">
+                    <div class="filter-card-header">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-funnel-fill text-success fs-5"></i>
+                            <h6 class="fw-bold mb-0 text-dark">Filters</h6>
+                        </div>
+                        <button type="button" class="btn btn-link btn-sm text-danger text-decoration-none fw-semibold p-0" onclick="clearAllFilters()">
+                            Reset All
+                        </button>
+                    </div>
+
+                    <!-- Category Filter -->
+                    <div class="filter-group">
+                        <div class="filter-group-title">
+                            <span>Category</span>
+                        </div>
+                        <div class="filter-scrollable" id="desktopCategoryFilterList">
+                            <div class="filter-item-check">
+                                <label>
+                                    <input type="radio" name="desktopCategory" value="ALL" checked onchange="onCategoryFilterChange('ALL')"> All Categories
+                                </label>
+                            </div>
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Brand Filter -->
+                    <div class="filter-group">
+                        <div class="filter-group-title">
+                            <span>Brand</span>
+                        </div>
+                        <div class="filter-scrollable" id="desktopBrandFilterList">
+                            <div class="filter-item-check">
+                                <label>
+                                    <input type="radio" name="desktopBrand" value="ALL" checked onchange="onBrandFilterChange('ALL')"> All Brands
+                                </label>
+                            </div>
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Fertilizer Type Filter -->
+                    <div class="filter-group">
+                        <div class="filter-group-title">
+                            <span>Fertilizer Type</span>
+                        </div>
+                        <div class="filter-scrollable" id="desktopTypeFilterList">
+                            <div class="filter-item-check">
+                                <label>
+                                    <input type="radio" name="desktopType" value="ALL" checked onchange="onTypeFilterChange('ALL')"> All Types
+                                </label>
+                            </div>
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Stock Status Filter -->
+                    <div class="filter-group">
+                        <div class="filter-group-title">
+                            <span>Stock Availability</span>
+                        </div>
+                        <div>
+                            <div class="filter-item-check">
+                                <label><input type="radio" name="desktopStock" value="all" checked onchange="onStockFilterChange('all')"> All Products</label>
+                            </div>
+                            <div class="filter-item-check">
+                                <label><input type="radio" name="desktopStock" value="in_stock" onchange="onStockFilterChange('in_stock')"> In Stock Only</label>
+                            </div>
+                            <div class="filter-item-check">
+                                <label><input type="radio" name="desktopStock" value="low_stock" onchange="onStockFilterChange('low_stock')"> Low Stock (&le; 10)</label>
+                            </div>
+                            <div class="filter-item-check">
+                                <label><input type="radio" name="desktopStock" value="out_of_stock" onchange="onStockFilterChange('out_of_stock')"> Out of Stock</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Price Range Filter -->
+                    <div class="filter-group">
+                        <div class="filter-group-title">
+                            <span>Price Range (₹)</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <input type="number" id="desktopMinPriceInput" class="form-control form-control-sm text-center" placeholder="Min">
+                            <span class="text-muted">-</span>
+                            <input type="number" id="desktopMaxPriceInput" class="form-control form-control-sm text-center" placeholder="Max">
+                        </div>
+                        <button type="button" class="btn btn-outline-success btn-sm w-100 fw-semibold" onclick="applyPriceFilter()">
+                            Apply Price
+                        </button>
+                    </div>
+
+                    <!-- NPK Ratio Quick Filters -->
+                    <div class="filter-group">
+                        <div class="filter-group-title">
+                            <span>NPK Ratio Formulations</span>
+                        </div>
+                        <div class="d-flex flex-wrap gap-1" id="desktopNpkPills">
+                            <button type="button" class="npk-quick-pill active" onclick="onNpkFilterChange('')">All</button>
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- PRODUCT GRID & PAGINATION COLUMN -->
+            <section class="col-12 col-lg-9">
+                <!-- PRODUCTS GRID -->
+                <div class="row g-3 g-md-4" id="productsGrid">
+                    <!-- Loading state -->
+                    <div class="col-12 text-center py-5">
+                        <div class="spinner-border text-success" role="status"></div>
+                        <p class="mt-2 text-muted">Loading agricultural catalog...</p>
+                    </div>
+                </div>
+
+                <!-- PAGINATION CONTROLS -->
+                <nav id="paginationContainer" class="catalog-pagination" aria-label="Catalog Page Navigation" style="display: none;">
+                    <!-- Injected dynamically -->
+                </nav>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- MOBILE FILTER OFFCANVAS DRAWER -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileFilterDrawer" aria-labelledby="mobileFilterDrawerLabel">
+        <div class="offcanvas-header bg-light border-bottom">
+            <h5 class="offcanvas-title fw-bold text-success" id="mobileFilterDrawerLabel">
+                <i class="bi bi-funnel-fill me-1"></i> Filter Products
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body p-3">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted small">Refine catalog</span>
+                <button type="button" class="btn btn-sm btn-link text-danger text-decoration-none fw-semibold p-0" onclick="clearAllFilters()">
+                    Reset All
+                </button>
+            </div>
+
+            <!-- Mobile Category Filter -->
+            <div class="filter-group">
+                <div class="filter-group-title">Category</div>
+                <div class="filter-scrollable" id="mobileCategoryFilterList">
+                    <!-- Injected dynamically -->
+                </div>
+            </div>
+
+            <!-- Mobile Brand Filter -->
+            <div class="filter-group">
+                <div class="filter-group-title">Brand</div>
+                <div class="filter-scrollable" id="mobileBrandFilterList">
+                    <!-- Injected dynamically -->
+                </div>
+            </div>
+
+            <!-- Mobile Fertilizer Type Filter -->
+            <div class="filter-group">
+                <div class="filter-group-title">Fertilizer Type</div>
+                <div class="filter-scrollable" id="mobileTypeFilterList">
+                    <!-- Injected dynamically -->
+                </div>
+            </div>
+
+            <!-- Mobile Stock Status Filter -->
+            <div class="filter-group">
+                <div class="filter-group-title">Stock Availability</div>
+                <div id="mobileStockFilterList">
+                    <div class="filter-item-check">
+                        <label><input type="radio" name="mobileStock" value="all" checked onchange="onStockFilterChange('all')"> All Products</label>
+                    </div>
+                    <div class="filter-item-check">
+                        <label><input type="radio" name="mobileStock" value="in_stock" onchange="onStockFilterChange('in_stock')"> In Stock Only</label>
+                    </div>
+                    <div class="filter-item-check">
+                        <label><input type="radio" name="mobileStock" value="low_stock" onchange="onStockFilterChange('low_stock')"> Low Stock (&le; 10)</label>
+                    </div>
+                    <div class="filter-item-check">
+                        <label><input type="radio" name="mobileStock" value="out_of_stock" onchange="onStockFilterChange('out_of_stock')"> Out of Stock</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Price Range Filter -->
+            <div class="filter-group">
+                <div class="filter-group-title">Price Range (₹)</div>
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <input type="number" id="mobileMinPriceInput" class="form-control form-control-sm text-center" placeholder="Min">
+                    <span class="text-muted">-</span>
+                    <input type="number" id="mobileMaxPriceInput" class="form-control form-control-sm text-center" placeholder="Max">
+                </div>
+                <button type="button" class="btn btn-outline-success btn-sm w-100 fw-semibold" onclick="applyPriceFilter()">
+                    Apply Price
+                </button>
+            </div>
+
+            <!-- Mobile NPK Ratio Quick Filters -->
+            <div class="filter-group">
+                <div class="filter-group-title">NPK Formulations</div>
+                <div class="d-flex flex-wrap gap-1" id="mobileNpkPills">
+                    <!-- Injected dynamically -->
+                </div>
+            </div>
+            
+            <div class="mt-4 pt-2 border-top">
+                <button type="button" class="btn btn-success w-100 py-2 fw-semibold" data-bs-dismiss="offcanvas">
+                    View Results
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRODUCT DETAILS MODAL -->
+    <div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title fw-bold" id="modalProductName">Fertilizer Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4" id="modalProductBody">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast-container">
+        <div id="liveToast" class="toast align-items-center text-white bg-success border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body" id="toastMessage">
+                    Item added to cart!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../JS/config.js"></script>
+    <script src="../JS/utils.js"></script>
+    <script src="../JS/api.js"></script>
+    <script src="../JS/auth.js"></script>
+    <script src="../JS/customer-catalog.js"></script>
+    <script src="../JS/i18n.js"></script>
+</body>
+</html>

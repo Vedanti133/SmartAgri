@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Procurement & Supplier Management | SmartAgri</title>
+
+    <!-- Bootstrap 5.3.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="../CSS/style4.css">
+    <style>
+        .proc-kpi-card {
+            border-radius: 10px;
+            padding: 1.25rem;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .proc-kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        .nav-pills .nav-link {
+            color: #4b5563;
+            font-weight: 500;
+            border-radius: 8px;
+            padding: 0.6rem 1.25rem;
+        }
+        .nav-pills .nav-link.active {
+            background-color: #15803d;
+            color: #fff;
+        }
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 0.35em 0.65em;
+            font-weight: 600;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+<aside class="sidebar" id="side">
+    <div class="brand">
+        <i class="bi bi-leaf-fill"></i>
+        <span>SmartAgri</span>
+    </div>
+
+    <nav class="sidebar-menu">
+        <a href="admin-dashboard.html">
+            <i class="bi bi-house-door"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="admin-orders.html">
+            <i class="bi bi-bag-check"></i>
+            <span>Orders & Sales</span>
+        </a>
+        <a href="admin-delivery.html">
+            <i class="bi bi-truck"></i>
+            <span>Deliveries & Logistics</span>
+        </a>
+        <a href="admin-payments.html">
+            <i class="bi bi-credit-card"></i>
+            <span>Payments</span>
+        </a>
+        <a href="fertilizers.html">
+            <i class="bi bi-eyedropper"></i>
+            <span>Fertilizers</span>
+        </a>
+        <a href="categories.html">
+            <i class="bi bi-tags"></i>
+            <span>Categories</span>
+        </a>
+        <a href="inventory.html">
+            <i class="bi bi-box-seam"></i>
+            <span>Inventory</span>
+        </a>
+        <a href="batches.html">
+            <i class="bi bi-calendar2-range"></i>
+            <span>Batches & FEFO</span>
+        </a>
+        <a href="procurement.html" class="active">
+            <i class="bi bi-cart-check"></i>
+            <span>Procurement & GRN</span>
+        </a>
+        <a href="warehouses.html">
+            <i class="bi bi-buildings"></i>
+            <span>Warehouses & Bins</span>
+        </a>
+        <a href="transfers.html">
+            <i class="bi bi-arrow-left-right"></i>
+            <span>Stock Transfers</span>
+        </a>
+        <a href="stock-alerts.html">
+            <i class="bi bi-exclamation-triangle"></i>
+            <span>Stock Alerts</span>
+        </a>
+        <a href="reports.html">
+            <i class="bi bi-graph-up"></i>
+            <span>Reports</span>
+        </a>
+        <a href="users.html">
+            <i class="bi bi-people"></i>
+            <span>Users</span>
+        </a>
+    </nav>
+</aside>
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+<div class="main-content">
+
+    <!-- Top Navigation -->
+    <header class="top-nav d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center gap-3">
+            <button class="btn btn-outline-secondary d-md-none" id="sidebarToggle">
+                <i class="bi bi-list"></i>
+            </button>
+            <h4 class="mb-0 fw-bold"><i class="bi bi-cart-check text-success me-2"></i>Procurement & Supplier Management</h4>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <button class="btn btn-outline-primary btn-sm" onclick="loadDashboard(); reloadActiveTab();">
+                <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+            </button>
+            <div class="dropdown">
+                <button class="btn btn-success btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    <i class="bi bi-plus-circle me-1"></i> New Action
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="javascript:void(0)" onclick="openCreateSupplierModal()"><i class="bi bi-building me-2"></i>New Supplier</a></li>
+                    <li><a class="dropdown-item" href="javascript:void(0)" onclick="openCreatePoModal()"><i class="bi bi-file-earmark-plus me-2"></i>New Purchase Order</a></li>
+                    <li><a class="dropdown-item" href="javascript:void(0)" onclick="openCreateGrnModal()"><i class="bi bi-box-arrow-in-down me-2"></i>New Goods Receipt (GRN)</a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    <i class="bi bi-person-circle me-1"></i> <span id="currentUserName">Admin</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item text-danger" href="javascript:void(0)" onclick="logout()"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Alert Banner Container -->
+    <div id="alertContainer"></div>
+
+    <!-- KPI Summary Cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-xl-3 col-md-6">
+            <div class="proc-kpi-card border-start border-success border-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="text-muted small text-uppercase fw-bold">Active Suppliers</div>
+                        <h3 class="mb-0 fw-bold mt-1 text-dark" id="kpiActiveSuppliers">0</h3>
+                        <small class="text-muted" id="kpiTotalSuppliers">Total: 0</small>
+                    </div>
+                    <div class="bg-success-subtle text-success p-3 rounded-circle">
+                        <i class="bi bi-building fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="proc-kpi-card border-start border-primary border-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="text-muted small text-uppercase fw-bold">Open Purchase Orders</div>
+                        <h3 class="mb-0 fw-bold mt-1 text-primary" id="kpiOpenPOs">0</h3>
+                        <small class="text-muted" id="kpiDraftPendingPOs">Draft: 0 | Pending: 0</small>
+                    </div>
+                    <div class="bg-primary-subtle text-primary p-3 rounded-circle">
+                        <i class="bi bi-file-earmark-text fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="proc-kpi-card border-start border-warning border-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="text-muted small text-uppercase fw-bold">Pending GRNs</div>
+                        <h3 class="mb-0 fw-bold mt-1 text-warning" id="kpiPendingGRNs">0</h3>
+                        <small class="text-muted" id="kpiPartiallyReceivedPOs">Partial POs: 0</small>
+                    </div>
+                    <div class="bg-warning-subtle text-warning p-3 rounded-circle">
+                        <i class="bi bi-box-seam fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="proc-kpi-card border-start border-info border-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="text-muted small text-uppercase fw-bold">This Month Spend</div>
+                        <h3 class="mb-0 fw-bold mt-1 text-info" id="kpiMonthSpend">₹0.00</h3>
+                        <small class="text-muted">Approved & Received</small>
+                    </div>
+                    <div class="bg-info-subtle text-info p-3 rounded-circle">
+                        <i class="bi bi-cash-stack fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nav Tabs for Suppliers, Purchase Orders & Goods Receipts -->
+    <ul class="nav nav-pills mb-3 gap-2" id="procurementTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="tab-suppliers-btn" data-bs-toggle="pill" data-bs-target="#tab-suppliers" type="button" role="tab" onclick="loadSuppliers()">
+                <i class="bi bi-building me-1"></i> Suppliers
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab-pos-btn" data-bs-toggle="pill" data-bs-target="#tab-pos" type="button" role="tab" onclick="loadPurchaseOrders()">
+                <i class="bi bi-file-earmark-text me-1"></i> Purchase Orders
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab-grns-btn" data-bs-toggle="pill" data-bs-target="#tab-grns" type="button" role="tab" onclick="loadGoodsReceipts()">
+                <i class="bi bi-box-arrow-in-down me-1"></i> Goods Receipts (GRN)
+            </button>
+        </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content" id="procurementTabContent">
+
+        <!-- =====================================================
+             TAB 1: SUPPLIERS
+        ===================================================== -->
+        <div class="tab-pane fade show active" id="tab-suppliers" role="tabpanel">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body p-3">
+                    <div class="row g-2 align-items-center">
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control" id="supplierSearchInput" placeholder="Search by name, code, contact or city..." onkeyup="debounce(loadSuppliers, 300)()">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-select" id="supplierStatusFilter" onchange="loadSuppliers()">
+                                <option value="">All Statuses</option>
+                                <option value="ACTIVE" selected>Active</option>
+                                <option value="INACTIVE">Inactive</option>
+                                <option value="BLOCKED">Blocked</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 text-end">
+                            <button class="btn btn-success w-100" onclick="openCreateSupplierModal()">
+                                <i class="bi bi-plus-lg me-1"></i> Add Supplier
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Company Name</th>
+                                    <th>Contact Person</th>
+                                    <th>Phone / Email</th>
+                                    <th>Location</th>
+                                    <th>GST / PAN</th>
+                                    <th>Status</th>
+                                    <th class="text-end pe-3">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="suppliersTableBody">
+                                <tr><td colspan="8" class="text-center py-4 text-muted"><div class="spinner-border spinner-border-sm me-2"></div>Loading suppliers...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =====================================================
+             TAB 2: PURCHASE ORDERS
+        ===================================================== -->
+        <div class="tab-pane fade" id="tab-pos" role="tabpanel">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body p-3">
+                    <div class="row g-2 align-items-center">
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control" id="poSearchInput" placeholder="Search PO # or supplier..." onkeyup="debounce(loadPurchaseOrders, 300)()">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select" id="poStatusFilter" onchange="loadPurchaseOrders()">
+                                <option value="">All PO Statuses</option>
+                                <option value="DRAFT">Draft</option>
+                                <option value="PENDING_APPROVAL">Pending Approval</option>
+                                <option value="APPROVED">Approved</option>
+                                <option value="SENT_TO_SUPPLIER">Sent to Supplier</option>
+                                <option value="PARTIALLY_RECEIVED">Partially Received</option>
+                                <option value="FULLY_RECEIVED">Fully Received</option>
+                                <option value="CANCELLED">Cancelled</option>
+                                <option value="CLOSED">Closed</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select" id="poSupplierFilter" onchange="loadPurchaseOrders()">
+                                <option value="">All Suppliers</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 text-end">
+                            <button class="btn btn-success w-100" onclick="openCreatePoModal()">
+                                <i class="bi bi-plus-lg me-1"></i> Create PO
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>PO Number</th>
+                                    <th>Supplier</th>
+                                    <th>Date</th>
+                                    <th>Items</th>
+                                    <th>Ordered / Received</th>
+                                    <th>Total Amount</th>
+                                    <th>Status</th>
+                                    <th class="text-end pe-3">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="posTableBody">
+                                <tr><td colspan="8" class="text-center py-4 text-muted"><div class="spinner-border spinner-border-sm me-2"></div>Loading purchase orders...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =====================================================
+             TAB 3: GOODS RECEIPTS (GRN)
+        ===================================================== -->
+        <div class="tab-pane fade" id="tab-grns" role="tabpanel">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body p-3">
+                    <div class="row g-2 align-items-center">
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control" id="grnSearchInput" placeholder="Search GRN #, PO # or Invoice..." onkeyup="debounce(loadGoodsReceipts, 300)()">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-select" id="grnStatusFilter" onchange="loadGoodsReceipts()">
+                                <option value="">All GRN Statuses</option>
+                                <option value="PENDING_INSPECTION">Pending Inspection</option>
+                                <option value="INSPECTION_PASSED">Inspection Passed</option>
+                                <option value="PARTIALLY_ACCEPTED">Partially Accepted</option>
+                                <option value="ACCEPTED">Accepted into Inventory</option>
+                                <option value="REJECTED">Rejected</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 text-end">
+                            <button class="btn btn-success w-100" onclick="openCreateGrnModal()">
+                                <i class="bi bi-plus-lg me-1"></i> Receive Goods
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>GRN Number</th>
+                                    <th>PO Number</th>
+                                    <th>Supplier</th>
+                                    <th>Received Date</th>
+                                    <th>Received / Accepted</th>
+                                    <th>Quality Status</th>
+                                    <th>GRN Status</th>
+                                    <th class="text-end pe-3">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="grnsTableBody">
+                                <tr><td colspan="8" class="text-center py-4 text-muted"><div class="spinner-border spinner-border-sm me-2"></div>Loading goods receipts...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+     MODALS
+===================================================== -->
+
+<!-- 1. Create/Edit Supplier Modal -->
+<div class="modal fade" id="supplierModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="supplierModalTitle"><i class="bi bi-building me-2"></i>Add Supplier</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="supplierForm">
+                    <input type="hidden" id="supplierEditId">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Supplier Code <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="supCode" placeholder="e.g. SUP-IFFCO" required>
+                        </div>
+                        <div class="col-md-8">
+                            <label class="form-label fw-semibold">Company Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="supCompanyName" placeholder="e.g. IFFCO Manufacturing Ltd" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Contact Person</label>
+                            <input type="text" class="form-control" id="supContactPerson" placeholder="Full name">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Phone</label>
+                            <input type="text" class="form-control" id="supPhone" placeholder="Mobile number">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Email</label>
+                            <input type="email" class="form-control" id="supEmail" placeholder="supplier@example.com">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">GST Number</label>
+                            <input type="text" class="form-control" id="supGstNumber" placeholder="27AAAAA0000A1Z5">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">PAN Number</label>
+                            <input type="text" class="form-control" id="supPanNumber" placeholder="AAAAA0000A">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">City</label>
+                            <input type="text" class="form-control" id="supCity" placeholder="City">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">State</label>
+                            <input type="text" class="form-control" id="supState" placeholder="State">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Postal Code</label>
+                            <input type="text" class="form-control" id="supPostalCode" placeholder="PIN code">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label fw-semibold">Address</label>
+                            <textarea class="form-control" id="supAddress" rows="2" placeholder="Full registered address"></textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Payment Terms</label>
+                            <input type="text" class="form-control" id="supPaymentTerms" placeholder="e.g. Net 30 Days">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Notes</label>
+                            <input type="text" class="form-control" id="supNotes" placeholder="Internal remarks">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" onclick="saveSupplier()">Save Supplier</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 2. Create Purchase Order Modal -->
+<div class="modal fade" id="poModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold"><i class="bi bi-file-earmark-plus me-2"></i>Create Purchase Order</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="poForm">
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Supplier <span class="text-danger">*</span></label>
+                            <select class="form-select" id="poSupplierSelect" required>
+                                <option value="">Select Supplier...</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Order Date</label>
+                            <input type="date" class="form-control" id="poOrderDate">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Expected Delivery Date</label>
+                            <input type="date" class="form-control" id="poExpectedDate">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label fw-semibold">Notes</label>
+                            <input type="text" class="form-control" id="poNotes" placeholder="Order instructions or PO terms">
+                        </div>
+                    </div>
+
+                    <h6 class="fw-bold mb-2">Order Line Items</h6>
+                    <div class="table-responsive mb-2">
+                        <table class="table table-bordered align-middle" id="poItemsTable">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 35%;">Fertilizer Product <span class="text-danger">*</span></th>
+                                    <th style="width: 15%;">Quantity <span class="text-danger">*</span></th>
+                                    <th style="width: 15%;">Unit Cost (₹) <span class="text-danger">*</span></th>
+                                    <th style="width: 12%;">Tax Rate (%)</th>
+                                    <th style="width: 15%;">Line Total (₹)</th>
+                                    <th style="width: 8%;"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="poItemsBody">
+                                <!-- Dynamic Rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <button type="button" class="btn btn-outline-success btn-sm mb-3" onclick="addPoItemRow()">
+                        <i class="bi bi-plus-lg me-1"></i> Add Line Item
+                    </button>
+
+                    <div class="row justify-content-end">
+                        <div class="col-md-4">
+                            <div class="bg-light p-3 rounded">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span class="text-muted">Subtotal:</span>
+                                    <span class="fw-semibold" id="poSubtotalDisplay">₹0.00</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span class="text-muted">Tax (GST):</span>
+                                    <span class="fw-semibold" id="poTaxDisplay">₹0.00</span>
+                                </div>
+                                <hr class="my-2">
+                                <div class="d-flex justify-content-between">
+                                    <span class="fw-bold">Grand Total:</span>
+                                    <span class="fw-bold text-success fs-5" id="poTotalDisplay">₹0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" onclick="savePurchaseOrder()">Save as Draft PO</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 3. View Purchase Order Details Modal -->
+<div class="modal fade" id="poViewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="poViewModalTitle"><i class="bi bi-file-earmark-text me-2"></i>Purchase Order Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="poViewModalBody">
+                <div class="text-center py-4"><div class="spinner-border spinner-border-sm me-2"></div>Loading details...</div>
+            </div>
+            <div class="modal-footer" id="poViewModalFooter">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 4. Create Goods Receipt (GRN) Modal -->
+<div class="modal fade" id="grnModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold"><i class="bi bi-box-arrow-in-down me-2"></i>Receive Goods Against Purchase Order</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="grnForm">
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Select Purchase Order <span class="text-danger">*</span></label>
+                            <select class="form-select" id="grnPoSelect" onchange="onPoSelectedForGrn()" required>
+                                <option value="">Select PO...</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Received Date <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" id="grnReceivedDate" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Supplier Invoice #</label>
+                            <input type="text" class="form-control" id="grnInvoiceNo" placeholder="e.g. INV-9876">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Delivery / Challan #</label>
+                            <input type="text" class="form-control" id="grnDeliveryNo" placeholder="e.g. DC-4567">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Packaging Condition</label>
+                            <select class="form-select" id="grnPackaging">
+                                <option value="GOOD" selected>Intact / Good</option>
+                                <option value="DAMAGED">Damaged / Torn</option>
+                                <option value="WET">Wet / Moisture Exposed</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Seal Condition</label>
+                            <select class="form-select" id="grnSeal">
+                                <option value="INTACT" selected>Factory Seal Intact</option>
+                                <option value="BROKEN">Seal Broken / Tampered</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <h6 class="fw-bold mb-2">Items to Receive & Batch Information</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Fertilizer</th>
+                                    <th>Ordered</th>
+                                    <th>Remaining</th>
+                                    <th style="width: 14%;">Receive Qty <span class="text-danger">*</span></th>
+                                    <th style="width: 16%;">Batch # <span class="text-danger">*</span></th>
+                                    <th style="width: 14%;">Mfg Date</th>
+                                    <th style="width: 14%;">Expiry Date <span class="text-danger">*</span></th>
+                                </tr>
+                            </thead>
+                            <tbody id="grnItemsBody">
+                                <tr><td colspan="7" class="text-center py-3 text-muted">Please select an approved purchase order first.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" onclick="saveGoodsReceipt()">Submit Goods Receipt</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 5. Inspect Goods Receipt Modal -->
+<div class="modal fade" id="grnInspectModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold"><i class="bi bi-shield-check me-2"></i>Quality Inspection</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="grnInspectForm">
+                    <input type="hidden" id="inspectGrnId">
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Quality Status <span class="text-danger">*</span></label>
+                            <select class="form-select" id="inspectQualityStatus" onchange="onQualityStatusChange()" required>
+                                <option value="PASSED" selected>PASSED (Accept All Lots)</option>
+                                <option value="PARTIAL">PARTIAL (Specify Accepted/Rejected)</option>
+                                <option value="FAILED">FAILED (Reject All)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Packaging Condition</label>
+                            <input type="text" class="form-control" id="inspectPackaging" value="GOOD">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label fw-semibold">Inspection Remarks / Observations</label>
+                            <textarea class="form-control" id="inspectNotes" rows="2" placeholder="Quality officer observations, seal validation, laboratory assay references..."></textarea>
+                        </div>
+                    </div>
+
+                    <h6 class="fw-bold mb-2">Item-by-Item Breakdown</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Item & Batch</th>
+                                    <th>Received</th>
+                                    <th style="width: 20%;">Accepted Qty</th>
+                                    <th style="width: 20%;">Rejected Qty</th>
+                                    <th>Rejection Reason</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inspectItemsBody">
+                                <!-- Dynamic Rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="submitInspection()">Record Inspection</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap 5 JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Procurement JS -->
+<script src="procurement.js"></script>
+    <script src="../JS/i18n.js"></script>
+</body>
+</html>
