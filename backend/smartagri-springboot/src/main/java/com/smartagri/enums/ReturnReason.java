@@ -1,0 +1,14 @@
+package com.smartagri.enums;
+
+public enum ReturnReason {
+    DAMAGED_PRODUCT,
+    WRONG_PRODUCT,
+    WRONG_QUANTITY,
+    EXPIRED_PRODUCT,
+    PRODUCT_DEFECT,
+    PACKAGING_DAMAGE,
+    DELIVERY_DAMAGE,
+    CUSTOMER_CHANGED_MIND,
+    ORDERED_BY_MISTAKE,
+    OTHER
+}
